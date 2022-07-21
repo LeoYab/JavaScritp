@@ -52,19 +52,64 @@ for (let i = 1; i <= 3; i++) {
     if (i == 1) {
         banco = "Con BBVA tenés un 20% de descuento quedando en: $"
     } else if (i == 2) {
-        banco = "Con Santander tenés un 60% de descuento quedando en: $"
+        banco = "Con Santander tenés un 40% de descuento quedando en: $"
     } else if (i == 3) {
-        banco = "Con Supervielle tenés un 80% de descuento quedando en: $"
+        banco = "Con Supervielle tenés un 60% de descuento quedando en: $"
     }
 
     console.log(banco + precioDesc);
 }
- */
+ 
+let precio = 0;
+let precioTotal = 0;
+let prodIngr;
+let tarjeta;
+let precioDesc;
 
-function totalDesc (valor1, valor2){
-let valor1= prompt("Ingrese valor1");
-let valor2= prompt("Ingrese valor2");
-return valor1
+while (prodIngr != "OK") {
+    producto();
+}
+function producto() {
+    prodIngr = prompt("Ingresa un producto");
+
+    if (prodIngr != "OK") {
+        precio = parseFloat(prompt("Ingresa el valor"));
+        let cantidadProd = parseInt(prompt("Ingrese la cantidad"));
+        precioTotal = precioTotal + (precio * cantidadProd);
+        console.log("Producto: " + prodIngr + " " + "Cantidad: x" + cantidadProd + " " + "Valor unitario: $" + precio);
+    } else {
+        console.log("Total: $" + precioTotal);
+        tarjeta = prompt("Elige la tarjeta: \nBBVA 20%\nSantander 40%\nSupervielle 60%");
+        descuento(tarjeta);
+    }
+}
+
+function descuento(valortarj) {
+
+    for ( i = 1; i <= 3; i++) {
+
+        precioDesc = precioTotal - ((precioTotal * (i * 20)) / 100);
+
+        if (i == 1 && valortarj == "BBVA") {
+
+            console.log("Con BBVA tenés un 20% de descuento quedando en: $" + precioDesc);
+    
+        } else if (i == 2 && valortarj == "Santander") {
+    
+            console.log("Con Santander tenés un 40% de descuento quedando en: $" + precioDesc);
+    
+        } else if (i == 3 && valortarj == "Supervielle") {
+    
+            console.log("Con Supervielle tenés un 60% de descuento quedando en: $" + precioDesc);
+    
+        }else if (valortarj != "BBVA" && valortarj != "Santander" && valortarj != "Supervielle"){
+
+            console.log("No contás con descuento. Valor total: $" + precioTotal);
+            break;
+        }
+    }
+
+    
 
 }
-console.log (valor1);
+*/
