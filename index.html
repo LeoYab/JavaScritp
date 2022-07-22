@@ -44,71 +44,93 @@
 
   <main class="container-fluid">
     <div class="barraLista">
-      <p>PRODUCTOS AGREGADOS
-      <p>
+      <p class="text-center">PRODUCTOS AGREGADOS<p>
     </div>
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Producto" aria-label="Recipient's username"
         aria-describedby="button-addon2">
       <input type="number" class="form-control" placeholder="Precio" aria-label="Recipient's username"
         aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">AGREGAR</button>
+      <button class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
     </div>
 
     <ul class="list-group row">
-      <li class="list-group-item">Ejemplo</li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-center fw-semibold">
+        <p class="tabla mb-0 col-2">Producto</p>
+        <p class="tabla mb-0 col-2">Valor</p>
+
+          <p class="tabla mb-0 col-2">Cantidad</p>
+          <p class="tabla mb-0 col-2">Total</p>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
+            <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Del</button>
+          </div>
+
+      </li>
+
+
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <p class="mb-0 col-2">Harina</p>
         <p class="mb-0 col-2">$1200</p>
         <div class="input-group input-group-sm canti">
           <span class="input-group-text" id="basic-addon1">X</span>
-          <input type="number" class="form-control text-center" placeholder="Cantidad" aria-describedby="basic-addon1">
+          <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
         </div>
         <p class="mb-0 col-2">$2400</p>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-sm btn-primary" type="submit">Edit</button>
-          <button class="btn btn-sm btn-secondary" type="submit">Del</button>
+          <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+          <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
         </div>
       </li>
+
+
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <p class="mb-0 col-2">Pescado</p>
         <p class="mb-0 col-2">$3400</p>
         <div class="input-group input-group-sm canti">
           <span class="input-group-text" id="basic-addon1">X</span>
-          <input type="number" class="form-control text-center" placeholder="Cantidad" aria-describedby="basic-addon1">
+          <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
         </div>
         <p class="mb-0 col-2">$6800</p>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-sm btn-primary" type="submit">Edit</button>
-          <button class="btn btn-sm btn-secondary" type="submit">Del</button>
+          <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+          <button class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
         </div>
       </li>
+
+
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        <p class="mb-0 col-2">Pan</p>
+        <p class="mb-0 col-2">Cebolla</p>
         <p class="mb-0 col-2">$200</p>
         <div class="input-group input-group-sm canti">
           <span class="input-group-text" id="basic-addon1">X</span>
-          <input type="number" class="form-control text-center" placeholder="Cantidad" aria-describedby="basic-addon1">
+          <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
         </div>
         <p class="mb-0 col-2">$600</p>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-sm btn-primary" type="submit">Edit</button>
-          <button class="btn btn-sm btn-secondary" type="submit">Del</button>
+          <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+          <button class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
         </div>
       </li>
+
+
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <p class="mb-0 col-2">Fideos</p>
         <p class="mb-0 col-2">$950</p>
         <div class="input-group input-group-sm canti">
           <span class="input-group-text" id="basic-addon1">X</span>
-          <input type="number" class="form-control text-center" placeholder="Cantidad" aria-describedby="basic-addon1">
+          <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
         </div>
         <p class="mb-0 col-2">$2850</p>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-sm btn-primary" type="submit">Edit</button>
-          <button class="btn btn-sm btn-secondary" type="submit">Del</button>
+          <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+          <button class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
         </div>
       </li>
+
+
     </ul>
   </main>
   <script src="./js/main.js"></script>

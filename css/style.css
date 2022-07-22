@@ -4,8 +4,11 @@
   box-sizing: border-box; }
 
 .barraLista {
-  background-color: #0c6baa;
+  background-color: #5a8f05;
   color: aliceblue; }
 
 .canti {
-  width: 18%; }
+  width: 16%; }
+
+strong {
+  font-size: 0.8rem; }

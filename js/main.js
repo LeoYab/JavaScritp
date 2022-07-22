@@ -58,8 +58,8 @@ for (let i = 1; i <= 3; i++) {
     }
 
     console.log(banco + precioDesc);
-}
- 
+} 
+
 let precio = 0;
 let precioTotal = 0;
 let prodIngr;
