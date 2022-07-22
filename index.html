@@ -42,7 +42,7 @@
     </nav>
   </header>
 
-  <main class="container-fluid">
+  <main class="container-fluid container-md">
     <div class="barraLista">
       <p class="text-center">PRODUCTOS AGREGADOS<p>
     </div>
@@ -54,7 +54,95 @@
       <button class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
     </div>
 
-    <ul class="list-group row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Total</th>
+          <th scope="col">
+            <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
+            <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Del</button>
+          </div>
+        </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th scope="row">Harina</th>
+          <td>$1200</td>
+          <td class="canti">
+            <div class="input-group input-group-sm ">
+            <span class="input-group-text" id="basic-addon1">X</span>
+            <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
+          </div>
+        </td>
+          <td>$2400</td>
+          <td>
+            <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+            <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+          </div>
+        </td>
+        </tr>
+         <tr>
+          <th scope="row">Pescado</th>
+          <td>$3400</td>
+          <td class="canti">
+            <div class="input-group input-group-sm">
+            <span class="input-group-text" id="basic-addon1">X</span>
+            <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
+          </div>
+        </td>
+          <td>$6800</td>
+          <td>
+            <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+            <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+          </div>
+        </td>
+        </tr>
+        <tr>
+          <th scope="row">Cebolla</th>
+          <td>$200</td>
+          <td class="canti">
+            <div class="input-group input-group-sm">
+            <span class="input-group-text" id="basic-addon1">X</span>
+            <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
+          </div>
+        </td>
+          <td>$600</td>
+          <td>
+            <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+            <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+          </div>
+        </td>
+        </tr>
+        <tr>
+          <th scope="row">Fideos</th>
+          <td>$950</td>
+          <td class="canti">
+            <div class="input-group input-group-sm">
+            <span class="input-group-text" id="basic-addon1">X</span>
+            <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
+          </div>
+        </td>
+          <td>$2850</td>
+          <td>
+            <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+            <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+          </div>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <ul class="list-group row">
 
       <li class="list-group-item d-flex justify-content-between align-items-center fw-semibold">
         <p class="tabla mb-0 col-2">Producto</p>
@@ -131,7 +219,7 @@
       </li>
 
 
-    </ul>
+    </ul> -->
   </main>
   <script src="./js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
