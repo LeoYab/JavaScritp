@@ -112,4 +112,21 @@ function descuento(valortarj) {
     
 
 }
+
+
+class Producto {
+    constructor(nombre, precio, cantidad){
+
+    this.nombre = nombre[0].toUpperCase() + nombre.substring(1);
+    this.precio = parseFloat(precio);
+    this.cantidad = parseInt(cantidad);
+}
+ingresaProducto(){
+    console.log("Producto: " + this.nombre + "\nPrecio: " + this.precio + "\nCantidad: " + this.cantidad)
+}
+}
+
+const prod1 = new Producto (prompt("Ingresa el producto:"), prompt("Ingresa el Precio:"), prompt("Ingresa la cantidad:"));
+
+console.log(prod1);
 */
