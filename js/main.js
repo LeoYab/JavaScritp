@@ -1,118 +1,83 @@
-/* //Desafío: Selección de productos los cuales cuentan con su respectivo precio. Al terminar la "compra" se visualiza el total y los descuentos que hay con diferentes bancos.
-
-let seleccion = prompt("Ingresa la zapatilla que desees: \nAdidas: $10.000 \nNike: $7.500 \nTopper: $5.300 \n\nOK Para terminar.");
-let precio = 0;
-let banco;
-let precioDesc;
-
-//Selección de productos e impresión en pantalla de cada uno.
-
-while (seleccion != "OK") {
-    switch (seleccion) {
-        case "ADIDAS":
-        case "Adidas":
-        case "adidas":
-            precio = precio + 10000;
-            console.log("Elegiste Adidas.\nValor: $10.000");
-
-            break;
-
-        case "NIKE":
-        case "Nike":
-        case "nike":
-            precio = precio + 7500;
-            console.log("Elegiste Nike. \nValor: $7.500");
-
-            break;
-
-        case "TOPPER":
-        case "Topper":
-        case "topper":
-            precio = precio + 5300;
-            console.log("Elegiste Topper. \nValor: $5.300");
-
-            break;
-
-        default:
-            console.log("No seleccionaste el producto de la lista");
-            break;
-    }
-
-    seleccion = prompt("Ingresa otra zapatilla que desees: \n Adidas: $10.000 \n Nike: $7.500 \n Topper: $5.300 \n\nOK Para terminar.");
-}
-
-//Suma total de los productos seleccionados
-console.log("Total: $" + precio);
-
-// Muestra en pantalla el descuento con cada banco.
-
-for (let i = 1; i <= 3; i++) {
-    precioDesc = precio - ((precio * (i * 20)) / 100);
-
-    if (i == 1) {
-        banco = "Con BBVA tenés un 20% de descuento quedando en: $"
-    } else if (i == 2) {
-        banco = "Con Santander tenés un 40% de descuento quedando en: $"
-    } else if (i == 3) {
-        banco = "Con Supervielle tenés un 60% de descuento quedando en: $"
-    }
-
-    console.log(banco + precioDesc);
-} 
-
+// Desafío: Programa de una lista de supermercado en donde se debe indicar el Nombre del producto, Valor y Cantidad.
+//Luego se muestra el total con IVA y si tiene o no descuento dependiendo de la tarjeta.
 let precio = 0;
 let precioTotal = 0;
 let prodIngr;
 let tarjeta;
 let precioDesc;
+let cantidadProd;
 
+
+alert("¡Bienvenido a SuperLista!\n\nAquí podrás crear tu lista de super y visualizar el total.");
+
+// Ejecución del programa
 while (prodIngr != "OK") {
     producto();
 }
+
+//Función para agregar productos y verificar tarjeta para descuento
 function producto() {
-    prodIngr = prompt("Ingresa un producto");
+    prodIngr = prompt("Ingresa un producto\n\nPara terminar ingresa OK");
 
     if (prodIngr != "OK") {
+
         precio = parseFloat(prompt("Ingresa el valor"));
-        let cantidadProd = parseInt(prompt("Ingrese la cantidad"));
-        precioTotal = precioTotal + (precio * cantidadProd);
-        console.log("Producto: " + prodIngr + " " + "Cantidad: x" + cantidadProd + " " + "Valor unitario: $" + precio);
+     cantidadProd = parseInt(prompt("Ingresa la cantidad"));
+
+        if (cantidadProd < 1) {
+            alert("Ingrese una cantidad válida");
+            cantidadProd = parseInt(prompt("Ingresa la cantidad"));
+            precioTotProd();
+        } else {
+            precioTotProd();
+        }
+
     } else {
+
         console.log("Total: $" + precioTotal);
-        tarjeta = prompt("Elige la tarjeta: \nBBVA 20%\nSantander 40%\nSupervielle 60%");
+        tarjeta = prompt("Elige la tarjeta: \n1) BBVA 20%\n2) Santander 40%\n3) Supervielle 60%");
         descuento(tarjeta);
     }
 }
 
+// Se suma el precio del producto por la cantidad y se muestra en pantalla los datos ingresados.
+function precioTotProd(){
+    precioTotal = precioTotal + (precio * cantidadProd);
+    console.log("Producto: " + prodIngr + " " + "Cantidad: x" + cantidadProd + " " + "Valor unitario: $" + precio);
+}
+
+//Bucle para indicar el precio con el descuento e iva.
 function descuento(valortarj) {
 
-    for ( i = 1; i <= 3; i++) {
+    for (i = 1; i <= 3; i++) {
 
-        precioDesc = precioTotal - ((precioTotal * (i * 20)) / 100);
+        precioDesc = (precioTotal - ((precioTotal * (i * 20)) / 100)) * 1.21;
 
-        if (i == 1 && valortarj == "BBVA") {
+        if (i == 1 && valortarj == "1") {
 
-            console.log("Con BBVA tenés un 20% de descuento quedando en: $" + precioDesc);
-    
-        } else if (i == 2 && valortarj == "Santander") {
-    
-            console.log("Con Santander tenés un 40% de descuento quedando en: $" + precioDesc);
-    
-        } else if (i == 3 && valortarj == "Supervielle") {
-    
-            console.log("Con Supervielle tenés un 60% de descuento quedando en: $" + precioDesc);
-    
-        }else if (valortarj != "BBVA" && valortarj != "Santander" && valortarj != "Supervielle"){
+            console.log("Con BBVA tenés un 20% de descuento quedando en: $" + precioDesc + " IVA incluido.");
 
-            console.log("No contás con descuento. Valor total: $" + precioTotal);
+        } else if (i == 2 && valortarj == "2") {
+
+            console.log("Con Santander tenés un 40% de descuento quedando en: $" + precioDesc + " IVA incluido.");
+
+        } else if (i == 3 && valortarj == "3") {
+
+            console.log("Con Supervielle tenés un 60% de descuento quedando en: $" + precioDesc + " IVA incluido.");
+
+        } else if (valortarj != "1" && valortarj != "2" && valortarj != "3") {
+
+            console.log("No contás con descuento. Valor total con IVA: $" + (precioTotal * 1.21));
+
             break;
         }
     }
-
-    
-
 }
 
+
+
+/* 
+//Constructor
 
 class Producto {
     constructor(nombre, precio, cantidad){
@@ -128,5 +93,4 @@ ingresaProducto(){
 
 const prod1 = new Producto (prompt("Ingresa el producto:"), prompt("Ingresa el Precio:"), prompt("Ingresa la cantidad:"));
 
-console.log(prod1);
-*/
+console.log(prod1); */
