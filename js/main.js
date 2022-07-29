@@ -1,20 +1,23 @@
-// Desafío: Programa de una lista de supermercado en donde se debe indicar el Nombre del producto, Valor y Cantidad.
-//Luego se muestra el total con IVA y si tiene o no descuento dependiendo de la tarjeta.
+/* Desafío: Programa de una lista de supermercado en donde se debe indicar el Nombre del producto, Valor y Cantidad.
+En el mismo se puede editar, buscar y eliminar un producto previamente cargado.*/
+ 
 let precio = 0;
 let precTotProd = 0;
 let precioTotal = 0;
 let terminar;
 const productos = [];
 let totProd;
+let contProdNom=0;
+
+
 alert("¡Bienvenido a SuperLista!\n\nAquí podrás crear tu lista de super y visualizar el total.");
 
-// Ejecución del programa
-/* while (productos[nombre] != "OK") {
-    addProd();
-} */
+
 
 
 addProd()
+
+//Función constructora y modificadora de productos previamente creados.
 
 function addProd() {
 
@@ -29,18 +32,29 @@ function addProd() {
 
     }
 
+    //Se realiza un While en donde se irán agregando los nuevos productos hasta que se escriba OK.
+    //Los mismos se irán mostrando en la consola para poder luego editarlos en caso de necesitarlo.
+
     while (terminar != "OK") {
+
 
         productos.push(new Producto(prompt("Ingresa el producto:"), prompt("Ingresa el Precio:"), prompt("Ingresa la cantidad:")));
 
         terminar = prompt("Presione ENTER para agregar otro producto\n\nIngrese OK para terminar.");
+
+        console.log(productos[contProdNom])
+
+        contProdNom=contProdNom + 1;
+
+        
     }
 
-
+    //Luego de la carga de productos se ingresa una condición en donde el usuario puede modificar y eliminar productos.
+    
     if (terminar == "OK") {
-
-        let modList = prompt("Si desea modificar la lista elija lo siguiente:\n\n1) Modificar producto\n2) Eliminar producto\n3) Terminar");
-
+        
+        let modList = prompt("\nSi desea modificar la lista elija lo siguiente:\n\n1) Modificar producto\n2) Eliminar producto\n3) Terminar");
+      
         if (modList == 1) {
 
             let indSelec = parseInt(prompt("Ingrese el índice del producto a modificar:"));
@@ -51,8 +65,10 @@ function addProd() {
             productos[indSelec].totprod = productos[indSelec].precio * productos[indSelec].cantidad;
 
             console.log(productos);
-            // A arreglar, no toma el valor de totprod
-            /*  productos.splice(prompt("Ingrese el índice del producto a modificar:"), 1, { nombre: prompt("Ingrese el nuevo nombre:"), precio: parseFloat(prompt("Ingrese el precio:")), cantidad: parseInt(prompt("Ingrese la cantidad:")) }); */
+
+            // La modificación de datos la intenté realizar con el splice que se muestra comentado abajo, pero no tomaba el valor del precio por la cantidad. 
+            //Por lo cual se realizó como se ve arriba.
+            /* productos.splice(prompt("Ingrese el índice del producto a modificar:"), 1, { nombre: prompt("Ingrese el nuevo nombre:"), precio: parseFloat(prompt("Ingrese el precio:")), cantidad: parseInt(prompt("Ingrese la cantidad:")) }); */
 
         } else if (modList == 2) {
 
@@ -74,6 +90,7 @@ function addProd() {
     busProd()
 }
 
+//Se crea una función con un for que recorre el array y suma el valor total de los productos agregados.
 
 function valTotal() {
 
@@ -84,6 +101,7 @@ function valTotal() {
 
 }
 
+//Función para realizar búsquedas de productos
 
 function busProd() {
 
@@ -116,73 +134,4 @@ function busProd() {
     }
 
 }
-   /*  for (let i = 0; i < productos.length; i++) {
-
-precioTotal = precioTotal + productos[i].precio;
-
-}
-
-console.log("El precio total es: $" + precioTotal); */
-
-
-/* if (prodIngr != "OK") {
-
-    precio = parseFloat(prompt("Ingresa el valor"));
- cantidadProd = parseInt(prompt("Ingresa la cantidad"));
-
-    if (cantidadProd < 1) {
-        alert("Ingrese una cantidad válida");
-        cantidadProd = parseInt(prompt("Ingresa la cantidad"));
-        precioTotProd();
-    } else {
-        precioTotProd();
-    }
-
-} else {
-
-    console.log("Total: $" + precioTotal);
-    tarjeta = prompt("Elige la tarjeta: \n1) BBVA 20%\n2) Santander 40%\n3) Supervielle 60%");
-    descuento(tarjeta);
-}
-}
-
-// Se suma el precio del producto por la cantidad y se muestra en pantalla los datos ingresados.
-function precioTotProd(){
-precioTotal = precioTotal + (precio * cantidadProd);
-console.log("Producto: " + prodIngr + " " + "Cantidad: x" + cantidadProd + " " + "Valor unitario: $" + precio);
-}
-
-//Bucle para indicar el precio con el descuento e iva.
-function descuento(valortarj) {
-
-for (i = 1; i <= 3; i++) {
-
-    precioDesc = (precioTotal - ((precioTotal * (i * 20)) / 100)) * 1.21;
-
-    if (i == 1 && valortarj == "1") {
-
-        console.log("Con BBVA tenés un 20% de descuento quedando en: $" + precioDesc + " IVA incluido.");
-
-    } else if (i == 2 && valortarj == "2") {
-
-        console.log("Con Santander tenés un 40% de descuento quedando en: $" + precioDesc + " IVA incluido.");
-
-    } else if (i == 3 && valortarj == "3") {
-
-        console.log("Con Supervielle tenés un 60% de descuento quedando en: $" + precioDesc + " IVA incluido.");
-
-    } else if (valortarj != "1" && valortarj != "2" && valortarj != "3") {
-
-        console.log("No contás con descuento. Valor total con IVA: $" + (precioTotal * 1.21));
-
-        break;
-    }
-}
-
-
-*/
-
-/* 
-//Constructor
-
- */
+ 
