@@ -1,18 +1,16 @@
 /* Desafío: Programa de una lista de supermercado en donde se debe indicar el Nombre del producto, Valor y Cantidad.
 En el mismo se puede editar, buscar y eliminar un producto previamente cargado.*/
- 
+
 let precio = 0;
 let precTotProd = 0;
 let precioTotal = 0;
 let terminar;
 const productos = [];
 let totProd;
-let contProdNom=0;
+let contProdNom = 0;
+let fecha = new Date();
 
-
-alert("¡Bienvenido a SuperLista!\n\nAquí podrás crear tu lista de super y visualizar el total.");
-
-
+alert("¡Bienvenido a SuperLista!\n\nAquí podrás crear tu lista de super y visualizar el total." + "\n\nFecha: " + fecha.toLocaleString());
 
 
 addProd()
@@ -44,21 +42,22 @@ function addProd() {
 
         console.log(productos[contProdNom])
 
-        contProdNom=contProdNom + 1;
+        contProdNom = contProdNom + 1;
 
-        
+
     }
 
     //Luego de la carga de productos se ingresa una condición en donde el usuario puede modificar y eliminar productos.
-    
+
     if (terminar == "OK") {
-        
+
         let modList = prompt("\nSi desea modificar la lista elija lo siguiente:\n\n1) Modificar producto\n2) Eliminar producto\n3) Terminar");
-      
+
         if (modList == 1) {
 
             let indSelec = parseInt(prompt("Ingrese el índice del producto a modificar:"));
             let nombreMay = prompt("Ingrese el nuevo nombre:");
+
             productos[indSelec].nombre = nombreMay[0].toUpperCase() + nombreMay.slice(1).toLowerCase();
             productos[indSelec].precio = parseFloat(prompt("Ingrese el precio:"));
             productos[indSelec].cantidad = parseInt(prompt("Ingrese la cantidad:"));
@@ -66,6 +65,8 @@ function addProd() {
 
             console.log(productos);
 
+            valTotal();
+            busProd();
             // La modificación de datos la intenté realizar con el splice que se muestra comentado abajo, pero no tomaba el valor del precio por la cantidad. 
             //Por lo cual se realizó como se ve arriba.
             /* productos.splice(prompt("Ingrese el índice del producto a modificar:"), 1, { nombre: prompt("Ingrese el nuevo nombre:"), precio: parseFloat(prompt("Ingrese el precio:")), cantidad: parseInt(prompt("Ingrese la cantidad:")) }); */
@@ -76,18 +77,17 @@ function addProd() {
 
             console.log(productos);
 
+            valTotal();
+            busProd();
+
         } else {
 
-            console.log(productos);
+            valTotal();
+            busProd();
         }
-    } else {
+    } 
 
-        return productos();
-
-    }
-
-    valTotal();
-    busProd()
+   
 }
 
 //Se crea una función con un for que recorre el array y suma el valor total de los productos agregados.
@@ -95,6 +95,7 @@ function addProd() {
 function valTotal() {
 
     for (const vTotal of productos) {
+
         precioTotal = precioTotal + vTotal.totprod;
     }
     console.log("El precio total es: $" + precioTotal);
@@ -107,31 +108,29 @@ function busProd() {
 
     let buscarProd = prompt("Si desea buscar un producto presione ENTER\n\nIngrese ESC para salir");
 
-    if (buscarProd != "ESC") {
+    while (buscarProd != "ESC") {
 
         let busProd = prompt("Ingrese el nombre del producto a buscar")
-        let posicionProd;
 
         busProd = busProd[0].toUpperCase() + busProd.slice(1).toLowerCase();
 
-        for (const producto of productos) {
+        const resBusq = productos.filter((prod) => prod.nombre.includes(busProd))
 
-            if (producto.nombre == busProd) {
-                posicionProd = productos.indexOf(producto);
-                console.log("Producto buscado: " + busProd);
-                console.log(producto);
-                break;
-            }
-        }
+        if (resBusq != "") {
 
-        if (posicionProd == undefined) {
+            console.table(resBusq);
+
+            break;
+
+        } else {
+
             console.log("El producto no está en la lista.")
-        }
-       
-    } else {
+            buscarProd = prompt("Si desea buscar un producto presione ENTER\n\nIngrese ESC para salir");
+        } 
+
+    } 
 
         console.log("Gracias por su visita")
-    }
+   
 
 }
- 
