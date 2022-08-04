@@ -80,6 +80,8 @@ function prodgen() {
 function btnAgregar() {
     document.getElementById("agregarProd").style.display = "none";
     document.getElementById("ingresarProd").style.display = "flex"
+
+    document.getElementById("cantProd").focus();
 }
 
 function btnAgregarOcul() {
