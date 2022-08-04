@@ -64,11 +64,13 @@
       <p>
     </div>
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Producto" aria-label="Recipient's username"
+      <input id="cantProd" type="text" class="form-control" placeholder="Producto"
         aria-describedby="button-addon2">
-      <input type="number" class="form-control" placeholder="Precio" aria-label="Recipient's username"
+      <input id="precIngr" type="number" class="form-control" placeholder="Precio"
         aria-describedby="button-addon2">
-      <button class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
+        <input id="cantIngr" type="number" class="form-control" placeholder="Cantidad"
+        aria-describedby="button-addon2">
+      <button onclick="addProd()" class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
     </div>
 
     <table class="table table-striped">
@@ -87,75 +89,8 @@
         </tr>
       </thead>
 
-      <tbody>
-        <tr>
-          <td>Harina</td>
-          <td>$1200</td>
-          <td class="canti">
-            <div class="input-group input-group-sm ">
-              <span class="input-group-text" id="basic-addon1">X</span>
-              <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
-            </div>
-          </td>
-          <td>$2400</td>
-          <td>
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-              <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Pescado</td>
-          <td>$3400</td>
-          <td class="canti">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text" id="basic-addon1">X</span>
-              <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
-            </div>
-          </td>
-          <td>$6800</td>
-          <td>
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-              <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Cebolla</td>
-          <td>$200</td>
-          <td class="canti">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text" id="basic-addon1">X</span>
-              <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
-            </div>
-          </td>
-          <td>$600</td>
-          <td>
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-              <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Fideos</td>
-          <td>$950</td>
-          <td class="canti">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text" id="basic-addon1">X</span>
-              <input type="number" class="form-control text-center" placeholder="1" aria-describedby="basic-addon1">
-            </div>
-          </td>
-          <td>$2850</td>
-          <td>
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-              <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-            </div>
-          </td>
-        </tr>
+      <tbody id="tabla">
+        
       </tbody>
     </table>
 
