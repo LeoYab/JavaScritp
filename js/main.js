@@ -12,13 +12,15 @@ let fecha = new Date();
 
 /* alert("¡Bienvenido a SuperLista!\n\nAquí podrás crear tu lista de super y visualizar el total." + "\n\nFecha: " + fecha.toLocaleString()); */
 
-function addProd(){
+function addProd() {
+
+    btnAgregarOcul()
 
     let prodIng = document.getElementById("cantProd").value;
     let precIng = document.getElementById("precIngr").value;
     let cantIng = document.getElementById("cantIngr").value;
-    
-   
+
+
 
     class Producto {
         constructor(nombre, precio, cantidad) {
@@ -42,15 +44,15 @@ function addProd(){
 
 function prodgen() {
 
-     prodIng = document.getElementById("cantProd").value = "";
-     precIng = document.getElementById("precIngr").value = "";
-     cantIng = document.getElementById("cantIngr").value = "";
+    prodIng = document.getElementById("cantProd").value = "";
+    precIng = document.getElementById("precIngr").value = "";
+    cantIng = document.getElementById("cantIngr").value = "";
 
-   let genTab = document.createElement("tr");
+    let genTab = document.createElement("tr");
 
-   for(const producto of productos){
-    
-    genTab.innerHTML = `
+    for (const producto of productos) {
+
+        genTab.innerHTML = `
     <td>${producto.nombre}</td>
     <td>${producto.precio}</td>
     <td class="canti">
@@ -67,11 +69,20 @@ function prodgen() {
       </div>
     </td>
     `
-   }
+    }
 
-   tabGen = document.getElementById("tabla");
-   tabGen.append(genTab);
- 
-   
+    tabGen = document.getElementById("tabla");
+    tabGen.append(genTab);
+
+
 }
-    
+
+function btnAgregar() {
+    document.getElementById("agregarProd").style.display = "none";
+    document.getElementById("ingresarProd").style.display = "flex"
+}
+
+function btnAgregarOcul() {
+    document.getElementById("agregarProd").style.display = "block";
+    document.getElementById("ingresarProd").style.display = "none"
+}

@@ -97,12 +97,17 @@
 
       </tbody>
     </table>
-    <div class="input-group mb-3 fixed-bottom">
+<div  id="agregarProd" class="agregarProd fixed-bottom m-3 ">
+  <button onclick="btnAgregar()" type="button" class="btn btn-success pt-3 pb-3 pl-4 pr-4">+</button>
+</div>
+    
+    <div id="ingresarProd" class="ingresarProd input-group mb-3 fixed-bottom">
       <input id="cantProd" type="text" class="form-control" placeholder="Producto" aria-describedby="button-addon2">
       <input id="precIngr" type="number" class="form-control" placeholder="Precio" aria-describedby="button-addon2">
       <input id="cantIngr" type="number" class="form-control" placeholder="Cantidad" aria-describedby="button-addon2">
       <button onclick="addProd()" class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
     </div>
+  
   </main>
   <script src="./js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
