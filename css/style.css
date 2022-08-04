@@ -3,8 +3,18 @@
   padding: 0;
   box-sizing: border-box; }
 
+header {
+  background-color: #69a30a;
+  padding-bottom: 2px; }
+
+nav {
+  background-color: #69a30a; }
+
+.navbarCol {
+  background-color: #69a30a; }
+
 .barraLista {
-  background-color: #5a8f05;
+  background-color: #558508;
   color: aliceblue; }
 
 .canti {
@@ -12,3 +22,41 @@
 
 strong {
   font-size: 0.8rem; }
+
+.has-search .form-control {
+  padding-left: 2.375rem; }
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa; }
+
+.navbar-toggler {
+  padding: none;
+  font-size: none;
+  line-height: none;
+  color: none;
+  background-color: none;
+  border: none;
+  border-radius: none;
+  transition: none; }
+
+.navbar-toggler:focus {
+  box-shadow: none; }
+
+.usrProf {
+  background-image: url("../images/usr1.jpg");
+  background-repeat: round;
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 20px; }
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("../images/menubur.png"); }
