@@ -42,6 +42,10 @@ function addProd(){
 
 function prodgen() {
 
+     prodIng = document.getElementById("cantProd").value = "";
+     precIng = document.getElementById("precIngr").value = "";
+     cantIng = document.getElementById("cantIngr").value = "";
+
    let genTab = document.createElement("tr");
 
    for(const producto of productos){
