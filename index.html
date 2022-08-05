@@ -13,7 +13,7 @@
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
   <link rel="stylesheet" href="./css/style.css">
-  <title>Desafío</title>
+  <title>SUPER-LISTA</title>
 </head>
 
 <body>
@@ -73,10 +73,17 @@
   <main class="container-fluid container-md mt-2">
 
 
-    <div class="barraLista">
-      <p class="text-center">PRODUCTOS AGREGADOS<p>
+    <div class="barraLista d-flex justify-content-between p-2 rounded-4">
+      <div class="d-flex gap-2 align-items-center">
+      <p class="mb-0 ml-2">PRODUCTOS AGREGADOS</p>
+      <img src="./images/Arrowicon.png" alt="Flecha de productos">
     </div>
-    <table class="table table-striped">
+    <div class="d-flex gap-2 align-items-center">
+    <img src="./images/carrito.png" alt="Carrito de compras">
+      <p id="totalProd" class="mb-0 fw-bold"></p>
+    </div>
+    </div>
+    <table class="table table-striped mt-2">
       <thead>
         <tr>
           <th scope="col">Producto</th>
@@ -97,14 +104,14 @@
       </tbody>
     </table>
 <div  id="agregarProd" class="agregarProd fixed-bottom m-3 ">
-  <button onclick="btnAgregar()" type="button" class="btn btn-success pt-3 pb-3 pl-4 pr-4">+</button>
+  <button id="agrProBtn" type="button" class="btn btn-success pt-3 pb-3 pl-4 pr-4">+</button>
 </div>
     
     <div id="ingresarProd" class="ingresarProd input-group mb-3 fixed-bottom container-md">
       <input id="cantProd" type="text" class="form-control" placeholder="Producto" aria-describedby="button-addon2">
       <input id="precIngr" type="number" class="form-control" placeholder="Precio" aria-describedby="button-addon2">
       <input id="cantIngr" type="number" class="form-control" placeholder="Cantidad" aria-describedby="button-addon2">
-      <button onclick="addProd()" class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
+      <button class="btn btn-outline-success" type="button" id="button-addon2">AGREGAR</button>
     </div>
   
   </main>
