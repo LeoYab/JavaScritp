@@ -13,15 +13,15 @@ let fecha = new Date();
 
 function prodGen() {
 
-    prodIng = document.getElementById("cantProd").value = "";
-    precIng = document.getElementById("precIngr").value = "";
-    cantIng = document.getElementById("cantIngr").value = "";
+  prodIng = document.getElementById("cantProd").value = "";
+  precIng = document.getElementById("precIngr").value = "";
+  cantIng = document.getElementById("cantIngr").value = "";
 
-    let genTab = document.createElement("tr");
+  let genTab = document.createElement("tr");
 
-    for (const productor of productos) {
+  for (const productor of productos) {
 
-        genTab.innerHTML =`
+    genTab.innerHTML = `
     <td>${productor.nombre}</td>
     <td>$${productor.precio}</td>
     <td class="canti">
@@ -40,12 +40,10 @@ function prodGen() {
     `;
     document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
 
-    }
+  }
 
-  /*   precioTotal = precioTotal + producto.totprod; */
-  
-    tabGen = document.getElementById("tabla");
-    tabGen.append(genTab);
+  tabGen = document.getElementById("tabla");
+  tabGen.append(genTab);
 
 
 }
@@ -54,28 +52,28 @@ function prodGen() {
 
 function addProd() {
 
-    let prodIng = document.getElementById("cantProd").value;
-    let precIng = document.getElementById("precIngr").value;
-    let cantIng = document.getElementById("cantIngr").value;
+  let prodIng = document.getElementById("cantProd").value;
+  let precIng = document.getElementById("precIngr").value;
+  let cantIng = document.getElementById("cantIngr").value;
 
-    
 
-    class Producto {
-        constructor(nombre, precio, cantidad) {
 
-            this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-            this.precio = parseFloat(precio);
-            this.cantidad = parseInt(cantidad);
-            this.totprod = parseFloat(this.precio * this.cantidad);
-            precioTotal = parseFloat(precioTotal + this.totprod);
-        }
-       //REVISAR PORQUÉ EL PRECIO TOTAL SALE COMO UNDEFINED
+  class Producto {
+    constructor(nombre, precio, cantidad) {
+
+      this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
+      this.precio = parseFloat(precio);
+      this.cantidad = parseInt(cantidad);
+      this.totprod = parseFloat(this.precio * this.cantidad);
+      precioTotal = parseFloat(precioTotal + this.totprod);
     }
+    //REVISAR PORQUÉ EL PRECIO TOTAL SALE COMO UNDEFINED
+  }
 
-    productos.push(new Producto(prodIng, precIng, cantIng));
+  productos.push(new Producto(prodIng, precIng, cantIng));
 
 
-    prodGen()
+  prodGen()
 }
 
 
@@ -84,29 +82,98 @@ function addProd() {
 //AL PRESIONAR EL BOTON DE AGREGAR PRODUCTO, DESAPARECE Y APARECEN LOS INPUTS.
 
 function btnAgregar() {
-    document.getElementById("agregarProd").style.display = "none";
-    document.getElementById("ingresarProd").style.display = "flex"
+  document.getElementById("agregarProd").style.display = "none";
+  document.getElementById("ingresarProd").style.display = "flex"
 
-    document.getElementById("cantProd").focus();
-    document.getElementById("cantProd").select();
+  document.getElementById("cantProd").focus();
+  document.getElementById("cantProd").select();
 }
 
 let agrProBtn = document.getElementById("agrProBtn")
 
-agrProBtn.onclick = () => {btnAgregar()}
+agrProBtn.onclick = () => { btnAgregar() }
 
 
 //AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR
 
 function btnAgregarOcul() {
-    document.getElementById("agregarProd").style.display = "block";
-    document.getElementById("ingresarProd").style.display = "none"
+  document.getElementById("agregarProd").style.display = "block";
+  document.getElementById("ingresarProd").style.display = "none"
 
-    addProd() 
+  addProd()
 }
 
 let ocuProBtn = document.getElementById("button-addon2")
 
-ocuProBtn.onclick = () =>{btnAgregarOcul()}
+ocuProBtn.onclick = () => { btnAgregarOcul() }
+
+
+
+
+
+
+
+
+
+let busProd = document.getElementById("busProd");
+
+
+busProd.onclick = () => {
+
+  let buscarProd = document.getElementById("busProdIng").value;
+
+
+
+
+  const resBusq = productos.filter((prod) => prod.nombre.includes(buscarProd[0].toUpperCase() + buscarProd.slice(1).toLowerCase()));
+  
+  console.log(resBusq);
+
+
+  //ELIMINAR ELEMENTOS DE LA TABLA
+
+  let elimTabla = document.getElementById("tabla")
+
+while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+  
+
+
+
+
+
+
+  for (const productor of resBusq) {
+   
+    let genTab = document.createElement("tr");
+
+ genTab.innerHTML += `
+
+  <td>${productor.nombre}</td>
+  <td>$${productor.precio}</td>
+  <td class="canti">
+    <div class="input-group input-group-sm ">
+      <span class="input-group-text" id="basic-addon1">X</span>
+      <input type="number" class="form-control text-center" placeholder="${productor.cantidad}" aria-describedby="basic-addon1">
+    </div>
+  </td>
+  <td>$${productor.totprod}</td>
+  <td>
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+      <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+    </div>
+  </td>
+  `;
+  tabGen = document.getElementById("tabla");
+  tabGen.append(genTab);
+  }
+
+}
+
+
+
+
+
+
 
 
