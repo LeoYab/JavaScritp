@@ -9,7 +9,7 @@ const productos = [];
 let totProd;
 let contProdNom = 0;
 let fecha = new Date();
-
+let genTab;
 
 function prodGen() {
 
@@ -17,7 +17,7 @@ function prodGen() {
   precIng = document.getElementById("precIngr").value = "";
   cantIng = document.getElementById("cantIngr").value = "";
 
-  let genTab = document.createElement("tr");
+   genTab = document.createElement("tr");
 
   for (const productor of productos) {
 
@@ -114,21 +114,17 @@ ocuProBtn.onclick = () => { btnAgregarOcul() }
 
 
 
+//BUSCADOR DE PRODUCTOS
 
-let busProd = document.getElementById("busProd");
-
-
-busProd.onclick = () => {
-
-  let buscarProd = document.getElementById("busProdIng").value;
+let busProdIng = document.getElementById("busProdIng");
 
 
+busProdIng.addEventListener ("input", () => {
 
-
-  const resBusq = productos.filter((prod) => prod.nombre.includes(buscarProd[0].toUpperCase() + buscarProd.slice(1).toLowerCase()));
   
-  console.log(resBusq);
+  if(busProdIng.value != ""){
 
+    const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
 
   //ELIMINAR ELEMENTOS DE LA TABLA
 
@@ -137,38 +133,73 @@ busProd.onclick = () => {
 while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
   
 
+resBusq.forEach ((prod) => {
 
+  genTab = document.createElement("tr");
 
+  genTab.innerHTML += `
+ 
+   <td>${prod.nombre}</td>
+   <td>$${prod.precio}</td>
+   <td class="canti">
+     <div class="input-group input-group-sm ">
+       <span class="input-group-text" id="basic-addon1">X</span>
+       <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+     </div>
+   </td>
+   <td>$${prod.totprod}</td>
+   <td>
+     <div class="d-flex justify-content-end gap-2">
+       <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+       <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+     </div>
+   </td>
+   `;
+  
+   tabGen = document.getElementById("tabla");
+   tabGen.append(genTab);
 
-
-
-  for (const productor of resBusq) {
+   });
    
-    let genTab = document.createElement("tr");
+  }else{
 
- genTab.innerHTML += `
+    //ELIMINAR ELEMENTOS DE LA TABLA
 
-  <td>${productor.nombre}</td>
-  <td>$${productor.precio}</td>
-  <td class="canti">
-    <div class="input-group input-group-sm ">
-      <span class="input-group-text" id="basic-addon1">X</span>
-      <input type="number" class="form-control text-center" placeholder="${productor.cantidad}" aria-describedby="basic-addon1">
-    </div>
-  </td>
-  <td>$${productor.totprod}</td>
-  <td>
-    <div class="d-flex justify-content-end gap-2">
-      <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-      <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-    </div>
-  </td>
-  `;
-  tabGen = document.getElementById("tabla");
-  tabGen.append(genTab);
-  }
+    let elimTabla = document.getElementById("tabla")
 
+    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+
+
+    productos.forEach((prod) => {
+
+      genTab = document.createElement("tr");
+
+      genTab.innerHTML += `
+     
+       <td>${prod.nombre}</td>
+       <td>$${prod.precio}</td>
+       <td class="canti">
+         <div class="input-group input-group-sm ">
+           <span class="input-group-text" id="basic-addon1">X</span>
+           <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+         </div>
+       </td>
+       <td>$${prod.totprod}</td>
+       <td>
+         <div class="d-flex justify-content-end gap-2">
+           <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+           <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+         </div>
+       </td>
+       `;
+       tabGen = document.getElementById("tabla");
+       tabGen.append(genTab);
+
+    })
+  
 }
+
+});
 
 
 
