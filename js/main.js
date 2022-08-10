@@ -12,7 +12,7 @@ let fecha = new Date();
 let genTab;
 
 
-                   /*GENERACIÓN DE TABLA EN PANTALLA*/
+/*GENERACIÓN DE TABLA EN PANTALLA*/
 /* -------------------------------------------------------------------- */
 
 //SE LIMPIAN VALORES DE LOS IMPUTS Y SE GENERA TABLA CON LOS DATOS INDICADOS.
@@ -22,7 +22,7 @@ function prodGen() {
   prodIng = document.getElementById("cantProd").value = "";
   precIng = document.getElementById("precIngr").value = "";
   cantIng = document.getElementById("cantIngr").value = "";
-  
+
   genTab = document.createElement("tr");
 
   for (const productor of productos) {
@@ -39,7 +39,7 @@ function prodGen() {
     <td>$${productor.totprod}</td>
     <td>
       <div class="d-flex justify-content-end gap-2">
-        <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
+        <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
         <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
       </div>
     </td>
@@ -54,7 +54,7 @@ function prodGen() {
 
 }
 
-                   /*ARRAY DE PRODUCTOS*/
+/*ARRAY DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
 //SE TOMAN VALORES DE LOS INPUTS Y SE GUARDAN EN EL ARRAY. LUEGO SE LLAMA A LA FUNCION prodGen() PARA MOSTRARLOS EN PANTALLA.
@@ -82,7 +82,7 @@ function addProd() {
   prodGen()
 }
 
-                   /*ACCIÓN DEL BOTON AGREGAR (+)*/
+/*ACCIÓN DEL BOTON AGREGAR (+)*/
 /* -------------------------------------------------------------------- */
 
 //AL PRESIONAR EL BOTON (+) DE AGREGAR PRODUCTO, DESAPARECE Y APARECEN LOS INPUTS SETEANDOLOS CON EL ATTRIB REQUIRED.
@@ -98,7 +98,7 @@ function btnAgregar() {
 
   document.getElementById("cantProd").focus();
   document.getElementById("cantProd").select();
-  
+
 
 }
 
@@ -106,41 +106,41 @@ function btnAgregar() {
 
 let agrProBtn = document.getElementById("agrProBtn")
 
-agrProBtn.onclick = () => {btnAgregar() }
+agrProBtn.onclick = () => { btnAgregar() }
 
 
-                   /*INPUTS PARA AGREGAR PRODUCTOS*/
+/*INPUTS PARA AGREGAR PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
 //AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR (+).
 //TAMBIÉN ELIMINA EL ATRIBUTO REQUIRED DE LOS IMPUTS PARA EVITAR ERRORES EN CONSOLA.
 
 function btnAgregarOcul() {
- 
+
   let prodIng = document.getElementById("cantProd").value;
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
 
-//SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO.
+  //SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO.
 
   (() => {
     'use strict';
-  
+
     const forms = document.getElementsByClassName("needs-validation");
-  
+
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
         }
-  
+
         form.classList.add("was-validated")
       }, false)
     })
   })()
- 
+
   if (prodIng != "" && precIng != "" && cantIng != "") {
 
     document.getElementById("agregarProd").style.display = "block";
@@ -148,8 +148,8 @@ function btnAgregarOcul() {
 
     addProd()
   }
-  
- } 
+
+}
 
 //SE LLAMA CON EL EVENTO CLICK A LA FUNCION btnAgregarOcul().
 
@@ -158,7 +158,7 @@ let ocuProBtn = document.getElementById("button-addon2")
 ocuProBtn.onclick = () => { btnAgregarOcul() }
 
 
-                   /*BUSCADOR DE PRODUCTOS*/
+/*BUSCADOR DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
 //SE REALIZA BÚSQUEDA DEL PRODUCTO Y SE MUESTRA EN LA TABLA EN TIEMPO REAL. SI EL CAMPO ESTÁ VACÍO MUESTRA LOS PRODUCTOS AGREGADOS.
@@ -179,7 +179,7 @@ busProdIng.addEventListener("input", () => {
     while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
 
     //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
-    
+
     resBusq.forEach((prod) => {
 
       genTab = document.createElement("tr");
@@ -197,8 +197,8 @@ busProdIng.addEventListener("input", () => {
    <td>$${prod.totprod}</td>
    <td>
      <div class="d-flex justify-content-end gap-2">
-       <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-       <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+     <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
+     <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
      </div>
    </td>
    `;
@@ -234,8 +234,8 @@ busProdIng.addEventListener("input", () => {
        <td>$${prod.totprod}</td>
        <td>
          <div class="d-flex justify-content-end gap-2">
-           <button class="btn btn-sm btn-outline-success" type="submit">Edit</button>
-           <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+         <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
+         <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
          </div>
        </td>
        `;

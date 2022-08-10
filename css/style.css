@@ -91,3 +91,14 @@ strong {
 
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   --bs-table-accent-bg: #14e71021; }
+
+.modal-dialog {
+  position: fixed;
+  bottom: 0;
+  left: 0%;
+  right: 0%;
+  transform: translate(-50%, -50%); }
+
+.modal-header {
+  background-color: #558508;
+  color: white; }
