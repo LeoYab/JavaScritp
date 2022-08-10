@@ -11,13 +11,19 @@ let contProdNom = 0;
 let fecha = new Date();
 let genTab;
 
+
+                   /*GENERACIÓN DE TABLA EN PANTALLA*/
+/* -------------------------------------------------------------------- */
+
+//SE LIMPIAN VALORES DE LOS IMPUTS Y SE GENERA TABLA CON LOS DATOS INDICADOS.
+
 function prodGen() {
 
   prodIng = document.getElementById("cantProd").value = "";
   precIng = document.getElementById("precIngr").value = "";
   cantIng = document.getElementById("cantIngr").value = "";
-
-   genTab = document.createElement("tr");
+  
+  genTab = document.createElement("tr");
 
   for (const productor of productos) {
 
@@ -48,15 +54,16 @@ function prodGen() {
 
 }
 
+                   /*ARRAY DE PRODUCTOS*/
+/* -------------------------------------------------------------------- */
 
+//SE TOMAN VALORES DE LOS INPUTS Y SE GUARDAN EN EL ARRAY. LUEGO SE LLAMA A LA FUNCION prodGen() PARA MOSTRARLOS EN PANTALLA.
 
 function addProd() {
 
   let prodIng = document.getElementById("cantProd").value;
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
-
-
 
   class Producto {
     constructor(nombre, precio, cantidad) {
@@ -67,7 +74,6 @@ function addProd() {
       this.totprod = parseFloat(this.precio * this.cantidad);
       precioTotal = parseFloat(precioTotal + this.totprod);
     }
-    //REVISAR PORQUÉ EL PRECIO TOTAL SALE COMO UNDEFINED
   }
 
   productos.push(new Producto(prodIng, precIng, cantIng));
@@ -76,68 +82,109 @@ function addProd() {
   prodGen()
 }
 
+                   /*ACCIÓN DEL BOTON AGREGAR (+)*/
+/* -------------------------------------------------------------------- */
 
-
-
-//AL PRESIONAR EL BOTON DE AGREGAR PRODUCTO, DESAPARECE Y APARECEN LOS INPUTS.
+//AL PRESIONAR EL BOTON (+) DE AGREGAR PRODUCTO, DESAPARECE Y APARECEN LOS INPUTS SETEANDOLOS CON EL ATTRIB REQUIRED.
 
 function btnAgregar() {
+
+
+  //Borra la clase was-validated la cual muestra los íconos de validación de formulario.
+  document.getElementById("formu").classList.remove("was-validated");
+
   document.getElementById("agregarProd").style.display = "none";
   document.getElementById("ingresarProd").style.display = "flex"
 
   document.getElementById("cantProd").focus();
   document.getElementById("cantProd").select();
+  
+
 }
+
+//SE LLAMA CON EL EVENTO CLICK A LA FUNCION btnAgregar().
 
 let agrProBtn = document.getElementById("agrProBtn")
 
-agrProBtn.onclick = () => { btnAgregar() }
+agrProBtn.onclick = () => {btnAgregar() }
 
 
-//AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR
+                   /*INPUTS PARA AGREGAR PRODUCTOS*/
+/* -------------------------------------------------------------------- */
+
+//AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR (+).
+//TAMBIÉN ELIMINA EL ATRIBUTO REQUIRED DE LOS IMPUTS PARA EVITAR ERRORES EN CONSOLA.
 
 function btnAgregarOcul() {
-  document.getElementById("agregarProd").style.display = "block";
-  document.getElementById("ingresarProd").style.display = "none"
+ 
+  let prodIng = document.getElementById("cantProd").value;
+  let precIng = document.getElementById("precIngr").value;
+  let cantIng = document.getElementById("cantIngr").value;
 
-  addProd()
-}
+
+//SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO.
+
+  (() => {
+    'use strict';
+  
+    const forms = document.getElementsByClassName("needs-validation");
+  
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+  
+        form.classList.add("was-validated")
+      }, false)
+    })
+  })()
+ 
+  if (prodIng != "" && precIng != "" && cantIng != "") {
+
+    document.getElementById("agregarProd").style.display = "block";
+    document.getElementById("ingresarProd").style.display = "none";
+
+    addProd()
+  }
+  
+ } 
+
+//SE LLAMA CON EL EVENTO CLICK A LA FUNCION btnAgregarOcul().
 
 let ocuProBtn = document.getElementById("button-addon2")
 
 ocuProBtn.onclick = () => { btnAgregarOcul() }
 
 
+                   /*BUSCADOR DE PRODUCTOS*/
+/* -------------------------------------------------------------------- */
 
-
-
-
-
-
-//BUSCADOR DE PRODUCTOS
+//SE REALIZA BÚSQUEDA DEL PRODUCTO Y SE MUESTRA EN LA TABLA EN TIEMPO REAL. SI EL CAMPO ESTÁ VACÍO MUESTRA LOS PRODUCTOS AGREGADOS.
 
 let busProdIng = document.getElementById("busProdIng");
 
+busProdIng.addEventListener("input", () => {
 
-busProdIng.addEventListener ("input", () => {
 
-  
-  if(busProdIng.value != ""){
+  if (busProdIng.value != "") {
 
     const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
 
-  //ELIMINAR ELEMENTOS DE LA TABLA
+    //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
 
-  let elimTabla = document.getElementById("tabla")
+    let elimTabla = document.getElementById("tabla")
 
-while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
-  
+    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
 
-resBusq.forEach ((prod) => {
+    //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
+    
+    resBusq.forEach((prod) => {
 
-  genTab = document.createElement("tr");
+      genTab = document.createElement("tr");
 
-  genTab.innerHTML += `
+      genTab.innerHTML += `
  
    <td>${prod.nombre}</td>
    <td>$${prod.precio}</td>
@@ -155,15 +202,15 @@ resBusq.forEach ((prod) => {
      </div>
    </td>
    `;
-  
-   tabGen = document.getElementById("tabla");
-   tabGen.append(genTab);
 
-   });
-   
-  }else{
+      tabGen = document.getElementById("tabla");
+      tabGen.append(genTab);
 
-    //ELIMINAR ELEMENTOS DE LA TABLA
+    });
+
+  } else {
+
+    //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
 
     let elimTabla = document.getElementById("tabla")
 
@@ -192,19 +239,12 @@ resBusq.forEach ((prod) => {
          </div>
        </td>
        `;
-       tabGen = document.getElementById("tabla");
-       tabGen.append(genTab);
+
+      tabGen = document.getElementById("tabla");
+      tabGen.append(genTab);
 
     })
-  
-}
-
+  }
 });
-
-
-
-
-
-
 
 

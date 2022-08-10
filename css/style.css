@@ -88,3 +88,6 @@ strong {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #558508;
   --bs-btn-disabled-border-color: #558508; }
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: #14e71021; }
