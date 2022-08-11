@@ -10,7 +10,7 @@ let totProd;
 let contProdNom = 0;
 let fecha = new Date();
 let genTab;
-
+let id = -1;
 
 /*GENERACIÓN DE TABLA EN PANTALLA*/
 /* -------------------------------------------------------------------- */
@@ -39,8 +39,7 @@ function prodGen() {
     <td>$${productor.totprod}</td>
     <td>
       <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
-        <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+        <button id="${id}" class="btn btn-sm btn-outline-secondary buttonEdit" type="submit">Del</button>
       </div>
     </td>
     `;
@@ -50,7 +49,7 @@ function prodGen() {
 
   tabGen = document.getElementById("tabla");
   tabGen.append(genTab);
-
+/*   updateDiv() */
 
 }
 
@@ -60,25 +59,29 @@ function prodGen() {
 //SE TOMAN VALORES DE LOS INPUTS Y SE GUARDAN EN EL ARRAY. LUEGO SE LLAMA A LA FUNCION prodGen() PARA MOSTRARLOS EN PANTALLA.
 
 function addProd() {
-
+  
   let prodIng = document.getElementById("cantProd").value;
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
   class Producto {
-    constructor(nombre, precio, cantidad) {
-
+    constructor(id, nombre, precio, cantidad) {
+      this.id = id;
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
       this.precio = parseFloat(precio);
       this.cantidad = parseInt(cantidad);
       this.totprod = parseFloat(this.precio * this.cantidad);
       precioTotal = parseFloat(precioTotal + this.totprod);
+
     }
+    
   }
 
-  productos.push(new Producto(prodIng, precIng, cantIng));
+  id = id + 1;
 
+  productos.push(new Producto(id, prodIng, precIng, cantIng));
 
+  console.log(productos)
   prodGen()
 }
 
@@ -197,8 +200,8 @@ busProdIng.addEventListener("input", () => {
    <td>$${prod.totprod}</td>
    <td>
      <div class="d-flex justify-content-end gap-2">
-     <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
-     <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
+     <button type="button" class="btn btn-sm btn-outline-success buttonEdit button" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
+     <button class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
      </div>
    </td>
    `;
@@ -211,40 +214,149 @@ busProdIng.addEventListener("input", () => {
   } else {
 
     //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
-
-    let elimTabla = document.getElementById("tabla")
-
-    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
-
-
-    productos.forEach((prod) => {
-
-      genTab = document.createElement("tr");
-
-      genTab.innerHTML += `
-     
-       <td>${prod.nombre}</td>
-       <td>$${prod.precio}</td>
-       <td class="canti">
-         <div class="input-group input-group-sm ">
-           <span class="input-group-text" id="basic-addon1">X</span>
-           <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
-         </div>
-       </td>
-       <td>$${prod.totprod}</td>
-       <td>
-         <div class="d-flex justify-content-end gap-2">
-         <button type="button" class="btn btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
-         <button class="btn btn-sm btn btn-outline-secondary" type="submit">Del</button>
-         </div>
-       </td>
-       `;
-
-      tabGen = document.getElementById("tabla");
-      tabGen.append(genTab);
-
-    })
+    id=-1;
+    
+    rearmarTab()
+   
   }
 });
+
+function rearmarTab(){
+
+  let elimTabla = document.getElementById("tabla")
+
+  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+
+ 
+  productos.forEach((prod) => {
+
+    id = id + 1;
+
+    productos[id].id = id;
+
+    genTab = document.createElement("tr");
+
+    genTab.innerHTML += `
+   
+     <td>${prod.nombre}</td>
+     <td>$${prod.precio}</td>
+     <td class="canti">
+       <div class="input-group input-group-sm ">
+         <span class="input-group-text" id="basic-addon1">X</span>
+         <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+       </div>
+     </td>
+     <td>$${prod.totprod}</td>
+     <td>
+       <div class="d-flex justify-content-end gap-2">
+       <button id="${id}" class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
+       </div>
+     </td>
+     `;
+
+    tabGen = document.getElementById("tabla");
+    tabGen.append(genTab);
+
+  })
+}
+
+
+  let tab = document.getElementById("tabla")
+
+  tab.addEventListener("click", (e) => {
+
+    console.log(e.target.id);
+
+   
+    let indiceElim= e.target.id;
+   
+
+    productos.splice(indiceElim,1);
+
+    id=-1;
+
+    rearmarTab()
+
+    });
+
+/* btnMod.onclick = () => { 
+
+  console.log(indiceMod)
+ 
+   let prodIngrMod = document.getElementById("prodIngrMod").value;
+    let precIngrMod = document.getElementById("precIngrMod").value;
+    let cantIngrMod = document.getElementById("cantIngrMod").value; 
+    console.log (cantIngrMod)
+    console.log (productos)
+
+    productos[indiceMod].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
+    productos[indiceMod].precio = parseFloat(precIngrMod);
+    productos[indiceMod].cantidad = parseInt(cantIngrMod);
+    productos[indiceMod].totprod = precIngrMod * cantIngrMod;
+    console.log (productos)
+    prodGen() 
+    
+  } */
+  
+
+
+
+
+
+/* 
+function modProd(indiceMod) {
+console.log(indiceMod)
+console.log (productos)
+ let cantProdMod = document.getElementById("cantProd").value;
+  let precIngrMod = document.getElementById("precIngr").value;
+  let cantIngrMod = document.getElementById("cantIngr").value; 
+  console.log (cantIngrMod)
+  productos[indiceMod].nombre = cantProdMod[0].toUpperCase() + cantProdMod.slice(1).toLowerCase();
+  productos[indiceMod].precio = parseFloat(precIngrMod);
+  productos[indiceMod].cantidad = parseInt(cantIngrMod);
+  productos[indiceMod].totprod = precIngrMod * cantIngrMod;
+
+}
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+let buttonList = document.querySelectorAll(".button");
+//REVISAR PORQUÉ NO FUNCIONA LA CARGA DE LA TABLA PARA PODER ACTUALIZARLA Y QUE TOME EL VALOR DE LOS ID AL MOMENTO DE 
+//PRESIONAR EDITAR
+buttonList.forEach(function(i){
+  
+  document.getElementById("tabla") = function() {
+    alert('La página terminó de cargar');
+  }
+  i.addEventListener("click", function(e){
+   
+ 
+   console.log(e.target.id);
+   
+  })
+})  */
+
+/*   productos[indSelec].nombre = nombreMay[0].toUpperCase() + nombreMay.slice(1).toLowerCase();
+  productos[indSelec].precio = parseFloat(prompt("Ingrese el precio:"));
+  productos[indSelec].cantidad = parseInt(prompt("Ingrese la cantidad:"));
+  productos[indSelec].totprod = productos[indSelec].precio * productos[indSelec].cantidad;
+ */
+
+
+
+
+
+
 
 
