@@ -39,7 +39,8 @@ function prodGen() {
     <td>$${productor.totprod}</td>
     <td>
       <div class="d-flex justify-content-end gap-2">
-        <button id="${id}" class="btn btn-sm btn-outline-secondary buttonEdit" type="submit">Del</button>
+      <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+        <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
       </div>
     </td>
     `;
@@ -172,7 +173,7 @@ busProdIng.addEventListener("input", () => {
 
 
   if (busProdIng.value != "") {
-
+    id=-1;
     const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
 
     //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
@@ -184,6 +185,10 @@ busProdIng.addEventListener("input", () => {
     //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
 
     resBusq.forEach((prod) => {
+
+      id = id + 1;
+
+      productos[id].id = id;
 
       genTab = document.createElement("tr");
 
@@ -200,8 +205,8 @@ busProdIng.addEventListener("input", () => {
    <td>$${prod.totprod}</td>
    <td>
      <div class="d-flex justify-content-end gap-2">
-     <button type="button" class="btn btn-sm btn-outline-success buttonEdit button" data-bs-toggle="modal" data-bs-target="#modificarProd">Edit</button>
-     <button class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
+     <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+     <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
      </div>
    </td>
    `;
@@ -215,11 +220,14 @@ busProdIng.addEventListener("input", () => {
 
     //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
     id=-1;
-    
-    rearmarTab()
-   
+
+    rearmarTab();
+
   }
+
+
 });
+
 
 function rearmarTab(){
 
@@ -249,7 +257,8 @@ function rearmarTab(){
      <td>$${prod.totprod}</td>
      <td>
        <div class="d-flex justify-content-end gap-2">
-       <button id="${id}" class="btn btn-sm btn-outline-secondary" type="submit">Del</button>
+       <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+        <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
        </div>
      </td>
      `;
@@ -261,21 +270,70 @@ function rearmarTab(){
 }
 
 
+//TOMA EL 
   let tab = document.getElementById("tabla")
 
   tab.addEventListener("click", (e) => {
 
-    console.log(e.target.id);
 
-   
-    let indiceElim= e.target.id;
-   
+    let valId = e.target.id;
+    let valVal = document.getElementById(e.target.id).value;
+    console.log(valId);
+    console.log(valVal);
+    
+if (valId == "ed" + valVal){
 
-    productos.splice(indiceElim,1);
+ 
+}else if(valId == "el" + valVal){
 
-    id=-1;
+  productos.splice(valVal , 1);
 
-    rearmarTab()
+  id=-1;
+
+    const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
+
+    //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
+
+    let elimTabla = document.getElementById("tabla")
+
+    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+
+    //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
+
+    resBusq.forEach((prod) => {
+
+      id = id + 1;
+
+      productos[id].id = id;
+
+      genTab = document.createElement("tr");
+
+      genTab.innerHTML += `
+ 
+   <td>${prod.nombre}</td>
+   <td>$${prod.precio}</td>
+   <td class="canti">
+     <div class="input-group input-group-sm ">
+       <span class="input-group-text" id="basic-addon1">X</span>
+       <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+     </div>
+   </td>
+   <td>$${prod.totprod}</td>
+   <td>
+     <div class="d-flex justify-content-end gap-2">
+     <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+     <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
+     </div>
+   </td>
+   `;
+
+      tabGen = document.getElementById("tabla");
+      tabGen.append(genTab);
+
+    });
+ /*  rearmarTab()  */
+}
+
 
     });
 
