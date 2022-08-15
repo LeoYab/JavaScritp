@@ -16,6 +16,8 @@ let id = -1;
 /*GENERACIÓN DE TABLA EN PANTALLA*/
 /* -------------------------------------------------------------------- */
 
+
+// BUSCA SI HAY PRODUCTOS GUARDADOS Y LOS MUESTRA EN PANTALLA.
 if (localStorage.getItem("productos")) {
 
   productos = JSON.parse(localStorage.getItem("productos"));
@@ -23,7 +25,7 @@ if (localStorage.getItem("productos")) {
 }
 
 
-//SE LIMPIAN VALORES DE LOS IMPUTS Y SE GENERA TABLA CON LOS DATOS INDICADOS.
+//SE LIMPIAN VALORES DE LOS IMPUTS DE AGREGAR PRODUCTO Y SE GENERA TABLA CON LOS DATOS INDICADOS.
 
 function prodGen() {
 
@@ -52,9 +54,11 @@ function prodGen() {
       </div>
     </td>
     `;
+
     document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
 
   }
+
   tabGen = document.getElementById("tabla");
   tabGen.append(genTab);
 
@@ -90,6 +94,7 @@ function addProd() {
   productos.push(new Producto(id, prodIng, precIng, cantIng));
 
   localStorage.setItem("productos", JSON.stringify(productos));
+
   prodGen()
 
 }
@@ -103,6 +108,7 @@ function btnAgregar() {
 
 
   //Borra la clase was-validated la cual muestra los íconos de validación de formulario.
+
   document.getElementById("formu").classList.remove("was-validated");
 
   document.getElementById("agregarProd").style.display = "none";
@@ -124,17 +130,10 @@ agrProBtn.onclick = () => { btnAgregar() }
 /*INPUTS PARA AGREGAR PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
-//AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR (+).
-//TAMBIÉN ELIMINA EL ATRIBUTO REQUIRED DE LOS IMPUTS PARA EVITAR ERRORES EN CONSOLA.
 
-function btnAgregarOcul() {
+ //SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO DE BOOSTRAP.
 
-  let prodIng = document.getElementById("cantProd").value;
-  let precIng = document.getElementById("precIngr").value;
-  let cantIng = document.getElementById("cantIngr").value;
-
-
-  //SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO.
+function btnVali(){
 
   (() => {
     'use strict';
@@ -151,7 +150,21 @@ function btnAgregarOcul() {
         form.classList.add("was-validated")
       }, false)
     })
-  })()
+
+  })();
+
+}
+
+
+//AL TERMINAR DE AGREGAR EL PRODUCTO Y ENVIARLO AL ARRAY, OCULTA LOS IMPUTS Y VUELVE A MOSTRAR EL BOTON AGREGAR (+).
+
+function btnAgregarOcul() {
+
+  let prodIng = document.getElementById("cantProd").value;
+  let precIng = document.getElementById("precIngr").value;
+  let cantIng = document.getElementById("cantIngr").value;
+
+  btnVali()
 
   if (prodIng != "" && precIng != "" && cantIng != "") {
 
@@ -159,6 +172,7 @@ function btnAgregarOcul() {
     document.getElementById("ingresarProd").style.display = "none";
 
     addProd()
+
   }
 
 }
@@ -169,7 +183,7 @@ let ocuProBtn = document.getElementById("button-addon2")
 
 ocuProBtn.onclick = () => { btnAgregarOcul() }
 
-
+//FUNCIÓN PARA CREAR TABLA DEPENDIENDO SI SE ELIMINA O SE MODIFICA UN CAMPO DE ALGÚN PRODUCTO.
 
 function tabla(prod) {
 
@@ -197,10 +211,14 @@ function tabla(prod) {
   tabGen = document.getElementById("tabla");
   tabGen.append(genTab);
 
+
 }
 
+//REARMA TABLA CON LOS PRODUCTOS ACTUALES.
 
 function rearmarTab(productos) {
+
+  precioTotal = 0;
 
   productos.forEach((prod) => {
 
@@ -210,12 +228,15 @@ function rearmarTab(productos) {
 
     tabla(prod)
 
+    precioTotal = precioTotal + productos[id].totprod;
+    
   })
+
+  document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
 
   localStorage.setItem("productos", JSON.stringify(productos));
 
 }
-
 
 
 /*BUSCADOR DE PRODUCTOS*/
@@ -239,10 +260,11 @@ function busqueda() {
 
   resBusq.forEach((prod) => {
 
+    //SE LLAMA A LA FUNCION PARA CREAR LA TABLA.
+
     tabla(prod)
 
     localStorage.setItem("productos", JSON.stringify(productos));
-
 
   });
 
@@ -264,7 +286,8 @@ function tabOrig() {
 
 }
 
-//ESCUCHADOR DE EVENTOS INPUT
+//ESCUCHADOR DE EVENTOS INPUT. SI EL VALOR ES VACÍO MUESTRA LA TABLA ORIGINA.
+//SINO MUESTRA LO ENCONTRADO EN REFERENCIA A LO INGRESADO EN EL INPUT.
 
 let busProdIng = document.getElementById("busProdIng");
 
@@ -283,6 +306,10 @@ busProdIng.addEventListener("input", () => {
 
 });
 
+/*MODIFICACIÓN DE PRODUCTOS*/
+/* -------------------------------------------------------------------- */
+
+//ELIMINA INPUTS DE MODIFICACIÓN DE PRODUCTOS SI LOS HAY Y CREA NUEVAMENTE LOS MISMOS OBTENIENDO EL VALOR ACTUAL DEL PRODUCTOS SELECCIONADO.
 
 function modProd(valVal) {
 
@@ -297,7 +324,7 @@ function modProd(valVal) {
 
   modTab.innerHTML = `
 
-  <form class="d-flex gap-2 needs-validation" >
+  <form class="d-flex gap-2 needs-validation" novalidate>
   <div class="mb-3">
     <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
   </div>
@@ -316,8 +343,10 @@ function modProd(valVal) {
    `;
 
   tabGen = document.getElementById("ediProd");
+
   tabGen.append(modTab);
 
+//SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
   let btnMod = document.getElementById("btnMod");
 
@@ -327,12 +356,12 @@ function modProd(valVal) {
     let precIngrMod = document.getElementById("precIngrMod").value;
     let cantIngrMod = document.getElementById("cantIngrMod").value;
 
-
     productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
     productos[valVal].precio = parseFloat(precIngrMod);
     productos[valVal].cantidad = parseInt(cantIngrMod);
-
-
+    productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
+    
+    btnVali()
 
     localStorage.setItem("productos", JSON.stringify(productos));
 
@@ -344,7 +373,9 @@ function modProd(valVal) {
 }
 
 
-//ESCUCHADOR DE EVENTOS CLICK
+//ESCUCHADOR DE EVENTOS CLICK EN EL CUAL CHEQUEA SI SE PRESIONÓ EL BOTÓN EDITAR O ELIMINAR DE UN PRODUCTO ESPECÍFICO.
+//SE REALIZA UN CONDICIONAL PARA SACAR ERROR EN CONSOLA EL CUAL ERA PRODUCIDO POR TOCAR CUALQUIER ETIQUETA DENTRO DEL id "tabla".
+//ÉSTE CONDICIONAL ACTIVA LAS FUNCIONES SI LO PRESIONADO EN TABLA DEVUELVE UN VALOR.
 
 let tab = document.getElementById("tabla");
 
