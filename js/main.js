@@ -5,15 +5,23 @@ let precio = 0;
 let precTotProd = 0;
 let precioTotal = 0;
 let terminar;
-const productos = [];
+let productos = [];
 let totProd;
 let contProdNom = 0;
 let fecha = new Date();
 let genTab;
 let id = -1;
 
+
 /*GENERACIÓN DE TABLA EN PANTALLA*/
 /* -------------------------------------------------------------------- */
+
+if (localStorage.getItem("productos")) {
+
+  productos = JSON.parse(localStorage.getItem("productos"));
+  rearmarTab(productos);
+}
+
 
 //SE LIMPIAN VALORES DE LOS IMPUTS Y SE GENERA TABLA CON LOS DATOS INDICADOS.
 
@@ -25,34 +33,33 @@ function prodGen() {
 
   genTab = document.createElement("tr");
 
-  for (const productor of productos) {
+  for (const producto of productos) {
 
     genTab.innerHTML = `
-    <td>${productor.nombre}</td>
-    <td>$${productor.precio}</td>
+    <td>${producto.nombre}</td>
+    <td>$${producto.precio}</td>
     <td class="canti">
       <div class="input-group input-group-sm ">
         <span class="input-group-text" id="basic-addon1">X</span>
-        <input type="number" class="form-control text-center" placeholder="${productor.cantidad}" aria-describedby="basic-addon1">
+        <input type="number" class="form-control text-center" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
-    <td>$${productor.totprod}</td>
+    <td>$${producto.totprod}</td>
     <td>
       <div class="d-flex justify-content-end gap-2">
-      <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-        <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+        <button id="el${producto.id}" value="${producto.id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
       </div>
     </td>
     `;
     document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
 
   }
-
   tabGen = document.getElementById("tabla");
   tabGen.append(genTab);
-/*   updateDiv() */
 
 }
+
 
 /*ARRAY DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
@@ -60,7 +67,7 @@ function prodGen() {
 //SE TOMAN VALORES DE LOS INPUTS Y SE GUARDAN EN EL ARRAY. LUEGO SE LLAMA A LA FUNCION prodGen() PARA MOSTRARLOS EN PANTALLA.
 
 function addProd() {
-  
+
   let prodIng = document.getElementById("cantProd").value;
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
@@ -75,15 +82,16 @@ function addProd() {
       precioTotal = parseFloat(precioTotal + this.totprod);
 
     }
-    
+
   }
 
   id = id + 1;
 
   productos.push(new Producto(id, prodIng, precIng, cantIng));
 
-  console.log(productos)
+  localStorage.setItem("productos", JSON.stringify(productos));
   prodGen()
+
 }
 
 /*ACCIÓN DEL BOTON AGREGAR (+)*/
@@ -162,10 +170,101 @@ let ocuProBtn = document.getElementById("button-addon2")
 ocuProBtn.onclick = () => { btnAgregarOcul() }
 
 
+
+function tabla(prod) {
+
+  genTab = document.createElement("tr");
+
+  genTab.innerHTML += `
+
+ <td>${prod.nombre}</td>
+ <td>$${prod.precio}</td>
+ <td class="canti">
+   <div class="input-group input-group-sm ">
+     <span class="input-group-text" id="basic-addon1">X</span>
+     <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+   </div>
+ </td>
+ <td>$${prod.totprod}</td>
+ <td>
+   <div class="d-flex justify-content-end gap-2">
+   <button id="ed${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+   <button id="el${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
+   </div>
+ </td>
+ `;
+
+  tabGen = document.getElementById("tabla");
+  tabGen.append(genTab);
+
+}
+
+
+function rearmarTab(productos) {
+
+  productos.forEach((prod) => {
+
+    id = id + 1;
+
+    productos[id].id = id;
+
+    tabla(prod)
+
+  })
+
+  localStorage.setItem("productos", JSON.stringify(productos));
+
+}
+
+
+
 /*BUSCADOR DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
 //SE REALIZA BÚSQUEDA DEL PRODUCTO Y SE MUESTRA EN LA TABLA EN TIEMPO REAL. SI EL CAMPO ESTÁ VACÍO MUESTRA LOS PRODUCTOS AGREGADOS.
+
+function busqueda() {
+
+  id = -1;
+
+  const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
+
+  //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
+
+  let elimTabla = document.getElementById("tabla")
+
+  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+
+  //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
+
+  resBusq.forEach((prod) => {
+
+    tabla(prod)
+
+    localStorage.setItem("productos", JSON.stringify(productos));
+
+
+  });
+
+}
+
+//ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
+
+function tabOrig() {
+
+  id = -1;
+
+  let elimTabla = document.getElementById("tabla")
+
+  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+
+
+  rearmarTab(productos)
+
+
+}
+
+//ESCUCHADOR DE EVENTOS INPUT
 
 let busProdIng = document.getElementById("busProdIng");
 
@@ -173,248 +272,105 @@ busProdIng.addEventListener("input", () => {
 
 
   if (busProdIng.value != "") {
-    id=-1;
-    const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
 
-    //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
-
-    let elimTabla = document.getElementById("tabla")
-
-    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
-
-    //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
-
-    resBusq.forEach((prod) => {
-
-      id = id + 1;
-
-      productos[id].id = id;
-
-      genTab = document.createElement("tr");
-
-      genTab.innerHTML += `
- 
-   <td>${prod.nombre}</td>
-   <td>$${prod.precio}</td>
-   <td class="canti">
-     <div class="input-group input-group-sm ">
-       <span class="input-group-text" id="basic-addon1">X</span>
-       <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
-     </div>
-   </td>
-   <td>$${prod.totprod}</td>
-   <td>
-     <div class="d-flex justify-content-end gap-2">
-     <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-     <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
-     </div>
-   </td>
-   `;
-
-      tabGen = document.getElementById("tabla");
-      tabGen.append(genTab);
-
-    });
+    busqueda()
 
   } else {
 
-    //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
-    id=-1;
-
-    rearmarTab();
+    tabOrig()
 
   }
-
 
 });
 
 
-function rearmarTab(){
+function modProd(valVal) {
 
-  let elimTabla = document.getElementById("tabla")
+  let ediProd = document.getElementById("ediProd")
 
-  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild);
 
- 
-  productos.forEach((prod) => {
-
-    id = id + 1;
-
-    productos[id].id = id;
-
-    genTab = document.createElement("tr");
-
-    genTab.innerHTML += `
-   
-     <td>${prod.nombre}</td>
-     <td>$${prod.precio}</td>
-     <td class="canti">
-       <div class="input-group input-group-sm ">
-         <span class="input-group-text" id="basic-addon1">X</span>
-         <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
-       </div>
-     </td>
-     <td>$${prod.totprod}</td>
-     <td>
-       <div class="d-flex justify-content-end gap-2">
-       <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-        <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
-       </div>
-     </td>
-     `;
-
-    tabGen = document.getElementById("tabla");
-    tabGen.append(genTab);
-
-  })
-}
+  let prodSelecEdi = productos[valVal];
 
 
-//TOMA EL 
-  let tab = document.getElementById("tabla")
+  modTab = document.createElement("div");
 
-  tab.addEventListener("click", (e) => {
+  modTab.innerHTML = `
 
+  <form class="d-flex gap-2 needs-validation" >
+  <div class="mb-3">
+    <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+  </div>
+  <div class="mb-3">
+    <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
+  </div>
+  <div class="mb-3">
+    <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-outline-success" type="submit" id="btnMod">EDITAR</button>
+  </div>
+</div>
+</form>
 
-    let valId = e.target.id;
-    let valVal = document.getElementById(e.target.id).value;
-    console.log(valId);
-    console.log(valVal);
-    
-if (valId == "ed" + valVal){
-
- 
-}else if(valId == "el" + valVal){
-
-  productos.splice(valVal , 1);
-
-  id=-1;
-
-    const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
-
-    //ELIMINAR ELEMENTOS DE LA TABLA PARA MOSTRAR LOS BUSCADOS
-
-    let elimTabla = document.getElementById("tabla")
-
-    while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
-
-    //SE RECORRE EL ARRAY DE BÚSQUEDA Y SE IMPRIME EN PANTALLA.
-
-    resBusq.forEach((prod) => {
-
-      id = id + 1;
-
-      productos[id].id = id;
-
-      genTab = document.createElement("tr");
-
-      genTab.innerHTML += `
- 
-   <td>${prod.nombre}</td>
-   <td>$${prod.precio}</td>
-   <td class="canti">
-     <div class="input-group input-group-sm ">
-       <span class="input-group-text" id="basic-addon1">X</span>
-       <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
-     </div>
-   </td>
-   <td>$${prod.totprod}</td>
-   <td>
-     <div class="d-flex justify-content-end gap-2">
-     <button id="ed${id}" value="${id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-     <button id="el${id}" value="${id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
-     </div>
-   </td>
    `;
 
-      tabGen = document.getElementById("tabla");
-      tabGen.append(genTab);
-
-    });
- /*  rearmarTab()  */
-}
+  tabGen = document.getElementById("ediProd");
+  tabGen.append(modTab);
 
 
-    });
+  let btnMod = document.getElementById("btnMod");
 
-/* btnMod.onclick = () => { 
+  btnMod.addEventListener("click", () => {
 
-  console.log(indiceMod)
- 
-   let prodIngrMod = document.getElementById("prodIngrMod").value;
+    let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
-    let cantIngrMod = document.getElementById("cantIngrMod").value; 
-    console.log (cantIngrMod)
-    console.log (productos)
+    let cantIngrMod = document.getElementById("cantIngrMod").value;
 
-    productos[indiceMod].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
-    productos[indiceMod].precio = parseFloat(precIngrMod);
-    productos[indiceMod].cantidad = parseInt(cantIngrMod);
-    productos[indiceMod].totprod = precIngrMod * cantIngrMod;
-    console.log (productos)
-    prodGen() 
-    
-  } */
-  
+
+    productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
+    productos[valVal].precio = parseFloat(precIngrMod);
+    productos[valVal].cantidad = parseInt(cantIngrMod);
 
 
 
+    localStorage.setItem("productos", JSON.stringify(productos));
+
+    tabOrig()
 
 
-/* 
-function modProd(indiceMod) {
-console.log(indiceMod)
-console.log (productos)
- let cantProdMod = document.getElementById("cantProd").value;
-  let precIngrMod = document.getElementById("precIngr").value;
-  let cantIngrMod = document.getElementById("cantIngr").value; 
-  console.log (cantIngrMod)
-  productos[indiceMod].nombre = cantProdMod[0].toUpperCase() + cantProdMod.slice(1).toLowerCase();
-  productos[indiceMod].precio = parseFloat(precIngrMod);
-  productos[indiceMod].cantidad = parseInt(cantIngrMod);
-  productos[indiceMod].totprod = precIngrMod * cantIngrMod;
+  });
 
 }
- */
 
 
+//ESCUCHADOR DE EVENTOS CLICK
+
+let tab = document.getElementById("tabla");
+
+tab.addEventListener("click", (e) => {
 
 
+  let valId = e.target.id;
 
+  if ((valId != "")) {
 
+    let valVal = document.getElementById(valId).value;
 
+    if (valId == "ed" + valVal) {
 
+      modProd(valVal)
 
+    } else if (valId == "el" + valVal) {
 
+      productos.splice(valVal, 1);
 
+      tabOrig()
 
-/* 
-let buttonList = document.querySelectorAll(".button");
-//REVISAR PORQUÉ NO FUNCIONA LA CARGA DE LA TABLA PARA PODER ACTUALIZARLA Y QUE TOME EL VALOR DE LOS ID AL MOMENTO DE 
-//PRESIONAR EDITAR
-buttonList.forEach(function(i){
-  
-  document.getElementById("tabla") = function() {
-    alert('La página terminó de cargar');
+    }
   }
-  i.addEventListener("click", function(e){
-   
- 
-   console.log(e.target.id);
-   
-  })
-})  */
 
-/*   productos[indSelec].nombre = nombreMay[0].toUpperCase() + nombreMay.slice(1).toLowerCase();
-  productos[indSelec].precio = parseFloat(prompt("Ingrese el precio:"));
-  productos[indSelec].cantidad = parseInt(prompt("Ingrese la cantidad:"));
-  productos[indSelec].totprod = productos[indSelec].precio * productos[indSelec].cantidad;
- */
-
-
-
-
-
+});
 
 
 
