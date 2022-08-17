@@ -38,15 +38,15 @@ function prodGen() {
   for (const producto of productos) {
 
     genTab.innerHTML = `
-    <td>${producto.nombre}</td>
-    <td>$${producto.precio}</td>
+    <td class="align-middle">${producto.nombre}</td>
+    <td class="align-middle">$${producto.precio}</td>
     <td class="canti">
       <div class="input-group input-group-sm ">
         <span class="input-group-text" id="basic-addon1">X</span>
-        <input type="number" class="form-control text-center" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
+        <input type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
-    <td>$${producto.totprod}</td>
+    <td class="align-middle">$${producto.totprod}</td>
     <td>
       <div class="d-flex justify-content-end gap-2">
       <button id="ed${producto.id}" value="${producto.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
@@ -131,9 +131,9 @@ agrProBtn.onclick = () => { btnAgregar() }
 /* -------------------------------------------------------------------- */
 
 
- //SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO DE BOOSTRAP.
+//SE AGREGA SCRIPT PARA LA VALIDACIÓN DEL FORMULARIO DE BOOSTRAP.
 
-function btnVali(){
+function btnVali() {
 
   (() => {
     'use strict';
@@ -191,15 +191,15 @@ function tabla(prod) {
 
   genTab.innerHTML += `
 
- <td>${prod.nombre}</td>
- <td>$${prod.precio}</td>
+ <td class="align-middle">${prod.nombre}</td>
+ <td class="align-middle">$${prod.precio}</td>
  <td class="canti">
    <div class="input-group input-group-sm ">
      <span class="input-group-text" id="basic-addon1">X</span>
-     <input type="number" class="form-control text-center" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+     <input type="number" class="form-control text-center" min="1" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
    </div>
  </td>
- <td>$${prod.totprod}</td>
+ <td class="align-middle">$${prod.totprod}</td>
  <td>
    <div class="d-flex justify-content-end gap-2">
    <button id="ed${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
@@ -229,7 +229,7 @@ function rearmarTab(productos) {
     tabla(prod)
 
     precioTotal = precioTotal + productos[id].totprod;
-    
+
   })
 
   document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
@@ -324,17 +324,20 @@ function modProd(valVal) {
 
   modTab.innerHTML = `
 
-  <form class="d-flex gap-2 needs-validation" novalidate>
+  <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
   <div class="mb-3">
+    <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
     <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
-  </div>
+    </div>
   <div class="mb-3">
+    <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
     <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
-  </div>
+    </div>
   <div class="mb-3">
+    <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
     <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
-  </div>
-  <div class="mb-3">
+    </div>
+  <div class="mb-0 mt-3">
     <button class="btn btn-outline-success" type="submit" id="btnMod">EDITAR</button>
   </div>
 </div>
@@ -346,7 +349,7 @@ function modProd(valVal) {
 
   tabGen.append(modTab);
 
-//SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
+  //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
   let btnMod = document.getElementById("btnMod");
 
@@ -360,7 +363,7 @@ function modProd(valVal) {
     productos[valVal].precio = parseFloat(precIngrMod);
     productos[valVal].cantidad = parseInt(cantIngrMod);
     productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
-    
+
     btnVali()
 
     localStorage.setItem("productos", JSON.stringify(productos));
