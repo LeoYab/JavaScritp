@@ -102,3 +102,16 @@ strong {
 .modal-header {
   background-color: #558508;
   color: white; }
+
+.modal {
+  --bs-modal-padding: 0 1rem; }
+
+.btn-close {
+  background-image: url("../images/close.svg");
+  opacity: .9; }
+
+.btn-group-vertical > .btn, .btn-group > .btn {
+  flex: none; }
+
+label {
+  color: #858585; }

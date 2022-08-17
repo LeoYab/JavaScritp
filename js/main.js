@@ -48,9 +48,9 @@ function prodGen() {
     </td>
     <td class="align-middle">$${producto.totprod}</td>
     <td>
-      <div class="d-flex justify-content-end gap-2">
-      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-        <button id="el${producto.id}" value="${producto.id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
+      <div class="d-flex justify-content-end btn-group">
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
+        <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm" type="button">Del</button>
       </div>
     </td>
     `;
@@ -201,7 +201,7 @@ function tabla(prod) {
  </td>
  <td class="align-middle">$${prod.totprod}</td>
  <td>
-   <div class="d-flex justify-content-end gap-2">
+   <div class="d-flex justify-content-end btn-group">
    <button id="ed${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
    <button id="el${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
    </div>
@@ -337,7 +337,8 @@ function modProd(valVal) {
     <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
     <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
     </div>
-  <div class="mb-0 mt-3">
+  <div class="mb-3">
+    <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">⁪</label>
     <button class="btn btn-outline-success" type="submit" id="btnMod">EDITAR</button>
   </div>
 </div>
