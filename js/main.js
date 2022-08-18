@@ -47,10 +47,10 @@ function prodGen() {
       </div>
     </td>
     <td class="align-middle">$${producto.totprod}</td>
-    <td>
+    <td class="align-middle">
       <div class="d-flex justify-content-end btn-group">
-      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"><ion-icon name="create-outline"></ion-icon></button>
-        <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm" type="button"><ion-icon name="trash-outline"></ion-icon></button>
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
+        <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
       </div>
     </td>
     `;
@@ -89,7 +89,8 @@ function addProd() {
 
   }
 
-  id = id + 1;
+  //Sugar Syntax
+  id ++;
 
   productos.push(new Producto(id, prodIng, precIng, cantIng));
 
@@ -200,10 +201,10 @@ function tabla(prod) {
    </div>
  </td>
  <td class="align-middle">$${prod.totprod}</td>
- <td>
-   <div class="d-flex justify-content-end btn-group">
-      <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"><ion-icon name="create-outline"></ion-icon></button>
-      <button id="el${prod.id}" value="${prod.id}" class="btn btn-outline-secondary btn-sm" type="button"><ion-icon name="trash-outline"></ion-icon></button>
+ <td class="align-middle">
+ <div class="d-flex justify-content-end btn-group">
+ <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
+   <button id="el${prod.id}" value="${prod.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
    </div>
  </td>
  `;
@@ -222,7 +223,8 @@ function rearmarTab(productos) {
 
   productos.forEach((prod) => {
 
-    id = id + 1;
+  //Sugar syntax
+    id++;
 
     productos[id].id = id;
 
@@ -339,7 +341,7 @@ function modProd(valVal) {
     </div>
   <div class="mb-3">
     <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">⁪</label>
-    <button class="btn btn-outline-success" type="submit" id="btnMod">EDITAR</button>
+    <button class="btn btn-outline-success fa-solid fa-circle-check" type="submit" id="btnMod"></button>
   </div>
 </div>
 </form>
