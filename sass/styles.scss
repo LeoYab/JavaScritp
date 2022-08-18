@@ -134,10 +134,6 @@ strong {
   --bs-modal-padding: 0 1rem;
 }
 
-.btn-close {
-    background-image: url("../images/close.svg");
-    opacity: .9;
-}
 
 .btn-group-vertical>.btn, .btn-group>.btn {
     flex: none;
@@ -145,4 +141,29 @@ strong {
 
 label{
     color:#858585;
+}
+
+.btn-close2 {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: .2em;
+    background-image: url("../images/close.svg");
+    border: 0;
+    border-radius: .375rem;
+    opacity: .9;
+    background-color: #558508;
+}
+
+.btn-close2:hover{
+background-color: #73b30c41;
+}
+
+#tabla tr .canti div input{
+    width: 50%;
+}
+
+.input-group-sm>.btn, .input-group-sm>.form-control, .input-group-sm>.form-select, .input-group-sm>.input-group-text {
+    padding: .25rem .1rem;
+
 }

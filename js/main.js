@@ -42,15 +42,15 @@ function prodGen() {
     <td class="align-middle">$${producto.precio}</td>
     <td class="canti">
       <div class="input-group input-group-sm ">
-        <span class="input-group-text" id="basic-addon1">X</span>
+      <button type="button" class="btn btn-outline-secondary" disabled>X</button>
         <input type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
     <td class="align-middle">$${producto.totprod}</td>
     <td>
       <div class="d-flex justify-content-end btn-group">
-      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-        <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm" type="button">Del</button>
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"><ion-icon name="create-outline"></ion-icon></button>
+        <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm" type="button"><ion-icon name="trash-outline"></ion-icon></button>
       </div>
     </td>
     `;
@@ -202,8 +202,8 @@ function tabla(prod) {
  <td class="align-middle">$${prod.totprod}</td>
  <td>
    <div class="d-flex justify-content-end btn-group">
-   <button id="ed${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd">Edit</button>
-   <button id="el${prod.id}" value="${prod.id}" class="btn btn-sm btn-outline-secondary" type="button">Del</button>
+      <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"><ion-icon name="create-outline"></ion-icon></button>
+      <button id="el${prod.id}" value="${prod.id}" class="btn btn-outline-secondary btn-sm" type="button"><ion-icon name="trash-outline"></ion-icon></button>
    </div>
  </td>
  `;
