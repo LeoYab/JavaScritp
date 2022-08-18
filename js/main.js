@@ -174,7 +174,7 @@ function btnAgregarOcul() {
 
     addProd()
 
-  }
+  } 
 
 }
 
@@ -358,9 +358,13 @@ function modProd(valVal) {
 
   btnMod.addEventListener("click", () => {
 
+    document.getElementById("prodIngrMod").focus();
+    document.getElementById("prodIngrMod").select();
+
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
     let cantIngrMod = document.getElementById("cantIngrMod").value;
+
 
     productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
     productos[valVal].precio = parseFloat(precIngrMod);
@@ -390,6 +394,7 @@ tab.addEventListener("click", (e) => {
 
   let valId = e.target.id;
 
+  
   if ((valId != "")) {
 
     let valVal = document.getElementById(valId).value;
