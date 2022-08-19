@@ -87,7 +87,7 @@ function prodGen() {
     <td class="align-middle">$${producto.totprod}</td>
     <td class="align-middle">
       <div class="d-flex justify-content-end btn-group">
-      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" ></button>
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
         <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
       </div>
     </td>
@@ -241,7 +241,7 @@ function tabla(prod) {
  <td class="align-middle">$${prod.totprod}</td>
  <td class="align-middle">
  <div class="d-flex justify-content-end btn-group">
- <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" ></button>
+ <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
    <button id="el${prod.id}" value="${prod.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
    </div>
  </td>
@@ -358,51 +358,51 @@ busProdIng.addEventListener("input", () => { busProdIng.value ? busqueda() : tab
 
 function modProd(valVal) {
 
-  /*  let ediProd = document.getElementById("ediProd") */
+  let ediProd = document.getElementById("ediProd")
 
-  /*  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild); */
+  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild);
 
   let prodSelecEdi = productos[valVal];
 
 
-  (async () => {
-    const { value: formValues } = await Swal.fire({
-      title: 'MODIFICAR',
-      color: '#fff',
-      customClass: {
-        title: 'title-class2',
-        confirmButton: 'btn btn-outline-success fa-solid fa-circle-check btnSwt',
-      },
-      html:
-        ` <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
-    <div class="mb-3">
-      <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
-      <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
-      </div>
-    <div class="mb-3">
-      <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
-      <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
-      </div>
-    <div class="mb-3">
-      <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
-      <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
-      </div>
-  </div>
-  </form>`,
-      focusConfirm: false,
-      buttonsStyling:false,
-      confirmButtonText:false,
-    });
-    /*   let btnMod = document.getElementById("btnMod");
-      btnMod.addEventListener("click", () => {formValues});
-       */
-    if (formValues) {
+  /*   (async () => {
+      const { value: formValues } = await Swal.fire({
+        title: 'MODIFICAR',
+        color: '#fff',
+        customClass: {
+          title: 'title-class2',
+          confirmButton: 'btn btn-outline-success fa-solid fa-circle-check btnSwt',
+        },
+        html:
+          ` <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
+      <div class="mb-3">
+        <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
+        <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+        </div>
+      <div class="mb-3">
+        <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
+        <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
+        </div>
+      <div class="mb-3">
+        <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
+        <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
+        </div>
+    </div>
+    </form>`,
+        focusConfirm: false,
+        buttonsStyling:false,
+        confirmButtonText:false,
+      }); */
 
 
 
-      /* modTab = document.createElement("div");
-    
-      modTab.innerHTML = `
+  /*     if (formValues) { */
+
+
+
+  modTab = document.createElement("div");
+
+  modTab.innerHTML = `
     
       <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
       <div class="mb-3">
@@ -425,42 +425,41 @@ function modProd(valVal) {
     </form>
     
        `;
-    
-      tabGen = document.getElementById("ediProd");
-    
-      tabGen.append(modTab);
-     */
-      //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
-      /* let btnMod = document.getElementById("btnMod");
+  tabGen = document.getElementById("ediProd");
 
-      btnMod.addEventListener("click", () => {  */
+  tabGen.append(modTab);
 
+  //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
-        let prodIngrMod = document.getElementById("prodIngrMod").value;
-        let precIngrMod = document.getElementById("precIngrMod").value;
-        let cantIngrMod = document.getElementById("cantIngrMod").value;
+  let btnMod = document.getElementById("btnMod");
+
+  btnMod.addEventListener("click", () => {
 
 
-        productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
-        productos[valVal].precio = parseFloat(precIngrMod);
-        productos[valVal].cantidad = parseInt(cantIngrMod);
-        productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
-
-        btnVali()
-
-        localStorage.setItem("productos", JSON.stringify(productos));
-
-        tabOrig()
+    let prodIngrMod = document.getElementById("prodIngrMod").value;
+    let precIngrMod = document.getElementById("precIngrMod").value;
+    let cantIngrMod = document.getElementById("cantIngrMod").value;
 
 
-    /*   }); */
+    productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
+    productos[valVal].precio = parseFloat(precIngrMod);
+    productos[valVal].cantidad = parseInt(cantIngrMod);
+    productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
 
-    }
+    btnVali()
 
-  })()
+    localStorage.setItem("productos", JSON.stringify(productos));
+
+    tabOrig()
+
+  });
 
 }
+
+/*   }) ()
+
+} */
 
 
 //ESCUCHADOR DE EVENTOS CLICK EN EL CUAL CHEQUEA SI SE PRESIONÓ EL BOTÓN EDITAR O ELIMINAR DE UN PRODUCTO ESPECÍFICO.
@@ -496,17 +495,38 @@ tab.addEventListener("click", (e) => {
         showCancelButton: true,
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancelar',
-        reverseButtons: true
+        reverseButtons: true,
+        confirmButtonColor: '#69a30a'
 
       }).then((delProd) => {
 
         if (delProd.isConfirmed) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
 
-          swal.fire(
+          Toast.fire({
+            icon: 'success',
+            title: `El producto ${productos[valId.value].nombre.bold()} se eliminó`
+          })
+
+
+
+
+
+          /* swal.fire(
             '¡Borrado!',
             `El producto ${productos[valId.value].nombre.bold()} se eliminó`,
             'success'
-          )
+          ) */
           productos.splice(valId.value, 1);
 
           tabOrig()
@@ -533,6 +553,7 @@ function usrlog() {
     html:
       '<input id="swal-input1" class="swal2-input">',
     focusConfirm: false,
+    confirmButtonColor: '#69a30a',
     preConfirm: () => {
       return [
 
@@ -549,4 +570,4 @@ function usrlog() {
   })
 
 }
-
+ 
