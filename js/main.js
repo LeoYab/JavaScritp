@@ -11,6 +11,44 @@ let contProdNom = 0;
 let fecha = new Date();
 let genTab;
 let id = -1;
+let usuario = [];
+AOS.init();
+
+
+/* function createUser(){
+
+class User {
+
+  constructor(nombre, edad, dni) {
+    this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
+    this.edad = parseInt(edad);
+    this.dni = parseInt(dni);
+  }
+
+}
+
+usuario.push(new User(nombre, edad, dni))
+
+
+}
+
+function addUser(){
+
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*GENERACIÓN DE TABLA EN PANTALLA*/
@@ -34,7 +72,7 @@ function prodGen() {
   cantIng = document.getElementById("cantIngr").value = "";
 
   genTab = document.createElement("tr");
-
+  genTab.setAttribute("data-aos", "zoom-in")
   for (const producto of productos) {
 
     genTab.innerHTML = `
@@ -49,13 +87,13 @@ function prodGen() {
     <td class="align-middle">$${producto.totprod}</td>
     <td class="align-middle">
       <div class="d-flex justify-content-end btn-group">
-      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
+      <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" ></button>
         <button id="el${producto.id}" value="${producto.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
       </div>
     </td>
     `;
 
-    document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
+    document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
 
   }
 
@@ -90,7 +128,7 @@ function addProd() {
   }
 
   //Sugar Syntax
-  id ++;
+  id++;
 
   productos.push(new Producto(id, prodIng, precIng, cantIng));
 
@@ -174,7 +212,7 @@ function btnAgregarOcul() {
 
     addProd()
 
-  } 
+  }
 
 }
 
@@ -203,7 +241,7 @@ function tabla(prod) {
  <td class="align-middle">$${prod.totprod}</td>
  <td class="align-middle">
  <div class="d-flex justify-content-end btn-group">
- <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
+ <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" ></button>
    <button id="el${prod.id}" value="${prod.id}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can" type="button"></button>
    </div>
  </td>
@@ -223,7 +261,7 @@ function rearmarTab(productos) {
 
   productos.forEach((prod) => {
 
-  //Sugar syntax
+    //Sugar syntax
     id++;
 
     productos[id].id = id;
@@ -234,7 +272,7 @@ function rearmarTab(productos) {
 
   })
 
-  document.getElementById("totalProd").innerHTML = "TOTAL: $" + precioTotal;
+  document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
 
   localStorage.setItem("productos", JSON.stringify(productos));
 
@@ -293,10 +331,15 @@ function tabOrig() {
 
 let busProdIng = document.getElementById("busProdIng");
 
-busProdIng.addEventListener("input", () => {
+
+//Operador Ternario
+
+busProdIng.addEventListener("input", () => { busProdIng.value ? busqueda() : tabOrig() });
 
 
-  if (busProdIng.value != "") {
+
+
+/*   if (busProdIng.value != "") {
 
     busqueda()
 
@@ -304,9 +347,9 @@ busProdIng.addEventListener("input", () => {
 
     tabOrig()
 
-  }
+  } */
 
-});
+
 
 /*MODIFICACIÓN DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
@@ -315,70 +358,107 @@ busProdIng.addEventListener("input", () => {
 
 function modProd(valVal) {
 
-  let ediProd = document.getElementById("ediProd")
+  /*  let ediProd = document.getElementById("ediProd") */
 
-  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild);
+  /*  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild); */
 
   let prodSelecEdi = productos[valVal];
 
 
-  modTab = document.createElement("div");
-
-  modTab.innerHTML = `
-
-  <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
-  <div class="mb-3">
-    <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
-    <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
-    </div>
-  <div class="mb-3">
-    <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
-    <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
-    </div>
-  <div class="mb-3">
-    <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
-    <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
-    </div>
-  <div class="mb-3">
-    <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">⁪</label>
-    <button class="btn btn-outline-success fa-solid fa-circle-check" type="submit" id="btnMod"></button>
+  (async () => {
+    const { value: formValues } = await Swal.fire({
+      title: 'MODIFICAR',
+      color: '#fff',
+      customClass: {
+        title: 'title-class2',
+        confirmButton: 'btn btn-outline-success fa-solid fa-circle-check btnSwt',
+      },
+      html:
+        ` <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
+    <div class="mb-3">
+      <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
+      <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+      </div>
+    <div class="mb-3">
+      <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
+      <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
+      </div>
+    <div class="mb-3">
+      <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
+      <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
+      </div>
   </div>
-</div>
-</form>
-
-   `;
-
-  tabGen = document.getElementById("ediProd");
-
-  tabGen.append(modTab);
-
-  //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
-
-  let btnMod = document.getElementById("btnMod");
-
-  btnMod.addEventListener("click", () => {
-
-    document.getElementById("prodIngrMod").focus();
-    document.getElementById("prodIngrMod").select();
-
-    let prodIngrMod = document.getElementById("prodIngrMod").value;
-    let precIngrMod = document.getElementById("precIngrMod").value;
-    let cantIngrMod = document.getElementById("cantIngrMod").value;
+  </form>`,
+      focusConfirm: false,
+      buttonsStyling:false,
+      confirmButtonText:false,
+    });
+    /*   let btnMod = document.getElementById("btnMod");
+      btnMod.addEventListener("click", () => {formValues});
+       */
+    if (formValues) {
 
 
-    productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
-    productos[valVal].precio = parseFloat(precIngrMod);
-    productos[valVal].cantidad = parseInt(cantIngrMod);
-    productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
 
-    btnVali()
+      /* modTab = document.createElement("div");
+    
+      modTab.innerHTML = `
+    
+      <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
+      <div class="mb-3">
+        <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
+        <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+        </div>
+      <div class="mb-3">
+        <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
+        <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
+        </div>
+      <div class="mb-3">
+        <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
+        <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
+        </div>
+      <div class="mb-3">
+        <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">⁪</label>
+        <button class="btn btn-outline-success fa-solid fa-circle-check" type="submit" id="btnMod"></button>
+      </div>
+    </div>
+    </form>
+    
+       `;
+    
+      tabGen = document.getElementById("ediProd");
+    
+      tabGen.append(modTab);
+     */
+      //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
-    localStorage.setItem("productos", JSON.stringify(productos));
+      /* let btnMod = document.getElementById("btnMod");
 
-    tabOrig()
+      btnMod.addEventListener("click", () => {  */
 
 
-  });
+        let prodIngrMod = document.getElementById("prodIngrMod").value;
+        let precIngrMod = document.getElementById("precIngrMod").value;
+        let cantIngrMod = document.getElementById("cantIngrMod").value;
+
+
+        productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
+        productos[valVal].precio = parseFloat(precIngrMod);
+        productos[valVal].cantidad = parseInt(cantIngrMod);
+        productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
+
+        btnVali()
+
+        localStorage.setItem("productos", JSON.stringify(productos));
+
+        tabOrig()
+
+
+    /*   }); */
+
+    }
+
+  })()
 
 }
 
@@ -392,27 +472,81 @@ let tab = document.getElementById("tabla");
 tab.addEventListener("click", (e) => {
 
 
-  let valId = e.target.id;
+  let valId = document.getElementById(e.target.id);
 
-  
-  if ((valId != "")) {
+  //Operador avanzado AND
 
-    let valVal = document.getElementById(valId).value;
+  valId != null && busqIdBot();
 
-    if (valId == "ed" + valVal) {
 
-      modProd(valVal)
+  function busqIdBot() {
 
-    } else if (valId == "el" + valVal) {
+    if (valId.id == "ed" + valId.value) {
 
-      productos.splice(valVal, 1);
+      modProd(valId.value)
 
-      tabOrig()
+    } else if (valId.id == "el" + valId.value) {
+
+      //SWEET ALERT PARA CONFIRMAR LA ELIMINACIÓN
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Se eliminará: ' + productos[valId.value].nombre.bold(),
+        text: '¿Desea continuar?',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+
+      }).then((delProd) => {
+
+        if (delProd.isConfirmed) {
+
+          swal.fire(
+            '¡Borrado!',
+            `El producto ${productos[valId.value].nombre.bold()} se eliminó`,
+            'success'
+          )
+          productos.splice(valId.value, 1);
+
+          tabOrig()
+        }
+      });
+
+
 
     }
   }
 
+
 });
 
 
+
+let usrlg = document.getElementById("usrProf1");
+
+usrlg.onclick = () => { usrlog() }
+
+function usrlog() {
+  Swal.fire({
+    title: 'Ingresa tu nombre',
+    html:
+      '<input id="swal-input1" class="swal2-input">',
+    focusConfirm: false,
+    preConfirm: () => {
+      return [
+
+        document.getElementById('swal-input1').value,
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Bienvenido \n' + document.getElementById('swal-input1').value,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      ]
+    }
+  })
+
+}
 
