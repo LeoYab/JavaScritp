@@ -80,7 +80,7 @@ function prodGen() {
     <td class="align-middle">$${producto.precio}</td>
     <td class="canti">
       <div class="input-group input-group-sm ">
-      <button type="button" class="btn btn-outline-secondary" disabled>X</button>
+      <span class="input-group-text" id="basic-addon1">X</span>
         <input type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
@@ -496,7 +496,10 @@ tab.addEventListener("click", (e) => {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancelar',
         reverseButtons: true,
-        confirmButtonColor: '#69a30a'
+        confirmButtonColor: '#69a30a',
+        cancelButtonColor: '#6c757d',
+        focusConfirm: false, 
+        focusCancel: false
 
       }).then((delProd) => {
 

@@ -71,7 +71,8 @@ strong {
   text-align: center; }
 
 .agregarProd button {
-  border-radius: 100%; }
+  border-radius: 100%;
+  padding: 20px; }
 
 .btn-success {
   --bs-btn-color: #fff;
@@ -161,3 +162,7 @@ margin:0 !important;
 .swal2-title{
     padding:.5rem !important;
 } */
+.btn-outline-success {
+  --bs-btn-hover-bg: #69a30a;
+  --bs-btn-border-color: #558508;
+  --bs-btn-color:#558508; }
