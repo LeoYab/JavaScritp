@@ -81,7 +81,7 @@ function prodGen() {
     <td class="canti">
       <div class="input-group input-group-sm ">
       <span class="input-group-text" id="basic-addon1">X</span>
-        <input type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
+        <input id="cantProd${producto.cantidad}" type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
     <td class="align-middle">$${producto.totprod}</td>
@@ -94,7 +94,7 @@ function prodGen() {
     `;
 
     document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
-
+    
   }
 
   tabGen = document.getElementById("tabla");
@@ -235,7 +235,7 @@ function tabla(prod) {
  <td class="canti">
    <div class="input-group input-group-sm ">
      <span class="input-group-text" id="basic-addon1">X</span>
-     <input type="number" class="form-control text-center" min="1" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+     <input input id="cantProd${prod.cantidad}" type="number" class="form-control text-center" min="1" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
    </div>
  </td>
  <td class="align-middle">$${prod.totprod}</td>
@@ -546,6 +546,9 @@ tab.addEventListener("click", (e) => {
 
 
 
+
+
+
 let usrlg = document.getElementById("usrProf1");
 
 usrlg.onclick = () => { usrlog() }
@@ -574,3 +577,14 @@ function usrlog() {
 
 }
  
+
+//ACTUALIZACIÓN DE CANTIDAD EN TIEMPO REAL.
+/* let inputTotProd = document.getElementById(`cantProd${producto.cantidad}`);
+console.log(inputTotProd)
+inputTotProd.change = (e) => {
+
+  let cantNuev = e.target.value;
+  
+  producto.cantidad = cantNuev;
+
+}; */
