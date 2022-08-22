@@ -15,42 +15,6 @@ let usuario = [];
 AOS.init();
 
 
-/* function createUser(){
-
-class User {
-
-  constructor(nombre, edad, dni) {
-    this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-    this.edad = parseInt(edad);
-    this.dni = parseInt(dni);
-  }
-
-}
-
-usuario.push(new User(nombre, edad, dni))
-
-
-}
-
-function addUser(){
-
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*GENERACIÓN DE TABLA EN PANTALLA*/
 /* -------------------------------------------------------------------- */
 
@@ -337,20 +301,6 @@ let busProdIng = document.getElementById("busProdIng");
 busProdIng.addEventListener("input", () => { busProdIng.value ? busqueda() : tabOrig() });
 
 
-
-
-/*   if (busProdIng.value != "") {
-
-    busqueda()
-
-  } else {
-
-    tabOrig()
-
-  } */
-
-
-
 /*MODIFICACIÓN DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
@@ -363,42 +313,6 @@ function modProd(valVal) {
   while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild);
 
   let prodSelecEdi = productos[valVal];
-
-
-  /*   (async () => {
-      const { value: formValues } = await Swal.fire({
-        title: 'MODIFICAR',
-        color: '#fff',
-        customClass: {
-          title: 'title-class2',
-          confirmButton: 'btn btn-outline-success fa-solid fa-circle-check btnSwt',
-        },
-        html:
-          ` <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
-      <div class="mb-3">
-        <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
-        <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
-        </div>
-      <div class="mb-3">
-        <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
-        <input id="precIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.precio}" required>
-        </div>
-      <div class="mb-3">
-        <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">Cantidad</label>
-        <input id="cantIngrMod" type="number" min="1" class="form-control" value="${prodSelecEdi.cantidad}" required>
-        </div>
-    </div>
-    </form>`,
-        focusConfirm: false,
-        buttonsStyling:false,
-        confirmButtonText:false,
-      }); */
-
-
-
-  /*     if (formValues) { */
-
-
 
   modTab = document.createElement("div");
 
@@ -456,11 +370,6 @@ function modProd(valVal) {
   });
 
 }
-
-/*   }) ()
-
-} */
-
 
 //ESCUCHADOR DE EVENTOS CLICK EN EL CUAL CHEQUEA SI SE PRESIONÓ EL BOTÓN EDITAR O ELIMINAR DE UN PRODUCTO ESPECÍFICO.
 //SE REALIZA UN CONDICIONAL PARA SACAR ERROR EN CONSOLA EL CUAL ERA PRODUCIDO POR TOCAR CUALQUIER ETIQUETA DENTRO DEL id "tabla".
@@ -521,15 +430,6 @@ tab.addEventListener("click", (e) => {
             title: `El producto ${productos[valId.value].nombre.bold()} se eliminó`
           })
 
-
-
-
-
-          /* swal.fire(
-            '¡Borrado!',
-            `El producto ${productos[valId.value].nombre.bold()} se eliminó`,
-            'success'
-          ) */
           productos.splice(valId.value, 1);
 
           tabOrig()
@@ -543,11 +443,6 @@ tab.addEventListener("click", (e) => {
 
 
 });
-
-
-
-
-
 
 let usrlg = document.getElementById("usrProf1");
 
@@ -576,15 +471,3 @@ function usrlog() {
   })
 
 }
- 
-
-//ACTUALIZACIÓN DE CANTIDAD EN TIEMPO REAL.
-/* let inputTotProd = document.getElementById(`cantProd${producto.cantidad}`);
-console.log(inputTotProd)
-inputTotProd.change = (e) => {
-
-  let cantNuev = e.target.value;
-  
-  producto.cantidad = cantNuev;
-
-}; */
