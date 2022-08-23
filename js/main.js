@@ -15,29 +15,97 @@ let usuario = [];
 AOS.init();
 
 
-/* function createUser(){
+if (localStorage.getItem("usuarios")){
+usuario = JSON.parse(localStorage.getItem("usuarios"));
+}
+
+function createUser(){
+
+  let usrAdd = document.getElementById("usrAdd").value;
+  let dniAdd = document.getElementById("dniAdd").value;
 
 class User {
-
-  constructor(nombre, edad, dni) {
+  constructor(nombre, dni) {
     this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-    this.edad = parseInt(edad);
-    this.dni = parseInt(dni);
+    this.dni = dni;
   }
 
 }
 
-usuario.push(new User(nombre, edad, dni))
+usuario.push(new User(usrAdd, dniAdd));
 
-
+localStorage.setItem("usuarios", JSON.stringify(usuario));
 }
 
-function addUser(){
-
-} */
 
 
 
+
+
+
+let usrlg = document.getElementById("usrProf1");
+
+usrlg.onclick = () => { usrlog() }
+
+function usrlog() {
+
+  Swal.fire({
+    title: 'Ingresa tu nombre',
+    html:
+      '<input id="usrAdd" class="swal2-input" placeholder="Nombre">'+
+      '<input id="dniAdd" class="swal2-input" placeholder="DNI">',
+
+    focusConfirm: false,
+    confirmButtonColor: '#69a30a',
+    
+  
+  
+ /*    usuario.dni.includes(dniAdd) ? console.log("existe") : console.log("no existe"), */
+    
+
+ preConfirm: () => {
+
+/* const userBusq = usuario.find ((e) => e.id.includes(verifUser))
+console.log(userBusq); */
+/* usuario.forEach((e) => e.dni.includes(verifUser) ? console.log("Existe") : console.log("No existe")) */
+
+let userIng = document.getElementById("usrAdd").value;
+let passIng = document.getElementById("dniAdd").value;
+
+
+if(!userIng){
+  Swal.showValidationMessage("Ingrese un usuario");
+  return false;
+}
+
+if(!passIng){
+  Swal.showValidationMessage("Ingrese la contraseña");
+  return false;
+}
+
+if(usuario.find(user => user.nombre === userIng && user.dni === passIng )){
+  createUser(),
+  document.getElementById('usrAdd').value,
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
+    showConfirmButton: false,
+    timer: 1500
+  })
+} else{
+  Swal.fire({
+    icon: 'error',
+    title: 'Usuario no encontrado',
+    text: ''
+  })
+}
+
+    }
+    
+  })
+
+}
 
 
 
@@ -73,6 +141,8 @@ function prodGen() {
 
   genTab = document.createElement("tr");
   genTab.setAttribute("data-aos", "zoom-in")
+  genTab.setAttribute("data-aos-once", "true")
+  
   for (const producto of productos) {
 
     genTab.innerHTML = `
@@ -81,7 +151,7 @@ function prodGen() {
     <td class="canti">
       <div class="input-group input-group-sm ">
       <span class="input-group-text" id="basic-addon1">X</span>
-        <input id="cantProd${producto.cantidad}" type="number" class="form-control text-center" min="1" placeholder="${producto.cantidad}" aria-describedby="basic-addon1">
+        <input id="${producto.id}" type="number" class="form-control text-center" min="1" value="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
     <td class="align-middle">$${producto.totprod}</td>
@@ -94,7 +164,8 @@ function prodGen() {
     `;
 
     document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
-    
+
+
   }
 
   tabGen = document.getElementById("tabla");
@@ -154,8 +225,7 @@ function btnAgregar() {
   document.getElementById("ingresarProd").style.display = "flex"
 
   document.getElementById("cantProd").focus();
-  document.getElementById("cantProd").select();
-
+/*   document.getElementById("cantProd").select(); */
 
 }
 
@@ -235,7 +305,7 @@ function tabla(prod) {
  <td class="canti">
    <div class="input-group input-group-sm ">
      <span class="input-group-text" id="basic-addon1">X</span>
-     <input input id="cantProd${prod.cantidad}" type="number" class="form-control text-center" min="1" placeholder="${prod.cantidad}" aria-describedby="basic-addon1">
+     <input input id="${prod.id}" type="number" class="form-control text-center" min="1" value="${prod.cantidad}" aria-describedby="basic-addon1">
    </div>
  </td>
  <td class="align-middle">$${prod.totprod}</td>
@@ -334,7 +404,7 @@ let busProdIng = document.getElementById("busProdIng");
 
 //Operador Ternario
 
-busProdIng.addEventListener("input", () => { busProdIng.value ? busqueda() : tabOrig() });
+busProdIng.addEventListener("input", () =>  busProdIng.value ? busqueda() : tabOrig() );
 
 
 
@@ -401,13 +471,12 @@ function modProd(valVal) {
 
 
   modTab = document.createElement("div");
-
   modTab.innerHTML = `
     
       <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
       <div class="mb-3">
         <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
-        <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+        <input autofocus id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
         </div>
       <div class="mb-3">
         <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
@@ -429,13 +498,14 @@ function modProd(valVal) {
   tabGen = document.getElementById("ediProd");
 
   tabGen.append(modTab);
+ 
 
   //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
   let btnMod = document.getElementById("btnMod");
-
+ 
   btnMod.addEventListener("click", () => {
-
+    
 
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
@@ -452,7 +522,7 @@ function modProd(valVal) {
     localStorage.setItem("productos", JSON.stringify(productos));
 
     tabOrig()
-
+    document.getElementById("prodIngrMod").focus();
   });
 
 }
@@ -466,7 +536,22 @@ function modProd(valVal) {
 //SE REALIZA UN CONDICIONAL PARA SACAR ERROR EN CONSOLA EL CUAL ERA PRODUCIDO POR TOCAR CUALQUIER ETIQUETA DENTRO DEL id "tabla".
 //ÉSTE CONDICIONAL ACTIVA LAS FUNCIONES SI LO PRESIONADO EN TABLA DEVUELVE UN VALOR.
 
+
+//ver si es posible utilizar el indexof
 let tab = document.getElementById("tabla");
+
+tab.addEventListener("change", (e) => {
+
+  let cantNuev = e.target.value;
+
+  productos[e.target.id].cantidad = cantNuev;
+  productos[e.target.id].totprod = productos[e.target.id].precio * cantNuev;
+  
+  tabOrig()
+});
+
+
+
 
 tab.addEventListener("click", (e) => {
 
@@ -498,7 +583,7 @@ tab.addEventListener("click", (e) => {
         reverseButtons: true,
         confirmButtonColor: '#69a30a',
         cancelButtonColor: '#6c757d',
-        focusConfirm: false, 
+        focusConfirm: false,
         focusCancel: false
 
       }).then((delProd) => {
@@ -549,6 +634,11 @@ tab.addEventListener("click", (e) => {
 
 
 
+
+
+
+
+/* 
 let usrlg = document.getElementById("usrProf1");
 
 usrlg.onclick = () => { usrlog() }
@@ -558,6 +648,7 @@ function usrlog() {
     title: 'Ingresa tu nombre',
     html:
       '<input id="swal-input1" class="swal2-input">',
+
     focusConfirm: false,
     confirmButtonColor: '#69a30a',
     preConfirm: () => {
@@ -574,9 +665,7 @@ function usrlog() {
       ]
     }
   })
-
-}
- 
+ */
 
 //ACTUALIZACIÓN DE CANTIDAD EN TIEMPO REAL.
 /* let inputTotProd = document.getElementById(`cantProd${producto.cantidad}`);

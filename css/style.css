@@ -166,3 +166,8 @@ margin:0 !important;
   --bs-btn-hover-bg: #69a30a;
   --bs-btn-border-color: #558508;
   --bs-btn-color:#558508; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
