@@ -12,29 +12,31 @@ let fecha = new Date();
 let genTab;
 let id = -1;
 let usuario = [];
+let dniUser;
 AOS.init();
 
 
-if (localStorage.getItem("usuarios")){
-usuario = JSON.parse(localStorage.getItem("usuarios"));
+if (localStorage.getItem("usuarios")) {
+  usuario = JSON.parse(localStorage.getItem("usuarios"));
 }
 
-function createUser(){
+function createUser(usrAdd, dniAdd) {
+  /* 
+    let usrAdd = document.getElementById("usrAdd").value;
+    let dniAdd = document.getElementById("dniAdd").value; */
 
-  let usrAdd = document.getElementById("usrAdd").value;
-  let dniAdd = document.getElementById("dniAdd").value;
+  class User {
+    constructor(nombre, dni) {
+      this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
+      this.dni = dni;
+    }
 
-class User {
-  constructor(nombre, dni) {
-    this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-    this.dni = dni;
   }
 
-}
 
-usuario.push(new User(usrAdd, dniAdd));
+  usuario.push(new User(usrAdd, dniAdd));
 
-localStorage.setItem("usuarios", JSON.stringify(usuario));
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
 }
 
 
@@ -50,59 +52,99 @@ usrlg.onclick = () => { usrlog() }
 function usrlog() {
 
   Swal.fire({
-    title: 'Ingresa tu nombre',
+    title: 'INGRESA TUS DATOS',
     html:
-      '<input id="usrAdd" class="swal2-input" placeholder="Nombre">'+
+      '<input id="usrAdd" class="swal2-input" placeholder="Nombre">' +
       '<input id="dniAdd" class="swal2-input" placeholder="DNI">',
 
     focusConfirm: false,
     confirmButtonColor: '#69a30a',
-    
-  
-  
- /*    usuario.dni.includes(dniAdd) ? console.log("existe") : console.log("no existe"), */
-    
-
- preConfirm: () => {
-
-/* const userBusq = usuario.find ((e) => e.id.includes(verifUser))
-console.log(userBusq); */
-/* usuario.forEach((e) => e.dni.includes(verifUser) ? console.log("Existe") : console.log("No existe")) */
-
-let userIng = document.getElementById("usrAdd").value;
-let passIng = document.getElementById("dniAdd").value;
 
 
-if(!userIng){
-  Swal.showValidationMessage("Ingrese un usuario");
-  return false;
-}
 
-if(!passIng){
-  Swal.showValidationMessage("Ingrese la contraseña");
-  return false;
-}
+    /*    usuario.dni.includes(dniAdd) ? console.log("existe") : console.log("no existe"), */
 
-if(usuario.find(user => user.nombre === userIng && user.dni === passIng )){
-  createUser(),
-  document.getElementById('usrAdd').value,
-  Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
-    showConfirmButton: false,
-    timer: 1500
-  })
-} else{
-  Swal.fire({
-    icon: 'error',
-    title: 'Usuario no encontrado',
-    text: ''
-  })
-}
+
+    preConfirm: () => {
+
+      /* const userBusq = usuario.find ((e) => e.id.includes(verifUser))
+      console.log(userBusq); */
+      /* usuario.forEach((e) => e.dni.includes(verifUser) ? console.log("Existe") : console.log("No existe")) */
+
+      let userIng = document.getElementById("usrAdd").value;
+      let dniIng = document.getElementById("dniAdd").value;
+
+
+      if (!userIng) {
+        Swal.showValidationMessage("Ingrese un usuario");
+        return false;
+      }
+
+      if (!dniIng) {
+        Swal.showValidationMessage("Ingrese la contraseña");
+        return false;
+      }
+
+      if (usuario.find(user => user.nombre === userIng && user.dni === dniIng)) {
+        document.getElementById('usrAdd').value,
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
+            showConfirmButton: false,
+            timer: 1500
+          })
+      } else {
+
+   
+
+        swal.fire({
+          title: 'Usuario no encontrado',
+          text: "¿Desea crearlo?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Crear',
+          cancelButtonText: 'Cancelar',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
+            dniUser=dniIng;
+            
+            swal.fire(
+              'Usuario ' + userIng + ' creado',
+              '',
+              'success',
+              createUser(userIng, dniIng)
+            )
+          } else{
+
+            swal.fire({
+              title: 'Usuario no creado',
+              icon: 'error',
+              showCancelButton: false,
+              showCloseButton: false,
+              showConfirmButton: false,
+              timer: 1000
+            })
+          }
+        })
+
+
+
+        /* Swal.fire({
+          icon: 'error',
+          title: 'Usuario no encontrado',
+          text: '¿Desea crearlo?',
+          showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }) */
+      }
 
     }
-    
+
   })
 
 }
@@ -142,7 +184,7 @@ function prodGen() {
   genTab = document.createElement("tr");
   genTab.setAttribute("data-aos", "zoom-in")
   genTab.setAttribute("data-aos-once", "true")
-  
+
   for (const producto of productos) {
 
     genTab.innerHTML = `
@@ -225,7 +267,7 @@ function btnAgregar() {
   document.getElementById("ingresarProd").style.display = "flex"
 
   document.getElementById("cantProd").focus();
-/*   document.getElementById("cantProd").select(); */
+  /*   document.getElementById("cantProd").select(); */
 
 }
 
@@ -404,7 +446,7 @@ let busProdIng = document.getElementById("busProdIng");
 
 //Operador Ternario
 
-busProdIng.addEventListener("input", () =>  busProdIng.value ? busqueda() : tabOrig() );
+busProdIng.addEventListener("input", () => busProdIng.value ? busqueda() : tabOrig());
 
 
 
@@ -498,14 +540,14 @@ function modProd(valVal) {
   tabGen = document.getElementById("ediProd");
 
   tabGen.append(modTab);
- 
+
 
   //SE AGREGA EL PRODUCTO MODIFICADO AL ARRAY Y SE GUARDA EN EL LOCALSTORAGE.
 
   let btnMod = document.getElementById("btnMod");
- 
+
   btnMod.addEventListener("click", () => {
-    
+
 
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
@@ -546,7 +588,7 @@ tab.addEventListener("change", (e) => {
 
   productos[e.target.id].cantidad = cantNuev;
   productos[e.target.id].totprod = productos[e.target.id].precio * cantNuev;
-  
+
   tabOrig()
 });
 
@@ -638,7 +680,7 @@ tab.addEventListener("click", (e) => {
 
 
 
-/* 
+/*
 let usrlg = document.getElementById("usrProf1");
 
 usrlg.onclick = () => { usrlog() }
