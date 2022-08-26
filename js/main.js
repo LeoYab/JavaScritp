@@ -6,6 +6,7 @@ let precTotProd = 0;
 let precioTotal = 0;
 let terminar;
 let productos = [];
+let producto = [];
 let totProd;
 let contProdNom = 0;
 let fecha = new Date();
@@ -13,12 +14,53 @@ let genTab;
 let id = -1;
 let usuario = [];
 let dniUser;
+let nomUser;
 AOS.init();
-
-
+//Al editar los productos de un usuario en particular, agarra otro array en vez de continuar con el mismo. Tambien con la eliminación.
 if (localStorage.getItem("usuarios")) {
   usuario = JSON.parse(localStorage.getItem("usuarios"));
 }
+
+function prodUser(userIng, dniIng) {
+
+
+  if (usuario.find(user => user.nombre === userIng && user.dni === dniIng)) {
+
+    productos = JSON.parse(localStorage.getItem("productos" + dniIng));
+
+    if (productos != null) {
+      tabOrig(productos)
+    } else {
+      productos = [];
+      localStorage.setItem("productos" + dniIng, JSON.stringify(productos));
+    }
+
+  }
+
+
+}
+
+
+/* if (localStorage.getItem("usuarios")) {
+  usuario = JSON.parse(localStorage.getItem("usuarios"));
+}
+
+
+
+
+// BUSCA SI HAY PRODUCTOS GUARDADOS Y LOS MUESTRA EN PANTALLA.
+if (localStorage.getItem("productos"+dniUser)) {
+
+  productos = JSON.parse(localStorage.getItem("productos"+dniUser));
+  rearmarTab(productos);
+}
+
+ */
+
+
+
+
+
 
 function createUser(usrAdd, dniAdd) {
   /* 
@@ -26,15 +68,16 @@ function createUser(usrAdd, dniAdd) {
     let dniAdd = document.getElementById("dniAdd").value; */
 
   class User {
-    constructor(nombre, dni) {
+    constructor(nombre, dni, producto) {
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
       this.dni = dni;
+      this.producto = [];
     }
 
   }
 
 
-  usuario.push(new User(usrAdd, dniAdd));
+  usuario.push(new User(usrAdd, dniAdd, producto));
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 }
@@ -86,17 +129,19 @@ function usrlog() {
       }
 
       if (usuario.find(user => user.nombre === userIng && user.dni === dniIng)) {
-        document.getElementById('usrAdd').value,
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
-            showConfirmButton: false,
-            timer: 1500
-          })
+        prodUser(userIng, dniIng)
+        dniUser = dniIng;
+        nomUser = userIng;
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
+          showConfirmButton: false,
+          timer: 1500
+        })
       } else {
 
-   
+
 
         swal.fire({
           title: 'Usuario no encontrado',
@@ -108,16 +153,17 @@ function usrlog() {
           reverseButtons: true
         }).then((result) => {
           if (result.isConfirmed) {
-            
-            dniUser=dniIng;
-            
+
+            dniUser = dniIng;
+            nomUser = userIng;
+
             swal.fire(
               'Usuario ' + userIng + ' creado',
               '',
               'success',
               createUser(userIng, dniIng)
             )
-          } else{
+          } else {
 
             swal.fire({
               title: 'Usuario no creado',
@@ -165,12 +211,6 @@ function usrlog() {
 /* -------------------------------------------------------------------- */
 
 
-// BUSCA SI HAY PRODUCTOS GUARDADOS Y LOS MUESTRA EN PANTALLA.
-if (localStorage.getItem("productos")) {
-
-  productos = JSON.parse(localStorage.getItem("productos"));
-  rearmarTab(productos);
-}
 
 
 //SE LIMPIAN VALORES DE LOS IMPUTS DE AGREGAR PRODUCTO Y SE GENERA TABLA CON LOS DATOS INDICADOS.
@@ -243,9 +283,9 @@ function addProd() {
   //Sugar Syntax
   id++;
 
-  productos.push(new Producto(id, prodIng, precIng, cantIng));
+  usuario[id].producto.push(new Producto(id, prodIng, precIng, cantIng));
 
-  localStorage.setItem("productos", JSON.stringify(productos));
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
 
   prodGen()
 
@@ -362,7 +402,6 @@ function tabla(prod) {
   tabGen = document.getElementById("tabla");
   tabGen.append(genTab);
 
-
 }
 
 //REARMA TABLA CON LOS PRODUCTOS ACTUALES.
@@ -386,7 +425,8 @@ function rearmarTab(productos) {
 
   document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
 
-  localStorage.setItem("productos", JSON.stringify(productos));
+  localStorage.setItem("productos" + dniUser, JSON.stringify(productos));
+
 
 }
 
@@ -416,7 +456,7 @@ function busqueda() {
 
     tabla(prod)
 
-    localStorage.setItem("productos", JSON.stringify(productos));
+    /*   localStorage.setItem("productos" + dniUser, JSON.stringify(productos)); */
 
   });
 
@@ -424,7 +464,7 @@ function busqueda() {
 
 //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
 
-function tabOrig() {
+function tabOrig(productos) {
 
   id = -1;
 
@@ -561,9 +601,11 @@ function modProd(valVal) {
 
     btnVali()
 
-    localStorage.setItem("productos", JSON.stringify(productos));
+    localStorage.setItem("productos" + dniUser, JSON.stringify(productos));
+  
+    productos = JSON.parse(localStorage.getItem("productos" + dniUser));
+    prodUser(nomUser, dniUser) 
 
-    tabOrig()
     document.getElementById("prodIngrMod").focus();
   });
 
