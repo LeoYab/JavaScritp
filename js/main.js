@@ -12,30 +12,64 @@ let contProdNom = 0;
 let fecha = new Date();
 let genTab;
 let id = -1;
+let idUsr = -1;
 let usuario = [];
 let dniUser;
 let nomUser;
+let prod = -1;
+let obtenerUser;
 AOS.init();
 //Al editar los productos de un usuario en particular, agarra otro array en vez de continuar con el mismo. Tambien con la eliminación.
 if (localStorage.getItem("usuarios")) {
   usuario = JSON.parse(localStorage.getItem("usuarios"));
+  idUsr = usuario.length - 1;
+
+  obtenerUser = JSON.parse(localStorage.getItem("userLog"));
+
+  if (obtenerUser != null) {
+
+
+    prodUser("", obtenerUser)
+
+  }
+
+
+
+
+
 }
 
 function prodUser(userIng, dniIng) {
 
 
-  if (usuario.find(user => user.nombre === userIng && user.dni === dniIng)) {
+  const obtenerUsr = usuario.find((user) => user.dni === dniIng);
 
-    productos = JSON.parse(localStorage.getItem("productos" + dniIng));
+
+
+
+  /*     productos = JSON.parse(localStorage.getItem("usuarios")); */
+
+  let ultimoProd = usuario[obtenerUsr.id].producto.length;
+
+  if (ultimoProd == 0) {
+
+
+    productos = [];
+
+
+  } else {
+
+    productos = usuario[obtenerUsr.id].producto[ultimoProd - 1];
 
     if (productos != null) {
       tabOrig(productos)
     } else {
       productos = [];
-      localStorage.setItem("productos" + dniIng, JSON.stringify(productos));
     }
-
   }
+
+
+
 
 
 }
@@ -68,7 +102,8 @@ function createUser(usrAdd, dniAdd) {
     let dniAdd = document.getElementById("dniAdd").value; */
 
   class User {
-    constructor(nombre, dni, producto) {
+    constructor(id, nombre, dni) {
+      this.id = id;
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
       this.dni = dni;
       this.producto = [];
@@ -76,13 +111,24 @@ function createUser(usrAdd, dniAdd) {
 
   }
 
+  idUsr++;
 
-  usuario.push(new User(usrAdd, dniAdd, producto));
+  usuario.push(new User(idUsr, usrAdd, dniAdd));
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+   let obtenerUsr = usuario.find((user) => user.dni === dniAdd);
+
+
+  localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
+
 }
 
+let usrunlg = document.getElementById("logoff");
 
+usrunlg.onclick = () => {
+  localStorage.setItem("userLog", null);
+}
 
 
 
@@ -128,21 +174,36 @@ function usrlog() {
         return false;
       }
 
-      if (usuario.find(user => user.nombre === userIng && user.dni === dniIng)) {
-        prodUser(userIng, dniIng)
+      
+
+   /*    usuario[obtenerUsr.id].producto[0] = productos; */
+
+
+ 
+      if (usuario.find((user) => user.dni === dniIng)) {
+
+   
+        let obtenerUsr = usuario.find((user) => user.dni === dniIng);
+
+        localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
+
         dniUser = dniIng;
         nomUser = userIng;
+
+        prodUser(userIng, dniIng)
+
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Bienvenido \n' + document.getElementById('usrAdd').value,
           showConfirmButton: false,
           timer: 1500
+
         })
+
+
+
       } else {
-
-
-
         swal.fire({
           title: 'Usuario no encontrado',
           text: "¿Desea crearlo?",
@@ -282,8 +343,19 @@ function addProd() {
 
   //Sugar Syntax
   id++;
+  prod++;
 
-  usuario[id].producto.push(new Producto(id, prodIng, precIng, cantIng));
+  productos.push(new Producto(id, prodIng, precIng, cantIng));
+
+
+
+
+  /*  usuario[obtenerUsr.id].producto[0] = productos; */
+  /*   usuario[0].producto2=usuario[0].push(new Producto(id, prodIng, precIng, cantIng));; */
+
+  //Al producto seleccionado del usuario se le agrega el array de productos
+  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+  usuario[obtenerUsr.id].producto[0] = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -406,7 +478,7 @@ function tabla(prod) {
 
 //REARMA TABLA CON LOS PRODUCTOS ACTUALES.
 
-function rearmarTab(productos) {
+function rearmarTab() {
 
   precioTotal = 0;
 
@@ -419,13 +491,19 @@ function rearmarTab(productos) {
 
     tabla(prod)
 
+
     precioTotal = precioTotal + productos[id].totprod;
 
   })
 
   document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
 
-  localStorage.setItem("productos" + dniUser, JSON.stringify(productos));
+
+  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+  usuario[obtenerUsr.id].producto[0] = productos;
+
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
 
 
 }
@@ -464,7 +542,7 @@ function busqueda() {
 
 //ELIMINAR ELEMENTOS DE LA TABLA Y MUESTRA EN LA TABLA LOS PRODUCTOS CARGADOS.
 
-function tabOrig(productos) {
+function tabOrig() {
 
   id = -1;
 
@@ -473,7 +551,7 @@ function tabOrig(productos) {
   while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
 
 
-  rearmarTab(productos)
+  rearmarTab()
 
 
 }
@@ -601,10 +679,28 @@ function modProd(valVal) {
 
     btnVali()
 
-    localStorage.setItem("productos" + dniUser, JSON.stringify(productos));
-  
-    productos = JSON.parse(localStorage.getItem("productos" + dniUser));
-    prodUser(nomUser, dniUser) 
+
+    const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+
+    usuario[obtenerUsr.id].producto[0] = productos;
+
+    localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+
+
+    /*     productos = JSON.parse(localStorage.getItem("usuarios")); */
+
+    tabOrig()
+
+
+
+
+
+
+
+
+
 
     document.getElementById("prodIngrMod").focus();
   });
@@ -700,6 +796,14 @@ tab.addEventListener("click", (e) => {
             'success'
           ) */
           productos.splice(valId.value, 1);
+
+          const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+
+          usuario[obtenerUsr.id].producto[0] = productos;
+
+          localStorage.setItem("usuarios", JSON.stringify(usuario));
+
 
           tabOrig()
         }
