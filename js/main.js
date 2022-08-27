@@ -44,7 +44,7 @@ function prodUser(userIng, dniIng) {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniIng);
 
-
+  dniUser = dniIng;
 
 
   /*     productos = JSON.parse(localStorage.getItem("usuarios")); */
@@ -128,6 +128,7 @@ let usrunlg = document.getElementById("logoff");
 
 usrunlg.onclick = () => {
   localStorage.setItem("userLog", null);
+  location.reload();
 }
 
 
