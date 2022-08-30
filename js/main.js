@@ -33,11 +33,135 @@ if (localStorage.getItem("usuarios")) {
 
   }
 
+}
+
+/* async function dolar(){
+
+const dolarTr = "https://api-dolar-argentina.herokuapp.com/api/dolarblue";
+const resp = await fetch(dolarTr)
+const data = await resp.json()
+
+document.getElementById("dolar").innerHTML=`<p>Dolar Blue: US$ ${data.compra}</p>`;
 
 
 
+} */
+
+
+
+
+const recetas = async () => {
+
+  const recetJson = await fetch("./js/data/recetas.json")
+
+  const data = await recetJson.json();
+
+let numAl1 = Math.round(Math.random() * 20000);
+let numAl2 = Math.round(Math.random() * 20000);
+let numAl3 = Math.round(Math.random() * 20000);
+
+
+console.log("NumRandom Index " + numAl1)
+
+let numAl1Id = data[numAl1].Id;
+let nombAl1 =  data[numAl1].Nombre.replace("Receta de ", "")
+nombAl1 = nombAl1.replace(/ /g, "_")
+nombAl1 = nombAl1[0].toLowerCase() + nombAl1.slice(1).toLowerCase();
+nombAl1 = nombAl1.normalize('NFD').replace(/[\u0300-\u036f]/g,"")
+
+let numAl2Id = data[numAl2].Id;
+let nombAl2 =  data[numAl2].Nombre.replace("Receta de ", "")
+nombAl2 = nombAl2.replace(/ /g, "_")
+nombAl2 = nombAl2[0].toLowerCase() + nombAl2.slice(1).toLowerCase();
+nombAl2 = nombAl2.normalize('NFD').replace(/[\u0300-\u036f]/g,"")
+
+let numAl3Id = data[numAl3].Id;
+let nombAl3 =  data[numAl3].Nombre.replace("Receta de ", "")
+nombAl3 = nombAl3.replace(/ /g, "_")
+nombAl3 = nombAl3[0].toLowerCase() + nombAl3.slice(1).toLowerCase();
+nombAl3 = nombAl3.normalize('NFD').replace(/[\u0300-\u036f]/g,"")
+
+/* console.log(data[numAl1].Id.toString().slice(-1))
+
+console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1))
+
+console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)) */
+
+
+
+  document.getElementById("recetas").innerHTML = `
+
+  <div class="carousel-item active">
+
+    <h3 class="text-center">${data[numAl1].Nombre}</h3>
+    <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg"
+    <ul>
+      <li><a href="${data[numAl1].Link_receta}">Receta completa</a></li>
+      <li>${data[numAl1].Ingredientes}</li>
+    </ul>
+  </div>
+
+  <div class="carousel-item">
+
+  <h3 class="text-center">${data[numAl2].Nombre}</h3>
+  <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
+    <ul>
+      <li><a href="${data[numAl2].Link_receta}">Receta completa</a></li>
+      <li>${data[numAl2].Ingredientes}</li>
+    </ul>
+  </div>
+
+  <div class="carousel-item">
+
+  <h3 class="text-center">${data[numAl3].Nombre}</h3>
+  <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
+    <ul>
+      <li><a href="${data[numAl3].Link_receta}">Receta completa</a></li>
+      <li>${data[numAl3].Ingredientes}</li>
+    </ul>
+
+  </div>
+  `
+}
+
+
+recetas();
+
+
+const userBd = async () => {
+
+  const userReg = await fetch("./js/data/datausr.json")
+
+  const data = await userReg.json()
+
+
+  data.forEach((post) => {
+    localStorage.setItem("usuarios", JSON.stringify(post));
+    usuario = post;
+
+  });
 
 }
+userBd();
+
+
+
+
+
+
+
+
+
+const dolar = async () => {
+
+  const dolarBlue = await fetch("https://api-dolar-argentina.herokuapp.com/api/dolarblue")
+
+  const data = await dolarBlue.json()
+
+  document.getElementById("dolar").innerHTML = `<p>Dolar Blue: US$ ${data.compra}</p>`;
+
+}
+dolar();
 
 function prodUser(userIng, dniIng) {
 
@@ -46,7 +170,8 @@ function prodUser(userIng, dniIng) {
 
   dniUser = dniIng;
 
-
+  document.getElementById("usrProf1").innerHTML = `
+  <h2>${obtenerUsr.nombre[0].toUpperCase()}</h2>`;
   /*     productos = JSON.parse(localStorage.getItem("usuarios")); */
 
   let ultimoProd = usuario[obtenerUsr.id].producto.length;
@@ -117,7 +242,29 @@ function createUser(usrAdd, dniAdd) {
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
-   let obtenerUsr = usuario.find((user) => user.dni === dniAdd);
+
+  /* const guardarjson = async () =>{
+  
+    const URLJSON = await fetch("./js/datausr.json");
+  
+    const data = await URLJSON.json()
+  
+  data ((post) => {
+  usuario
+  
+  })
+  
+  }
+  
+  guardarjson()
+   */
+  /*   .then((res) => res.json())
+    .then((data) =>{
+  
+      
+    }) */
+
+  let obtenerUsr = usuario.find((user) => user.dni === dniAdd);
 
 
   localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
@@ -147,6 +294,12 @@ function usrlog() {
       '<input id="usrAdd" class="swal2-input" placeholder="Nombre">' +
       '<input id="dniAdd" class="swal2-input" placeholder="DNI">',
 
+    /*     input: 'file',
+        inputAttributes: {
+          'accept': 'image/*',
+          'aria-label': 'Upload your profile picture',
+           id: "imgUsr"
+        }, */
     focusConfirm: false,
     confirmButtonColor: '#69a30a',
 
@@ -166,33 +319,35 @@ function usrlog() {
 
 
       if (!userIng) {
-        Swal.showValidationMessage("Ingrese un usuario");
+        Swal.showValidationMessage("Ingresa tu nombre");
         return false;
       }
 
       if (!dniIng) {
-        Swal.showValidationMessage("Ingrese la contraseña");
+        Swal.showValidationMessage("Intresa tu DNI");
         return false;
       }
 
-      
-
-   /*    usuario[obtenerUsr.id].producto[0] = productos; */
 
 
- 
-      if (usuario.find((user) => user.dni === dniIng)) {
+      /*    usuario[obtenerUsr.id].producto[0] = productos; */
 
-   
+
+
+      if (usuario.find((user) => user.nombre === userIng && user.dni === dniIng)) {
+
+
         let obtenerUsr = usuario.find((user) => user.dni === dniIng);
 
         localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
 
+        document.getElementById("usrProf1").innerHTML = `<h2>${userIng[0].toUpperCase()}</h2>`;
         dniUser = dniIng;
         nomUser = userIng;
 
         prodUser(userIng, dniIng)
 
+        //Se toma el elemento imagen del id imgUsr y se debe inyectar en el css .usrProf
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -204,10 +359,23 @@ function usrlog() {
 
 
 
+      } else if (usuario.find((user) => user.dni === dniIng)) {
+        swal.fire({
+          title: 'DNI ya existente',
+          text: 'El usuario no corresponde con el DNI ingresado.',
+          icon: 'warning',
+          confirmButtonText: 'Volver',
+
+        }).then((result) => {
+          if (result.isConfirmed) {
+            usrlog();
+          }
+        })
       } else {
+
         swal.fire({
           title: 'Usuario no encontrado',
-          text: "¿Desea crearlo?",
+          text: '¿Desea crearlo?',
           icon: 'warning',
           showCancelButton: true,
           confirmButtonText: 'Crear',
@@ -215,10 +383,10 @@ function usrlog() {
           reverseButtons: true
         }).then((result) => {
           if (result.isConfirmed) {
-
             dniUser = dniIng;
             nomUser = userIng;
-
+            document.getElementById("usrProf1").innerHTML = `
+            <h2>${userIng[0].toUpperCase()}</h2>`;
             swal.fire(
               'Usuario ' + userIng + ' creado',
               '',
