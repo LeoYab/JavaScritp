@@ -59,14 +59,14 @@ const recetas = async () => {
   const recetJson = await fetch("./js/data/recetas.json")
 
   const data = await recetJson.json();
-/* 
-  const filtro = data.filter ((el) => el.Link_receta.includes("-"))
 
-  console.log(data)
- */
-let numAl1 = Math.round(Math.random() * 11500);
-let numAl2 = Math.round(Math.random() * 11500);
-let numAl3 = Math.round(Math.random() * 11500);
+/*   const filtro = data.filter ((el) => el.Ingredientes.includes(" "))
+
+  console.log(filtro) */
+
+let numAl1 = Math.round(Math.random() * 11300);
+let numAl2 = Math.round(Math.random() * 11300);
+let numAl3 = Math.round(Math.random() * 11300);
 
 
 let numAl1Id = data[numAl1].Id;
