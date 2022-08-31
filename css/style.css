@@ -182,3 +182,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .imgRecetas {
   width: 250px; }
+
+.usrProf h2 {
+  user-select: none; }
+
+.form-control:focus {
+  color: #212529;
+  border-color: #428b30e3;
+  box-shadow: none; }
+
+.offcanvas.offcanvas-start {
+  width: 80%; }

@@ -99,10 +99,11 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
   <div class="carousel-item active">
 
     <h3 class="text-center">${data[numAl1].Nombre.replace("Receta de ", "")}</h3>
-    <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg"
+    <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg">
     <ul>
       <li class="text-start"><a href="${data[numAl1].Link_receta}">Receta completa</a></li>
-      <li class="text-start">Ingredientes:<br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
+      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl1].Tiempo}</li>
+      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
   </div>
 
@@ -112,7 +113,8 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
     <ul>
       <li class="text-start"><a href="${data[numAl2].Link_receta}">Receta completa</a></li>
-      <li class="text-start">Ingredientes:<br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
+      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl2].Tiempo}</li>
+      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
   </div>
 
@@ -122,7 +124,8 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
     <ul>
       <li class="text-start"><a href="${data[numAl3].Link_receta}">Receta completa</a></li>
-      <li class="text-start">Ingredientes:<br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
+      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl3].Tiempo}</li>
+      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
 
   </div>
@@ -815,7 +818,7 @@ function modProd(valVal) {
       <form class="d-flex gap-2 needs-validation align-items-center" novalidate>
       <div class="mb-3">
         <label for="prodIngrMod" class="form-label col-form-label-sm mb-0">Producto</label>
-        <input autofocus id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
+        <input id="prodIngrMod" type="text" class="form-control" value="${prodSelecEdi.nombre}" required>
         </div>
       <div class="mb-3">
         <label for="precIngrMod" class="form-label col-form-label-sm mb-0">Precio</label>
@@ -845,6 +848,7 @@ function modProd(valVal) {
 
   btnMod.addEventListener("click", () => {
 
+    document.getElementById("prodIngrMod").focus();
 
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
@@ -881,7 +885,7 @@ function modProd(valVal) {
 
 
 
-    document.getElementById("prodIngrMod").focus();
+   
   });
 
 }
