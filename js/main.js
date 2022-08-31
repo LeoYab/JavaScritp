@@ -31,9 +31,10 @@ if (localStorage.getItem("usuarios")) {
   if (obtenerUser != null) {
 
 
-    prodUser("", obtenerUser)
-
-    document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
+    prodUser("", obtenerUser);
+   
+    document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
+    document.getElementById("logoffSalir").setAttribute("style", "display:block");
   }
 
 }
@@ -101,7 +102,7 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
     <h3 class="text-center">${data[numAl1].Nombre.replace("Receta de ", "")}</h3>
     <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg">
     <ul>
-      <li class="text-start"><a href="${data[numAl1].Link_receta}">Receta completa</a></li>
+      <li class="text-start"><a href="${data[numAl1].Link_receta}" target="_blank">Receta completa</a></li>
       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl1].Tiempo}</li>
       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
@@ -112,7 +113,7 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
   <h3 class="text-center">${data[numAl2].Nombre.replace("Receta de ", "")}</h3>
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
     <ul>
-      <li class="text-start"><a href="${data[numAl2].Link_receta}">Receta completa</a></li>
+      <li class="text-start"><a href="${data[numAl2].Link_receta}" target="_blank">Receta completa</a></li>
       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl2].Tiempo}</li>
       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
@@ -123,7 +124,7 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
   <h3 class="text-center">${data[numAl3].Nombre.replace("Receta de ", "")}</h3>
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
     <ul>
-      <li class="text-start"><a href="${data[numAl3].Link_receta}">Receta completa</a></li>
+      <li class="text-start"><a href="${data[numAl3].Link_receta}" target="_blank">Receta completa</a></li>
       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl3].Tiempo}</li>
       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
@@ -277,7 +278,8 @@ function createUser(usrAdd, dniAdd) {
 
   localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
 
-  document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
+  document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
+  document.getElementById("logoffSalir").setAttribute("style", "display:block");
 }
 
 let usrunlg = document.getElementById("logoff");
@@ -286,10 +288,6 @@ usrunlg.onclick = () => {
   localStorage.setItem("userLog", null);
   location.reload();
 }
-
-
-
-
 
 
 let usrLog = document.getElementById("usrProf1");
@@ -354,7 +352,8 @@ function usrlog() {
         localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
 
         document.getElementById("usrProf1").innerHTML = `<h2 title="${userIng}">${userIng[0]}</h2>`;
-        document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
+        document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
+        document.getElementById("logoffSalir").setAttribute("style", "display:block");
         dniUser = dniIng;
         nomUser = userIng;
 
