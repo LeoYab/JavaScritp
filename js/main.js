@@ -21,7 +21,9 @@ let obtenerUser;
 AOS.init();
 //Al editar los productos de un usuario en particular, agarra otro array en vez de continuar con el mismo. Tambien con la eliminación.
 if (localStorage.getItem("usuarios")) {
+
   usuario = JSON.parse(localStorage.getItem("usuarios"));
+
   idUsr = usuario.length - 1;
 
   obtenerUser = JSON.parse(localStorage.getItem("userLog"));
@@ -31,6 +33,7 @@ if (localStorage.getItem("usuarios")) {
 
     prodUser("", obtenerUser)
 
+    document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
   }
 
 }
@@ -55,13 +58,15 @@ const recetas = async () => {
   const recetJson = await fetch("./js/data/recetas.json")
 
   const data = await recetJson.json();
+/* 
+  const filtro = data.filter ((el) => el.Link_receta.includes("-"))
 
-let numAl1 = Math.round(Math.random() * 20000);
-let numAl2 = Math.round(Math.random() * 20000);
-let numAl3 = Math.round(Math.random() * 20000);
+  console.log(data)
+ */
+let numAl1 = Math.round(Math.random() * 11500);
+let numAl2 = Math.round(Math.random() * 11500);
+let numAl3 = Math.round(Math.random() * 11500);
 
-
-console.log("NumRandom Index " + numAl1)
 
 let numAl1Id = data[numAl1].Id;
 let nombAl1 =  data[numAl1].Nombre.replace("Receta de ", "")
@@ -93,31 +98,31 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
 
   <div class="carousel-item active">
 
-    <h3 class="text-center">${data[numAl1].Nombre}</h3>
+    <h3 class="text-center">${data[numAl1].Nombre.replace("Receta de ", "")}</h3>
     <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg"
     <ul>
-      <li><a href="${data[numAl1].Link_receta}">Receta completa</a></li>
-      <li>${data[numAl1].Ingredientes}</li>
+      <li class="text-start"><a href="${data[numAl1].Link_receta}">Receta completa</a></li>
+      <li class="text-start">Ingredientes:<br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
   </div>
 
   <div class="carousel-item">
 
-  <h3 class="text-center">${data[numAl2].Nombre}</h3>
+  <h3 class="text-center">${data[numAl2].Nombre.replace("Receta de ", "")}</h3>
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length -3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
     <ul>
-      <li><a href="${data[numAl2].Link_receta}">Receta completa</a></li>
-      <li>${data[numAl2].Ingredientes}</li>
+      <li class="text-start"><a href="${data[numAl2].Link_receta}">Receta completa</a></li>
+      <li class="text-start">Ingredientes:<br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
   </div>
 
   <div class="carousel-item">
 
-  <h3 class="text-center">${data[numAl3].Nombre}</h3>
+  <h3 class="text-center">${data[numAl3].Nombre.replace("Receta de ", "")}</h3>
   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length -3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
     <ul>
-      <li><a href="${data[numAl3].Link_receta}">Receta completa</a></li>
-      <li>${data[numAl3].Ingredientes}</li>
+      <li class="text-start"><a href="${data[numAl3].Link_receta}">Receta completa</a></li>
+      <li class="text-start">Ingredientes:<br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
     </ul>
 
   </div>
@@ -128,7 +133,7 @@ console.log(data[numAl1].Id.toString().slice(numAl1Id.toString().length -3, -2))
 recetas();
 
 
-const userBd = async () => {
+/* const userBd = async () => {
 
   const userReg = await fetch("./js/data/datausr.json")
 
@@ -142,16 +147,13 @@ const userBd = async () => {
   });
 
 }
-userBd();
+userBd(); */
 
 
 
 
 
-
-
-
-
+/* 
 const dolar = async () => {
 
   const dolarBlue = await fetch("https://api-dolar-argentina.herokuapp.com/api/dolarblue")
@@ -161,8 +163,7 @@ const dolar = async () => {
   document.getElementById("dolar").innerHTML = `<p>Dolar Blue: US$ ${data.compra}</p>`;
 
 }
-dolar();
-
+dolar();*/
 function prodUser(userIng, dniIng) {
 
 
@@ -170,8 +171,12 @@ function prodUser(userIng, dniIng) {
 
   dniUser = dniIng;
 
-  document.getElementById("usrProf1").innerHTML = `
-  <h2>${obtenerUsr.nombre[0].toUpperCase()}</h2>`;
+  document.getElementById("changeButtonusrProf1").innerHTML = `
+  <div class="usrProf d-flex justify-content-center align-items-center ">
+  <h2 title="${obtenerUsr.nombre}">${obtenerUsr.nombre[0]}</h2>
+  </div>`;
+
+ 
   /*     productos = JSON.parse(localStorage.getItem("usuarios")); */
 
   let ultimoProd = usuario[obtenerUsr.id].producto.length;
@@ -269,6 +274,7 @@ function createUser(usrAdd, dniAdd) {
 
   localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
 
+  document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
 }
 
 let usrunlg = document.getElementById("logoff");
@@ -282,9 +288,12 @@ usrunlg.onclick = () => {
 
 
 
-let usrlg = document.getElementById("usrProf1");
 
-usrlg.onclick = () => { usrlog() }
+let usrLog = document.getElementById("usrProf1");
+
+usrLog != null && (document.getElementById("usrProf1").onclick = () => usrlog() )
+
+
 
 function usrlog() {
 
@@ -292,7 +301,7 @@ function usrlog() {
     title: 'INGRESA TUS DATOS',
     html:
       '<input id="usrAdd" class="swal2-input" placeholder="Nombre">' +
-      '<input id="dniAdd" class="swal2-input" placeholder="DNI">',
+      '<input id="dniAdd" type="number" class="swal2-input" placeholder="DNI">',
 
     /*     input: 'file',
         inputAttributes: {
@@ -314,7 +323,7 @@ function usrlog() {
       console.log(userBusq); */
       /* usuario.forEach((e) => e.dni.includes(verifUser) ? console.log("Existe") : console.log("No existe")) */
 
-      let userIng = document.getElementById("usrAdd").value;
+      let userIng = document.getElementById("usrAdd").value[0].toUpperCase() + document.getElementById("usrAdd").value.slice(1).toLowerCase();
       let dniIng = document.getElementById("dniAdd").value;
 
 
@@ -341,7 +350,8 @@ function usrlog() {
 
         localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
 
-        document.getElementById("usrProf1").innerHTML = `<h2>${userIng[0].toUpperCase()}</h2>`;
+        document.getElementById("usrProf1").innerHTML = `<h2 title="${userIng}">${userIng[0]}</h2>`;
+        document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket")
         dniUser = dniIng;
         nomUser = userIng;
 
@@ -361,7 +371,7 @@ function usrlog() {
 
       } else if (usuario.find((user) => user.dni === dniIng)) {
         swal.fire({
-          title: 'DNI ya existente',
+          title: 'DNI Existente',
           text: 'El usuario no corresponde con el DNI ingresado.',
           icon: 'warning',
           confirmButtonText: 'Volver',
@@ -386,7 +396,7 @@ function usrlog() {
             dniUser = dniIng;
             nomUser = userIng;
             document.getElementById("usrProf1").innerHTML = `
-            <h2>${userIng[0].toUpperCase()}</h2>`;
+            <h2 title="${userIng}">${userIng[0]}</h2>`;
             swal.fire(
               'Usuario ' + userIng + ' creado',
               '',
