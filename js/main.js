@@ -410,14 +410,14 @@ function prodGen() {
 
     genTab.innerHTML = `
     <td class="align-middle">${producto.nombre}</td>
-    <td class="align-middle">$${producto.precio}</td>
+    <td class="align-middle">$${producto.precio.toFixed(2)}</td>
     <td class="canti">
       <div class="input-group input-group-sm ">
       <span class="input-group-text" id="basic-addon1">X</span>
         <input id="${producto.id}" type="number" class="form-control text-center" min="1" value="${producto.cantidad}" aria-describedby="basic-addon1">
       </div>
     </td>
-    <td class="align-middle">$${producto.totprod}</td>
+    <td class="align-middle">$${producto.totprod.toFixed(2)}</td>
     <td class="align-middle">
       <div class="d-flex justify-content-end btn-group">
       <button id="ed${producto.id}" value="${producto.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
@@ -425,8 +425,8 @@ function prodGen() {
       </div>
     </td>`;
 
-    document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
-
+    document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal.toFixed(2);
+    document.getElementById("cantidadProductos").innerText = productos.length;
   }
 
   tabGen = document.getElementById("tabla");
@@ -564,14 +564,14 @@ function tabla(prod) {
   genTab.innerHTML += `
 
  <td class="align-middle">${prod.nombre}</td>
- <td class="align-middle">$${prod.precio}</td>
+ <td class="align-middle">$${prod.precio.toFixed(2)}</td>
  <td class="canti">
    <div class="input-group input-group-sm ">
      <span class="input-group-text" id="basic-addon1">X</span>
      <input input id="${prod.id}" type="number" class="form-control text-center" min="1" value="${prod.cantidad}" aria-describedby="basic-addon1">
    </div>
  </td>
- <td class="align-middle">$${prod.totprod}</td>
+ <td class="align-middle">$${prod.totprod.toFixed(2)}</td>
  <td class="align-middle">
  <div class="d-flex justify-content-end btn-group">
  <button id="ed${prod.id}" value="${prod.id}" class="btn btn-outline-success btn-sm fa-regular fa-pen-to-square" data-bs-toggle="modal" type="button" data-bs-target="#modificarProd"></button>
@@ -603,8 +603,9 @@ function rearmarTab() {
 
   });
 
-  document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal;
-
+  document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal.toFixed(2);
+  document.getElementById("cantidadProductos").innerText = productos.length;
+  document.getElementById("cantidadProductos").setAttribute("class", "mb-0 fw-bold");
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
