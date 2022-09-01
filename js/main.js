@@ -427,6 +427,7 @@ function prodGen() {
 
     document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal.toFixed(2);
     document.getElementById("cantidadProductos").innerText = productos.length;
+    document.getElementById("cantidadProductos").setAttribute("class", "mb-0 fw-bold");
   }
 
   tabGen = document.getElementById("tabla");
