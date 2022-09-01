@@ -143,29 +143,6 @@ label {
 button#btnMod {
   padding: .6rem; }
 
-/* 
-.title-class2{
-padding-bottom: 10px;
-background-color: #558508;
-border-radius: 5px 5px 0 0 ;
-font-size:x-large !important;
-}
-
-
-
-.btnSwt{
-padding: .8rem;
-
-}
-
-.swal2-actions{
-margin:0 !important;
-}
-
-
-.swal2-title{
-    padding:.5rem !important;
-} */
 .btn-outline-success {
   --bs-btn-hover-bg: #69a30a;
   --bs-btn-border-color: #558508;
@@ -193,7 +170,3 @@ input[type=number]::-webkit-outer-spin-button {
 
 .offcanvas.offcanvas-start {
   width: 80%; }
-
-  .swal2-html-container{
-    margin:0 !important;
-  }
