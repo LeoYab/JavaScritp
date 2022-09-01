@@ -435,7 +435,7 @@ function prodGen() {
 }
 
 
-/*ARRAY DE PRODUCTOS*/
+/*CARGA DE PRODUCTOS EN ARRAY DE OBJETOS*/
 /* -------------------------------------------------------------------- */
 
 //se toman valores de los inputs y se guardan en el array. Luego se llama al a función prodGen para mostrarlos en pantalla.
@@ -450,10 +450,10 @@ function addProd() {
     constructor(id, nombre, precio, cantidad) {
       this.id = id;
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-      this.precio = parseFloat(precio);
+      this.precio = parseFloat(precio).toFixed(2);
       this.cantidad = parseInt(cantidad);
-      this.totprod = parseFloat(this.precio * this.cantidad);
-      precioTotal = parseFloat(precioTotal + this.totprod);
+      this.totprod = parseFloat(this.precio * this.cantidad).toFixed(2);
+      precioTotal = parseFloat(precioTotal + this.totprod).toFixed(2);
 
     }
 
