@@ -709,7 +709,7 @@ function modProd(valVal) {
 
   btnMod.addEventListener("click", () => {
 
-    document.getElementById("prodIngrMod").focus();
+/*     document.getElementById("prodIngrMod").focus(); */
 
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
@@ -722,8 +722,6 @@ function modProd(valVal) {
     productos[valVal].precio = parseFloat(precIngrMod);
     productos[valVal].cantidad = parseInt(cantIngrMod);
     productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
-
-    
 
     const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
