@@ -355,7 +355,7 @@ function usrlog() {
             <div class="usrProf d-flex justify-content-center align-items-center ">
             <h2 title="${userIng}">${userIng[0]}</h2>
             </div>`;
-            
+
             swal.fire(
               'Usuario ' + userIng + ' creado',
               '',
@@ -617,6 +617,10 @@ function rearmarTab() {
 
 }
 
+function removerTabla(idCapturado) {
+
+  while (idCapturado.firstChild) idCapturado.removeChild(idCapturado.firstChild);
+}
 
 /*BUSCADOR DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
@@ -633,7 +637,7 @@ function busqueda() {
 
   let elimTabla = document.getElementById("tabla");
 
-  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+  removerTabla(elimTabla);
 
   //Se recorre el array de búsqueda y se imprime en pantalla.
 
@@ -652,7 +656,7 @@ function tabOrig() {
 
   let elimTabla = document.getElementById("tabla");
 
-  while (elimTabla.firstChild) elimTabla.removeChild(elimTabla.firstChild);
+  removerTabla(elimTabla);
 
   rearmarTab();
 
@@ -672,7 +676,7 @@ function modProd(valVal) {
 
   let ediProd = document.getElementById("ediProd");
 
-  while (ediProd.firstChild) ediProd.removeChild(ediProd.firstChild);
+  removerTabla(ediProd);
 
   let prodSelecEdi = productos[valVal];
 
@@ -694,7 +698,7 @@ function modProd(valVal) {
         </div>
       <div class="mb-3">
         <label for="cantIngrMod" class="form-label col-form-label-sm mb-0">⁪</label>
-        <button class="btn btn-outline-success fa-solid fa-circle-check" type="submit" id="btnMod"></button>
+        <button class="btn btn-outline-success fa-solid fa-circle-check" data-bs-dismiss="modal" type="submit" id="btnMod"></button>
       </div>
     </div>
     </form>`;
@@ -703,36 +707,41 @@ function modProd(valVal) {
 
   tabGen.append(modTab);
 
-//Se agrega el producto modificado al array y se guarda en el localStorage.
+  //Se agrega el producto modificado al array y se guarda en el localStorage.
 
   let btnMod = document.getElementById("btnMod");
 
-  btnMod.addEventListener("click", () => {
+  btnMod.onclick = () => {
 
-/*     document.getElementById("prodIngrMod").focus(); */
+    document.getElementById("prodIngrMod").focus();
 
     let prodIngrMod = document.getElementById("prodIngrMod").value;
     let precIngrMod = document.getElementById("precIngrMod").value;
     let cantIngrMod = document.getElementById("cantIngrMod").value;
 
+    btnVali();
 
     if (prodIngrMod != "" && precIngrMod != "" && cantIngrMod != "") {
-      
-    productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
-    productos[valVal].precio = parseFloat(precIngrMod);
-    productos[valVal].cantidad = parseInt(cantIngrMod);
-    productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
 
-    const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+      productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
+      productos[valVal].precio = parseFloat(precIngrMod);
+      productos[valVal].cantidad = parseInt(cantIngrMod);
+      productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
 
-    usuario[obtenerUsr.id].producto[0] = productos;
+      const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-    localStorage.setItem("usuarios", JSON.stringify(usuario));
+      usuario[obtenerUsr.id].producto[0] = productos;
 
-    tabOrig();
+      localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+
+      tabOrig();
+
+    }
+
+    return false;
 
   }
- });
 
 }
 //Escuchador de eventos click en el cual chequea si se presionó el botón editar o eliminar de un producto específico.

@@ -69,7 +69,10 @@ strong {
   height: 18px; }
 
 .ingresarProd {
-  display: none; }
+  display: none;
+  background-color: #69a30ae8;
+  padding: 10px;
+  border-radius: 15px; }
 
 .agregarProd {
   text-align: center; }
@@ -179,3 +182,16 @@ input[type=number]::-webkit-outer-spin-button {
 
 p#titProd {
   font-size: small; }
+
+#button-addon2 {
+  background-color: #4d77088e;
+  color: #fff; }
+
+#button-addon2:hover {
+  background-color: #9fc95a; }
+
+.btn {
+  border: var(--bs-btn-border-width) solid #6ca115ef; }
+
+.btn:hover {
+  border-color: var(--bs-btn-hover-bg); }
