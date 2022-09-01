@@ -450,10 +450,10 @@ function addProd() {
     constructor(id, nombre, precio, cantidad) {
       this.id = id;
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
-      this.precio = parseFloat(precio).toFixed(2);
+      this.precio = parseFloat(precio);
       this.cantidad = parseInt(cantidad);
-      this.totprod = parseFloat(this.precio * this.cantidad).toFixed(2);
-      precioTotal = parseFloat(precioTotal + this.totprod).toFixed(2);
+      this.totprod = parseFloat(this.precio * this.cantidad);
+      precioTotal = parseFloat(precioTotal + this.totprod);
 
     }
 
