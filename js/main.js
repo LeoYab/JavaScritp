@@ -716,12 +716,14 @@ function modProd(valVal) {
     let cantIngrMod = document.getElementById("cantIngrMod").value;
 
 
+    if (prodIngrMod != "" && precIngrMod != "" && cantIngrMod != "") {
+      
     productos[valVal].nombre = prodIngrMod[0].toUpperCase() + prodIngrMod.slice(1).toLowerCase();
     productos[valVal].precio = parseFloat(precIngrMod);
     productos[valVal].cantidad = parseInt(cantIngrMod);
     productos[valVal].totprod = productos[valVal].precio * productos[valVal].cantidad;
 
-    btnVali();
+    
 
     const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
@@ -731,7 +733,8 @@ function modProd(valVal) {
 
     tabOrig();
 
-  });
+  }
+ });
 
 }
 //Escuchador de eventos click en el cual chequea si se presionó el botón editar o eliminar de un producto específico.
