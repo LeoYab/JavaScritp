@@ -18,6 +18,7 @@ let dniUser;
 let nomUser;
 let prod = -1;
 let obtenerUser;
+let nombreLista;
 AOS.init();
 
 
@@ -166,7 +167,7 @@ function prodUser(userIng, dniIng) {
   <h2 title="${obtenerUsr.nombre}">${obtenerUsr.nombre[0]}</h2>
   </div>`;
 
-  let ultimoProd = usuario[obtenerUsr.id].producto.length;
+  let ultimoProd = usuario[obtenerUsr.id].nombreLista[0].productosLista.length;
 
   if (ultimoProd == 0) {
 
@@ -174,7 +175,7 @@ function prodUser(userIng, dniIng) {
 
   } else {
 
-    productos = usuario[obtenerUsr.id].producto[ultimoProd - 1];
+    productos = usuario[obtenerUsr.id].nombreLista[0].productosLista[ultimoProd - 1];
 
     if (productos != null) {
 
@@ -204,7 +205,10 @@ function createUser(usrAdd, dniAdd) {
       this.id = id;
       this.nombre = nombre[0].toUpperCase() + nombre.slice(1).toLowerCase();
       this.dni = dni;
-      this.producto = [];
+      this.nombreLista = [{
+        lista: "Sin_nombre",
+        productos: []
+      }];
     }
 
   }
@@ -213,8 +217,13 @@ function createUser(usrAdd, dniAdd) {
 
   usuario.push(new User(idUsr, usrAdd, dniAdd));
 
-  localStorage.setItem("usuarios", JSON.stringify(usuario));
+  /*   usuario[0].nombreLista.push(productosLista); */
 
+
+
+  /*   usuario[0].nombreLista[0].nombreLista = productos;  */
+
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
   /*   let obtenerUsr = usuario.find((user) => user.dni === dniAdd); */
 
   localStorage.setItem("userLog", JSON.stringify(dniAdd));
@@ -466,7 +475,8 @@ function addProd() {
   productos.push(new Producto(id, prodIng, precIng, cantIng));
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
-  usuario[obtenerUsr.id].producto[0] = productos;
+
+  usuario[0].nombreLista[0].productos = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -610,7 +620,7 @@ function rearmarTab() {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  usuario[obtenerUsr.id].producto[0] = productos;
+  usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -730,7 +740,7 @@ function modProd(valVal) {
 
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      usuario[obtenerUsr.id].producto[0] = productos;
+      usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -820,7 +830,7 @@ tab.addEventListener("click", (e) => {
 
           const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-          usuario[obtenerUsr.id].producto[0] = productos;
+          usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
 
           localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -835,3 +845,83 @@ tab.addEventListener("click", (e) => {
   }
 
 });
+
+
+document.getElementById("guardarLista").onclick = () => {
+
+  //Se oculta el navbar porque sino no deja escribir en el input
+
+  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
+
+  Swal.fire({
+
+    title: 'Ingrese el nombre de la lista',
+    html:
+      '<input id="nombreLista" class="swal2-input">',
+
+    focusConfirm: true,
+
+    preConfirm: () => {
+      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
+
+      let listaIngresada = document.getElementById("nombreLista").value
+
+      const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+      usuario[obtenerUsr.id].nombreLista[0].lista = listaIngresada;
+
+      localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+
+
+
+      /* 
+           class NombreLista {
+            constructor(nombredeLista) {
+              this.nombredeLista = nombredeLista;
+              this.productosLista = productos;
+          }
+      
+        }
+       */
+      /*   usuario[obtenerUsr.id].nombreLista[0].push(new NombreLista(listaIngresada)); */
+
+      /*   nombreLista[0] = productos;  */
+
+
+
+
+
+
+
+    }
+  })
+
+  //Realizar tarea con indexOf en donde al momento de guardar, busca la ultima lista del inidice y guarda en el siguiente indice.
+  //si se requier abrir una lista ya cargada se puede agregar al momento de guardar en un div, el value del indice. Entonces al presionar click
+  //toma el value que se tocó y busca ese indice.
+
+}
+
+document.getElementById("nuevaLista").onclick = () => {
+
+/*   removerTabla(pasarid); */
+
+  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+
+  usuario[obtenerUsr.id].nombreLista[1] = {
+    lista:"Sin_Nombre",
+    productos: [],
+  }
+    
+
+
+
+/*   usuario[obtenerUsr.id].nombreLista[0].lista = listaIngresada; */
+
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+
+
+}
