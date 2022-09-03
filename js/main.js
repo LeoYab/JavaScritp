@@ -168,6 +168,8 @@ function prodUser(userIng, dniIng) {
   <h2 title="${obtenerUsr.nombre}">${obtenerUsr.nombre[0]}</h2>
   </div>`;
 
+  cantListas = usuario[obtenerUsr.id].nombreLista.length -1;
+
   let ultimoProd = usuario[obtenerUsr.id].nombreLista[cantListas].productos.length;
 
   if (ultimoProd == 0) {
@@ -176,7 +178,7 @@ function prodUser(userIng, dniIng) {
 
   } else {
 
-    productos = usuario[obtenerUsr.id].nombreLista[cantListas].productos[ultimoProd - 1];
+    productos = usuario[obtenerUsr.id].nombreLista[cantListas].productos;
 
     if (productos != null) {
 
@@ -849,6 +851,9 @@ tab.addEventListener("click", (e) => {
 });
 
 
+///// Tiene que guardar la lista cuando el usuario quiera. Entonces al presioanr nueva lista, debe hacer una lista nueva unicamente
+// y si el usuario quiere, la guarda.
+
 document.getElementById("guardarLista").onclick = () => {
 
   //Se oculta el navbar porque sino no deja escribir en el input
@@ -874,6 +879,8 @@ document.getElementById("guardarLista").onclick = () => {
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
 
+      listas(listaIngresada);
+
     }
   })
 
@@ -894,10 +901,11 @@ document.getElementById("GuardarNuevaLista").onclick = () => {
   productos = [];
   id = -1;
   prod = -1;
+  precioTotal = 0;
 
 document.getElementById("cantidadProductos").innerText = "";
+document.getElementById("totalProd").innerText = "";
 
-precioTotal = 0;
 
   document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
 
@@ -926,9 +934,20 @@ precioTotal = 0;
 
       }
 
-      localStorage.setItem("usuarios", JSON.stringify(usuario));
+      listas(nuevaLista)
 
+      localStorage.setItem("usuarios", JSON.stringify(usuario));
     }
   });
+
+}
+
+function listas(nuevaLista){
+
+  document.getElementById("listasGuardadas").innerHTML +=`
+  <li><a id="Lista${cantListas}" class="dropdown-item" value"${cantListas}" href="#">${nuevaLista}</a></li>
+                <hr class="dropdown-divider">
+  
+  `;
 
 }
