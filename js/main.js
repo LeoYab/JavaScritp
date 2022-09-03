@@ -19,6 +19,7 @@ let nomUser;
 let prod = -1;
 let obtenerUser;
 let nombreLista;
+let cantListas = 0;
 AOS.init();
 
 
@@ -167,7 +168,7 @@ function prodUser(userIng, dniIng) {
   <h2 title="${obtenerUsr.nombre}">${obtenerUsr.nombre[0]}</h2>
   </div>`;
 
-  let ultimoProd = usuario[obtenerUsr.id].nombreLista[0].productosLista.length;
+  let ultimoProd = usuario[obtenerUsr.id].nombreLista[cantListas].productos.length;
 
   if (ultimoProd == 0) {
 
@@ -175,7 +176,7 @@ function prodUser(userIng, dniIng) {
 
   } else {
 
-    productos = usuario[obtenerUsr.id].nombreLista[0].productosLista[ultimoProd - 1];
+    productos = usuario[obtenerUsr.id].nombreLista[cantListas].productos[ultimoProd - 1];
 
     if (productos != null) {
 
@@ -476,7 +477,7 @@ function addProd() {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  usuario[0].nombreLista[0].productos = productos;
+  usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -620,7 +621,7 @@ function rearmarTab() {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
+  usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -630,6 +631,7 @@ function rearmarTab() {
 function removerTabla(idCapturado) {
 
   while (idCapturado.firstChild) idCapturado.removeChild(idCapturado.firstChild);
+
 }
 
 /*BUSCADOR DE PRODUCTOS*/
@@ -740,7 +742,7 @@ function modProd(valVal) {
 
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
+      usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -830,7 +832,7 @@ tab.addEventListener("click", (e) => {
 
           const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-          usuario[obtenerUsr.id].nombreLista[0].productosLista = productos;
+          usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
 
           localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -864,35 +866,13 @@ document.getElementById("guardarLista").onclick = () => {
     preConfirm: () => {
       document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
 
-      let listaIngresada = document.getElementById("nombreLista").value
+      let listaIngresada = document.getElementById("nombreLista").value;
 
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      usuario[obtenerUsr.id].nombreLista[0].lista = listaIngresada;
+      usuario[obtenerUsr.id].nombreLista[cantListas].lista = listaIngresada;
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
-
-
-
-
-      /* 
-           class NombreLista {
-            constructor(nombredeLista) {
-              this.nombredeLista = nombredeLista;
-              this.productosLista = productos;
-          }
-      
-        }
-       */
-      /*   usuario[obtenerUsr.id].nombreLista[0].push(new NombreLista(listaIngresada)); */
-
-      /*   nombreLista[0] = productos;  */
-
-
-
-
-
-
 
     }
   })
@@ -903,25 +883,52 @@ document.getElementById("guardarLista").onclick = () => {
 
 }
 
-document.getElementById("nuevaLista").onclick = () => {
+document.getElementById("GuardarNuevaLista").onclick = () => {
 
-/*   removerTabla(pasarid); */
+  //Pone todo en cero menos el usuario
 
-  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+  let elimTabla = document.getElementById("tabla");
 
+  removerTabla(elimTabla); 
 
-  usuario[obtenerUsr.id].nombreLista[1] = {
-    lista:"Sin_Nombre",
-    productos: [],
-  }
-    
+  productos = [];
+  id = -1;
+  prod = -1;
 
+document.getElementById("cantidadProductos").innerText = "";
 
+precioTotal = 0;
 
-/*   usuario[obtenerUsr.id].nombreLista[0].lista = listaIngresada; */
+  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
 
-  localStorage.setItem("usuarios", JSON.stringify(usuario));
+  Swal.fire({
 
+    title: 'Ingrese el nombre de la nueva lista',
+    html:
+      '<input id="nuevaLista" class="swal2-input">',
 
+    focusConfirm: true,
+
+    preConfirm: () => {
+
+      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
+
+      let nuevaLista = document.getElementById("nuevaLista").value;
+
+      const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+      cantListas = usuario[obtenerUsr.id].nombreLista.length;
+
+      usuario[obtenerUsr.id].nombreLista[cantListas] = {
+
+        lista: nuevaLista,
+        productos: []
+
+      }
+
+      localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+    }
+  });
 
 }
