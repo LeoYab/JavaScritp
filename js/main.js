@@ -19,7 +19,7 @@ let nomUser;
 let prod = -1;
 let obtenerUser;
 let nombreLista;
-let cantListas = 0;
+let indexLista = 0;
 AOS.init();
 
 
@@ -45,7 +45,9 @@ if (localStorage.getItem("usuarios")) {
 
   if (obtenerUser != null) {
 
-    prodUser("", obtenerUser);
+    const obtenerUsr = usuario.find((user) => user.dni === obtenerUser.dni);
+
+    prodUser(obtenerUsr.nombre, obtenerUser);
 
     document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
     document.getElementById("logoffSalir").setAttribute("style", "display:block");
@@ -159,26 +161,52 @@ recetas();
 
 function prodUser(userIng, dniIng) {
 
-  const obtenerUsr = usuario.find((user) => user.dni === dniIng);
+  dniUser = dniIng.dni;
 
-  dniUser = dniIng;
+  const obtenerUsr = usuario.find((user) => user.dni === dniIng.dni);
+
+
 
   document.getElementById("changeButtonusrProf1").innerHTML = `
   <div class="usrProf d-flex justify-content-center align-items-center ">
-  <h2 title="${obtenerUsr.nombre}">${obtenerUsr.nombre[0]}</h2>
+  <h2 title="${userIng}">${userIng[0]}</h2>
   </div>`;
 
-  cantListas = usuario[obtenerUsr.id].nombreLista.length -1;
 
-  let ultimoProd = usuario[obtenerUsr.id].nombreLista[cantListas].productos.length;
+  //// Revisar que al actualizar la página muestra el la última lista agregada. Debería mostra la última lista seleccionada de listas.
+  //También revisar que en el condicional de Sin_nombre hay que poner las llavas {} para que no lo tome al cargar nuevamente.
+  let indiceLista = -1;
 
-  if (ultimoProd == 0) {
+  usuario[obtenerUsr.id].nombreLista.forEach((e) => {
 
-    productos = [];
+    indiceLista++;
+
+    if (usuario[obtenerUsr.id].nombreLista[indiceLista].lista != "Sin_nombre") {
+
+      document.getElementById("listasGuardadas").innerHTML += `
+    <li><a id="lista${indiceLista}" class="dropdown-item" title="${indiceLista}" href="#">${e.lista}</a></li>
+                  <hr class="dropdown-divider">
+    `;
+    }
+  });
+
+
+
+
+  /*   indexLista = usuario[obtenerUsr.id].nombreLista.length -1; */
+  /* 
+  indexLista = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec]; */
+
+  let ultimoProd = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].productos;
+
+  if (ultimoProd.length == 0) {
+
+    productos = ultimoProd;
+
 
   } else {
 
-    productos = usuario[obtenerUsr.id].nombreLista[cantListas].productos;
+    productos = ultimoProd;
 
     if (productos != null) {
 
@@ -186,7 +214,7 @@ function prodUser(userIng, dniIng) {
 
     } else {
 
-      productos = [];
+      productos = ultimoProd;
 
     }
 
@@ -229,7 +257,7 @@ function createUser(usrAdd, dniAdd) {
   localStorage.setItem("usuarios", JSON.stringify(usuario));
   /*   let obtenerUsr = usuario.find((user) => user.dni === dniAdd); */
 
-  localStorage.setItem("userLog", JSON.stringify(dniAdd));
+  localStorage.setItem("userLog", JSON.stringify({ dni: dniAdd, listaSelec: indexLista }));
 
   document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
 
@@ -298,16 +326,16 @@ function usrlog() {
 
         let obtenerUsr = usuario.find((user) => user.dni === dniIng);
 
-        localStorage.setItem("userLog", JSON.stringify(obtenerUsr.dni));
-
+        localStorage.setItem("userLog", JSON.stringify({ dni: obtenerUsr.dni, listaSelec: obtenerUsr.nombreLista.length -1}));
+        indexLista = obtenerUsr.nombreLista.length -1;
         document.getElementById("usrProf1").innerHTML = `<h2 title="${userIng}">${userIng[0]}</h2>`;
         document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
         document.getElementById("logoffSalir").setAttribute("style", "display:block");
-
+        obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
         nomUser = userIng;
 
-        prodUser(userIng, dniIng);
+        prodUser(userIng, obtenerUser);
 
         //Muestra el nombre en pantalla
 
@@ -479,7 +507,7 @@ function addProd() {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
+  usuario[obtenerUsr.id].nombreLista[indexLista].productos = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -623,7 +651,7 @@ function rearmarTab() {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
+  usuario[obtenerUsr.id].nombreLista[indexLista].productos = productos;
 
   localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -744,7 +772,7 @@ function modProd(valVal) {
 
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
+      usuario[obtenerUsr.id].nombreLista[indexLista].productos = productos;
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -834,7 +862,7 @@ tab.addEventListener("click", (e) => {
 
           const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-          usuario[obtenerUsr.id].nombreLista[cantListas].productos = productos;
+          usuario[obtenerUsr.id].nombreLista[indexLista].productos = productos;
 
           localStorage.setItem("usuarios", JSON.stringify(usuario));
 
@@ -849,6 +877,56 @@ tab.addEventListener("click", (e) => {
   }
 
 });
+
+
+function listas(nuevaLista) {
+
+  document.getElementById("listasGuardadas").innerHTML += `
+  <li><a id="lista${indexLista}" class="dropdown-item" title="${indexLista}" href="#">${nuevaLista}</a></li>
+                <hr class="dropdown-divider">
+  
+  `;
+
+}
+
+
+
+let obtenerLista = document.getElementById("listasGuardadas");
+
+
+obtenerLista.onclick = (e) => {
+
+  indexLista = document.getElementById(e.target.id).title;
+
+  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+  productos = usuario[obtenerUsr.id].nombreLista[indexLista].productos;
+
+  localStorage.setItem("userLog", JSON.stringify({
+
+    dni: obtenerUsr.dni,
+
+    listaSelec: indexLista
+
+  }));
+
+  /*   localStorage.setItem("usuarios", JSON.stringify(usuario)); */
+
+  tabOrig()
+
+}
+
+
+/* 
+  usuario.nombreLista.lista.forEach(() => {
+
+    document.getElementById("listasGuardadas").innerHTML =`
+  <li><a id="Lista${indexLista}" class="dropdown-item" value="${indexLista}" href="#">${nuevaLista}</a></li>
+                <hr class="dropdown-divider">
+  
+  `;
+
+  }) */
 
 
 ///// Tiene que guardar la lista cuando el usuario quiera. Entonces al presioanr nueva lista, debe hacer una lista nueva unicamente
@@ -869,45 +947,54 @@ document.getElementById("guardarLista").onclick = () => {
     focusConfirm: true,
 
     preConfirm: () => {
+
       document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
 
       let listaIngresada = document.getElementById("nombreLista").value;
 
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      usuario[obtenerUsr.id].nombreLista[cantListas].lista = listaIngresada;
+      usuario[obtenerUsr.id].nombreLista[indexLista].lista = listaIngresada;
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+      localStorage.setItem("userLog", JSON.stringify({ 
+        
+        dni: obtenerUsr.dni, 
+
+        listaSelec: indexLista 
+
+      }));
 
       listas(listaIngresada);
 
     }
   })
-
+  /*   obtenerLista() */
   //Realizar tarea con indexOf en donde al momento de guardar, busca la ultima lista del inidice y guarda en el siguiente indice.
   //si se requier abrir una lista ya cargada se puede agregar al momento de guardar en un div, el value del indice. Entonces al presionar click
   //toma el value que se tocó y busca ese indice.
 
 }
 
-document.getElementById("GuardarNuevaLista").onclick = () => {
+document.getElementById("nuevaLista").onclick = () => {
 
   //Pone todo en cero menos el usuario
 
   let elimTabla = document.getElementById("tabla");
 
-  removerTabla(elimTabla); 
+  removerTabla(elimTabla);
 
   productos = [];
   id = -1;
   prod = -1;
   precioTotal = 0;
 
-document.getElementById("cantidadProductos").innerText = "";
-document.getElementById("totalProd").innerText = "";
+  document.getElementById("cantidadProductos").innerText = "";
+  document.getElementById("totalProd").innerText = "";
 
 
-  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
+  /*document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
 
   Swal.fire({
 
@@ -921,33 +1008,29 @@ document.getElementById("totalProd").innerText = "";
 
       document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
 
-      let nuevaLista = document.getElementById("nuevaLista").value;
+      let nuevaLista = document.getElementById("nuevaLista").value; */
 
-      const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-      cantListas = usuario[obtenerUsr.id].nombreLista.length;
+  indexLista = usuario[obtenerUsr.id].nombreLista.length;
 
-      usuario[obtenerUsr.id].nombreLista[cantListas] = {
+  usuario[obtenerUsr.id].nombreLista[indexLista] = {
 
-        lista: nuevaLista,
-        productos: []
+    lista: "Sin_nombre",
+    productos: []
 
-      }
+  }
 
-      listas(nuevaLista)
+  localStorage.setItem("usuarios", JSON.stringify(usuario));
+  localStorage.setItem("userLog", JSON.stringify({ 
 
-      localStorage.setItem("usuarios", JSON.stringify(usuario));
-    }
-  });
+    dni: obtenerUsr.dni, 
 
+    listaSelec: indexLista 
+    
+  }));
 }
+/*   }); 
 
-function listas(nuevaLista){
+}*/
 
-  document.getElementById("listasGuardadas").innerHTML +=`
-  <li><a id="Lista${cantListas}" class="dropdown-item" value"${cantListas}" href="#">${nuevaLista}</a></li>
-                <hr class="dropdown-divider">
-  
-  `;
-
-}
