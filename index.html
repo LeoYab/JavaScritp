@@ -41,10 +41,7 @@
           </div>
 
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-              </li>
+            <ul  class="navbar-nav justify-content-start flex-grow-1 pe-3">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">Listas</a>
@@ -61,7 +58,7 @@
               <li class="nav-item">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">Historial</a>
+                    aria-expanded="false">Historial de Listas</a>
                   <ul id="listasGuardadas" class="dropdown-menu">
 
                     <!-- CREACIÓN DE LISTAS -->
@@ -116,10 +113,11 @@
           <th scope="col">Precio</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Total</th>
-          <th scope="col">
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
-              <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Del</button>
+          <th scope="col" class="align-middle">
+            <div class="d-flex justify-content-start gap-2">
+              <p id="titLista" class="mb-0"> </p>
+          <!--     <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
+              <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Del</button> -->
             </div>
           </th>
         </tr>
