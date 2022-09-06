@@ -172,21 +172,9 @@ function prodUser(userIng, dniIng) {
   document.getElementById("usrProf").innerText = `${userIng[0]}`;
 
 
-
-
-  /*   document.getElementById("changeButtonusrProf1").innerHTML = `
-    <div class="usrProf d-flex justify-content-center align-items-center ">
-    <h2 type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover" title="${userIng}">${userIng[0]}</h2>
-    
-    </div>`; */
-
-
   cargaListas(obtenerUsr)
 
   document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].lista}`;
-  /*   indexLista = usuario[obtenerUsr.id].nombreLista.length -1; */
-  /* 
-  indexLista = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec]; */
 
   productos = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].productos;
 
@@ -197,10 +185,7 @@ function prodUser(userIng, dniIng) {
 
   }
 
-
-
 }
-
 
 
 function cargaListas(obtenerUsr) {
@@ -225,7 +210,9 @@ function cargaListas(obtenerUsr) {
       `;
 
     }
+
   });
+
 }
 
 /*CREACIÓN DE USUARIO*/
@@ -254,14 +241,7 @@ function createUser(usrAdd, dniAdd) {
 
   usuario.push(new User(idUsr, usrAdd, dniAdd));
 
-  /*   usuario[0].nombreLista.push(productosLista); */
-
-
-
-  /*   usuario[0].nombreLista[0].nombreLista = productos;  */
-
   localStorage.setItem("usuarios", JSON.stringify(usuario));
-  /*   let obtenerUsr = usuario.find((user) => user.dni === dniAdd); */
 
   localStorage.setItem("userLog", JSON.stringify({ dni: dniAdd, listaSelec: indexLista }));
 
@@ -341,6 +321,7 @@ function usrlog() {
 
         document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
         document.getElementById("logoffSalir").setAttribute("style", "display:block");
+     
         /*        document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
         obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
@@ -402,10 +383,17 @@ function usrlog() {
             dniUser = dniIng;
             nomUser = userIng;
 
+
+            document.getElementById("usrProf").setAttribute("style", "display:block");
+            document.getElementById("usrProf").setAttribute("title", `${userIng}`);
+            document.getElementById("usrProf1").setAttribute("style", "display:none");
+            document.getElementById("usrProf").innerText = `${userIng[0]}`;
+
+/* 
             document.getElementById("changeButtonusrProf1").innerHTML = `
             <div class="usrProf d-flex justify-content-center align-items-center ">
             <h2 title="${userIng}">${userIng[0]}</h2>
-            </div>`;
+            </div>`; */
 
             swal.fire(
               'Usuario ' + userIng + ' creado',
