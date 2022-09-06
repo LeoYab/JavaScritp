@@ -44,22 +44,22 @@
             <ul  class="navbar-nav justify-content-start flex-grow-1 pe-3">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">Listas</a>
+                  aria-expanded="false">Acción de Lista</a>
                 <ul class="dropdown-menu">
 
                   
-                  <li><a id="guardarLista" class="dropdown-item" href="#">Guarda lista</a></li>
+                  <li><a id="guardarLista" data-bs-dismiss="offcanvas" class="dropdown-item">Guarda lista</a></li>
 
 
                   <hr class="dropdown-divider">
-                  <li><a id="nuevaLista" class="dropdown-item" href="#">Nueva Lista</a></li>
+                  <li><a id="nuevaLista" class="dropdown-item" data-bs-dismiss="offcanvas">Nueva Lista</a></li>
                 </ul>
               </li>
               <li class="nav-item">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Historial de Listas</a>
-                  <ul id="listasGuardadas" class="dropdown-menu">
+                  <ul id="listasGuardadas" class="dropdown-menu p-0 show table-striped">
 
                     <!-- CREACIÓN DE LISTAS -->
 
@@ -67,6 +67,8 @@
               </li>
             </ul>
             <!-- <div id="dolar"></div> -->
+
+            <hr>
             <div class="carousel slide w-70 m-2 text-center" data-bs-ride="carousel">
               <div id="recetas" class="carousel-inner">
 
@@ -80,12 +82,13 @@
           <a class="logo navbar-brand text-white m-0" href="#"><img src="./images/logo.png" alt="Logo"></a>
         </div>
         <div id="changeButtonusrProf1">
+          <div class="usrProf d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" aria-controls="offcanvasNavbar" data-bs-target="#offcanvasNavbar"> 
+          <h2 id="usrProf" style="display:none"></h2>
+          <i id="usrProf1" class="fa-solid fa-circle-user fa-2xl" style="display:block"></i>
+        </div>
 
           <!--CAMBIO DE BOTON LOGIN-->
 
-          <div id="usrProf1" class="usrProf d-flex justify-content-center align-items-center ">
-            <i class="fa-solid fa-circle-user fa-2xl"></i>
-          </div>
         </div>
       </div>
     </nav>
@@ -100,15 +103,15 @@
 
     <div class="barraLista d-flex justify-content-between p-2 rounded-4">
       <div class="d-flex gap-2 align-items-center">
-        <p id="titProd" class="mb-0">PRODUCTOS AGREGADOS:</p>
+        <p id="titProd" class="mb-0">PRODUCTOS AGREGADOS</p>
         <i class="fa-solid fa-circle-down"></i>
       </div>
       <p id="totalProd" class="mb-0 fw-bold"></p>
     </div>
 
     <div class="d-flex justify-content-between">
-      <p id="cantidadProductos" class="mb-0 fw-bold">Cantidad: 1</p>
-    <p id="titLista" class="mb-0 text-end">Lista: ass</p>
+      <p id="cantidadProductos" class="mb-0 fw-bold"></p>
+    <p id="titLista" class="mb-0 text-end"></p>
     </div>
 
     <table class="table table-sm table-striped mt-2">

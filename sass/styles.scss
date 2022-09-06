@@ -75,6 +75,7 @@ strong {
         color:white;
         text-align: center;
         margin-bottom: 0;
+        padding: 5px 10px;
     }
 }
 
@@ -270,4 +271,12 @@ p#titProd {
 
 .swal2-styled.swal2-deny{
 background-color: #6c757d !important;
+}
+
+.btn{
+    border: none; 
+}
+
+button#btnMod {
+    border: var(--bs-btn-border-width) solid #6ca115ef;
 }

@@ -23,7 +23,6 @@ let indexLista = 0;
 AOS.init();
 
 
-
 /*BÚSQUEDA DE USUARIOS*/
 /* -------------------------------------------------------------------- */
 
@@ -66,6 +65,8 @@ const data = await resp.json()
 document.getElementById("dolar").innerHTML=`<p>Dolar Blue: US$ ${data.compra}</p>`;
 
 } */
+
+
 
 /*CARGA DE RECETAS*/
 /* -------------------------------------------------------------------- */
@@ -113,40 +114,40 @@ const recetas = async () => {
   //Como los ingredientes están separados por comas dentro del json, se reemplaza la "," por un salto de línea y un punto para mostrar por separado cada uno.
 
   document.getElementById("recetas").innerHTML = `
-
-  <div class="carousel-item active">
-
-    <h3 class="text-center">${data[numAl1].Nombre.replace("Receta de ", "")}</h3>
-    <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length - 2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length - 3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg">
-    <ul>
-      <li class="text-start"><a href="${data[numAl1].Link_receta}" target="_blank">Receta completa</a></li>
-      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl1].Tiempo}</li>
-      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
-    </ul>
-  </div>
-
-  <div class="carousel-item">
-
-  <h3 class="text-center">${data[numAl2].Nombre.replace("Receta de ", "")}</h3>
-  <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length - 2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length - 3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
-    <ul>
-      <li class="text-start"><a href="${data[numAl2].Link_receta}" target="_blank">Receta completa</a></li>
-      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl2].Tiempo}</li>
-      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
-    </ul>
-  </div>
-
-  <div class="carousel-item">
-
-  <h3 class="text-center">${data[numAl3].Nombre.replace("Receta de ", "")}</h3>
-  <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length - 2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length - 3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
-    <ul>
-      <li class="text-start"><a href="${data[numAl3].Link_receta}" target="_blank">Receta completa</a></li>
-      <li class="text-start"><strong>Tiempo:</strong> ${data[numAl3].Tiempo}</li>
-      <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
-    </ul>
-
-  </div>`
+ 
+   <div class="carousel-item active">
+ 
+     <h3 class="text-center">${data[numAl1].Nombre.replace("Receta de ", "")}</h3>
+     <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl1].Id.toString().slice(-1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length - 2, -1)}/${data[numAl1].Id.toString().slice(numAl1Id.toString().length - 3, -2)}/${nombAl1}_${data[numAl1].Id}_600.jpg">
+     <ul>
+       <li class="text-start"><a href="${data[numAl1].Link_receta}" target="_blank">Receta completa</a></li>
+       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl1].Tiempo}</li>
+       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl1].Ingredientes.replace(/,/g, "<br>• ")}</li>
+     </ul>
+   </div>
+ 
+   <div class="carousel-item">
+ 
+   <h3 class="text-center">${data[numAl2].Nombre.replace("Receta de ", "")}</h3>
+   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl2].Id.toString().slice(-1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length - 2, -1)}/${data[numAl2].Id.toString().slice(numAl2Id.toString().length - 3, -2)}/${nombAl2}_${data[numAl2].Id}_600.jpg">
+     <ul>
+       <li class="text-start"><a href="${data[numAl2].Link_receta}" target="_blank">Receta completa</a></li>
+       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl2].Tiempo}</li>
+       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl2].Ingredientes.replace(/,/g, "<br>• ")}</li>
+     </ul>
+   </div>
+ 
+   <div class="carousel-item">
+ 
+   <h3 class="text-center">${data[numAl3].Nombre.replace("Receta de ", "")}</h3>
+   <img class="imgRecetas" alt="" src="https://t1.rg.ltmcdn.com/es/posts/${data[numAl3].Id.toString().slice(-1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length - 2, -1)}/${data[numAl3].Id.toString().slice(numAl3Id.toString().length - 3, -2)}/${nombAl3}_${data[numAl3].Id}_600.jpg">
+     <ul>
+       <li class="text-start"><a href="${data[numAl3].Link_receta}" target="_blank">Receta completa</a></li>
+       <li class="text-start"><strong>Tiempo:</strong> ${data[numAl3].Tiempo}</li>
+       <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
+     </ul>
+ 
+   </div>`
 
 }
 
@@ -165,32 +166,22 @@ function prodUser(userIng, dniIng) {
 
   const obtenerUsr = usuario.find((user) => user.dni === dniIng.dni);
 
+  document.getElementById("usrProf").setAttribute("style", "display:block");
+  document.getElementById("usrProf").setAttribute("title", `${userIng}`);
+  document.getElementById("usrProf1").setAttribute("style", "display:none");
+  document.getElementById("usrProf").innerText = `${userIng[0]}`;
 
 
-  document.getElementById("changeButtonusrProf1").innerHTML = `
-  <div class="usrProf d-flex justify-content-center align-items-center ">
-  <h2 title="${userIng}">${userIng[0]}</h2>
-  </div>`;
 
 
-  //// Revisar que al actualizar la página muestra el la última lista agregada. Debería mostra la última lista seleccionada de listas.
-  //También revisar que en el condicional de Sin_nombre hay que poner las llavas {} para que no lo tome al cargar nuevamente.
-  let indiceLista = -1;
+  /*   document.getElementById("changeButtonusrProf1").innerHTML = `
+    <div class="usrProf d-flex justify-content-center align-items-center ">
+    <h2 type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover" title="${userIng}">${userIng[0]}</h2>
+    
+    </div>`; */
 
-  usuario[obtenerUsr.id].nombreLista.forEach((e) => {
 
-    indiceLista++;
-
-    if (usuario[obtenerUsr.id].nombreLista[indiceLista].lista != "Sin_nombre") {
-
-      document.getElementById("listasGuardadas").innerHTML += `
-      <li><a id="lista${indiceLista}" class="dropdown-item" role="button" title="${indiceLista}">${e.lista} - ${usuario[obtenerUsr.id].nombreLista[indiceLista].fecha}</a></li>
-                    <hr class="dropdown-divider">
-      
-      `;
-
-    }
-  });
+  cargaListas(obtenerUsr)
 
   document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].lista}`;
   /*   indexLista = usuario[obtenerUsr.id].nombreLista.length -1; */
@@ -210,6 +201,32 @@ function prodUser(userIng, dniIng) {
 
 }
 
+
+
+function cargaListas(obtenerUsr) {
+
+  //// Revisar que al actualizar la página muestra el la última lista agregada. Debería mostra la última lista seleccionada de listas.
+  //También revisar que en el condicional de Sin_nombre hay que poner las llavas {} para que no lo tome al cargar nuevamente.
+
+  let indiceLista = -1;
+
+  usuario[obtenerUsr.id].nombreLista.forEach((e) => {
+
+    indiceLista++;
+
+    if (usuario[obtenerUsr.id].nombreLista[indiceLista].lista != "Sin_nombre") {
+
+      document.getElementById("listasGuardadas").innerHTML += `
+      <li class="d-flex align-items-center">
+      <button id="lista${indiceLista}" class="dropdown-item p-2" role="button" value="${indiceLista}" title="${e.lista}">${e.lista.substring(0, 10)} - ${usuario[obtenerUsr.id].nombreLista[indiceLista].fecha}</button>
+      <button id="eliminarLista${indiceLista}" value="${indiceLista}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can p-3"></button>    
+      </li>
+      <hr class="dropdown-divider m-0">
+      `;
+
+    }
+  });
+}
 
 /*CREACIÓN DE USUARIO*/
 /* -------------------------------------------------------------------- */
@@ -878,11 +895,13 @@ tab.addEventListener("click", (e) => {
 function listas(nuevaLista) {
 
   document.getElementById("listasGuardadas").innerHTML += `
-  <li><a id="lista${indexLista}" class="dropdown-item" role="button" title="${indexLista}">${nuevaLista} ${fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</a></li>
-                <hr class="dropdown-divider">
+  <li class="d-flex align-items-center">
+  <button id="lista${indexLista}" class="dropdown-item p-2" role="button" value="${indexLista}" title="${nuevaLista}">${nuevaLista.substring(0, 10)} ${fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</button>
+  <button id="eliminarLista${indexLista}" value="${indexLista}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can p-3"></button>    
+  </li>
+  <hr class="dropdown-divider m-0">
   
   `;
-
 }
 
 
@@ -892,21 +911,92 @@ let obtenerLista = document.getElementById("listasGuardadas");
 
 obtenerLista.onclick = (e) => {
 
-  indexLista = document.getElementById(e.target.id).title;
+  indexLista = document.getElementById(e.target.id).value;
+  let selectOrDel = document.getElementById(e.target.id).id;
+  let obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
-  const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+  if (selectOrDel == "lista" + indexLista) {
 
-  productos = usuario[obtenerUsr.id].nombreLista[indexLista].productos;
 
-  document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
 
-  localStorage.setItem("userLog", JSON.stringify({
+    productos = usuario[obtenerUsr.id].nombreLista[indexLista].productos;
 
-    dni: obtenerUsr.dni,
+    document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
 
-    listaSelec: indexLista
+    localStorage.setItem("userLog", JSON.stringify({
 
-  }));
+      dni: obtenerUsr.dni,
+
+      listaSelec: indexLista
+
+    }));
+
+  } else if (selectOrDel == "eliminarLista" + indexLista) {
+
+    Swal.fire({
+      title: `¿Eliminar ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.bold()}?`,
+      focusConfirm: true,
+      confirmButtonText: "Ok",
+      denyButtonText: "Cancelar",
+      allowOutsideClick: false,
+      showDenyButton: true,
+      showCancelButton: false,
+      reverseButtons: true,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: `Lista ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.bold()} eliminada.`
+
+        })
+
+        usuario[obtenerUsr.id].nombreLista[indexLista].lista = "Sin_nombre";
+
+        localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+        obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+        document.getElementById("listasGuardadas").innerHTML = ``
+
+        cargaListas(obtenerUsr);
+
+      } else if (result.isDenied) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        Toast.fire({
+          icon: 'warning',
+          title: `Eliminación cancelada.`
+
+        })
+      }
+    })
+
+  }
+
+
+
 
   /*   localStorage.setItem("usuarios", JSON.stringify(usuario)); */
 
@@ -934,7 +1024,7 @@ document.getElementById("guardarLista").onclick = () => {
 
   //Se oculta el navbar porque sino no deja escribir en el input
 
-  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
+  /*   document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden"); */
 
   Swal.fire({
 
@@ -943,26 +1033,18 @@ document.getElementById("guardarLista").onclick = () => {
       '<input id="nombreLista" class="swal2-input">',
 
     confirmButtonColor: '#69a30a;',
-
     focusConfirm: true,
-
     confirmButtonText: "Ok",
-
     denyButtonText: "Cancelar",
-
     allowOutsideClick: false,
-
     showDenyButton: true,
-
     showCancelButton: false,
-
     reverseButtons: true,
-
   }).then((result) => {
 
     if (result.isConfirmed) {
 
-      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
+      /*   document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible"); */
 
       let listaIngresada = document.getElementById("nombreLista").value;
 
@@ -985,7 +1067,33 @@ document.getElementById("guardarLista").onclick = () => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
+
+      Toast.fire({
+        icon: 'success',
+        title: `Lista ${listaIngresada.bold()} guardada.`
+
+      });
+
+      document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
+
+      listas(listaIngresada);
+
+
+
+    } else if (result.isDenied) {
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -994,19 +1102,11 @@ document.getElementById("guardarLista").onclick = () => {
       })
 
       Toast.fire({
-        icon: 'success',
-        title: `Lista ${listaIngresada.bold()} creada.`
+        icon: 'warning',
+        title: `Lista no guardada.`
 
       })
-
-      document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista/* .substring(0, 7) */}`;
-
-      listas(listaIngresada);
-
-
-
-    } else if (result.isDenied) {
-      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
+      /*  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible"); */
     }
   })
 
@@ -1106,6 +1206,25 @@ document.getElementById("nuevaLista").onclick = () => {
     productos: []
 
   }
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1800,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+  Toast.fire({
+    icon: 'success',
+    title: `Lista creada.`
+
+  })
+
   document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
   localStorage.setItem("usuarios", JSON.stringify(usuario));
   localStorage.setItem("userLog", JSON.stringify({
@@ -1116,7 +1235,7 @@ document.getElementById("nuevaLista").onclick = () => {
 
   }));
 }
-/*   }); 
+/*   });
 
 }*/
 
