@@ -186,12 +186,14 @@ p#titProd {
 .swal2-styled.swal2-confirm {
   background-color: #69a30a !important; }
 
-p#titLista {
+#titLista, #cantidadProductos {
   font-size: small;
   background-color: #69a30a;
-  border-radius: 20px;
+  border-radius: 0 0 10px 10px;
   padding: 0 .5rem;
-  color: #fff; }
+  color: #fff;
+  margin-right: 1rem;
+  margin-left: 1rem; }
 
 #button-addon2 {
   background-color: #4d77088e;
@@ -205,3 +207,6 @@ p#titLista {
 
 .btn:hover {
   border-color: var(--bs-btn-hover-bg); }
+
+.swal2-styled.swal2-deny {
+  background-color: #6c757d !important; }

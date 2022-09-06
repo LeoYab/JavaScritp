@@ -48,7 +48,7 @@ if (localStorage.getItem("usuarios")) {
     const obtenerUsr = usuario.find((user) => user.dni === obtenerUser.dni);
 
     prodUser(obtenerUsr.nombre, obtenerUser);
-/*     document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
+    /*     document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
     document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
     document.getElementById("logoffSalir").setAttribute("style", "display:block");
 
@@ -184,7 +184,7 @@ function prodUser(userIng, dniIng) {
     if (usuario[obtenerUsr.id].nombreLista[indiceLista].lista != "Sin_nombre") {
 
       document.getElementById("listasGuardadas").innerHTML += `
-      <li><a id="lista${indiceLista}" class="dropdown-item" style="user-select: none" title="${indiceLista}"><b>${e.lista}</b> ${fecha.toLocaleString([], {day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'})}</a></li>
+      <li><a id="lista${indiceLista}" class="dropdown-item" role="button" title="${indiceLista}">${e.lista} - ${usuario[obtenerUsr.id].nombreLista[indiceLista].fecha}</a></li>
                     <hr class="dropdown-divider">
       
       `;
@@ -192,21 +192,21 @@ function prodUser(userIng, dniIng) {
     }
   });
 
-  document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].lista}`;
+  document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].lista}`;
   /*   indexLista = usuario[obtenerUsr.id].nombreLista.length -1; */
   /* 
   indexLista = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec]; */
 
-productos = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].productos;
+  productos = usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].productos;
 
 
-    if (productos != null) {
+  if (productos != null) {
 
-      tabOrig();
+    tabOrig();
 
-    } 
+  }
 
-  
+
 
 }
 
@@ -290,12 +290,12 @@ function usrlog() {
       '<input id="dniAdd" type="number" class="swal2-input" placeholder="DNI">',
 
     focusConfirm: false,
-    
+
 
     preConfirm: () => {
 
       let userIng = document.getElementById("usrAdd").value;
-      
+
       let dniIng = document.getElementById("dniAdd").value;
 
       //Revisa si hay algún campo vacío.
@@ -318,13 +318,13 @@ function usrlog() {
 
         let obtenerUsr = usuario.find((user) => user.dni === dniIng);
 
-        localStorage.setItem("userLog", JSON.stringify({ dni: obtenerUsr.dni, listaSelec: obtenerUsr.nombreLista.length -1}));
-        indexLista = obtenerUsr.nombreLista.length -1;
+        localStorage.setItem("userLog", JSON.stringify({ dni: obtenerUsr.dni, listaSelec: obtenerUsr.nombreLista.length - 1 }));
+        indexLista = obtenerUsr.nombreLista.length - 1;
         document.getElementById("usrProf1").innerHTML = `<h2 title="${userIng}">${userIng[0]}</h2>`;
-        
+
         document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
         document.getElementById("logoffSalir").setAttribute("style", "display:block");
- /*        document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
+        /*        document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
         obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
         nomUser = userIng;
@@ -460,8 +460,8 @@ function prodGen() {
     </td>`;
 
     document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal.toFixed(2);
-    document.getElementById("cantidadProductos").innerText = productos.length;
-    document.getElementById("cantidadProductos").setAttribute("class", "mb-0 fw-bold");
+    document.getElementById("cantidadProductos").innerText = "Cantidad: " + productos.length;
+    document.getElementById("cantidadProductos").setAttribute("class", "mb-0 text-end");
   }
 
   tabGen = document.getElementById("tabla");
@@ -640,8 +640,8 @@ function rearmarTab() {
   });
 
   document.getElementById("totalProd").innerText = "TOTAL: $" + precioTotal.toFixed(2);
-  document.getElementById("cantidadProductos").innerText = productos.length;
-  document.getElementById("cantidadProductos").setAttribute("class", "mb-0 fw-bold");
+  document.getElementById("cantidadProductos").innerText = "Cantidad: " + productos.length;
+  document.getElementById("cantidadProductos").setAttribute("class", "mb-0 text-end");
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
@@ -878,7 +878,7 @@ tab.addEventListener("click", (e) => {
 function listas(nuevaLista) {
 
   document.getElementById("listasGuardadas").innerHTML += `
-  <li><a id="lista${indexLista}" class="dropdown-item" style="user-select: none" title="${indexLista}"><b>${nuevaLista}</b> ${fecha.toLocaleString([], {day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'})}</a></li>
+  <li><a id="lista${indexLista}" class="dropdown-item" role="button" title="${indexLista}">${nuevaLista} ${fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</a></li>
                 <hr class="dropdown-divider">
   
   `;
@@ -897,8 +897,8 @@ obtenerLista.onclick = (e) => {
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
   productos = usuario[obtenerUsr.id].nombreLista[indexLista].productos;
-  
-  document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
+
+  document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
 
   localStorage.setItem("userLog", JSON.stringify({
 
@@ -942,11 +942,25 @@ document.getElementById("guardarLista").onclick = () => {
     html:
       '<input id="nombreLista" class="swal2-input">',
 
-      confirmButtonColor: '#69a30a;',
+    confirmButtonColor: '#69a30a;',
 
     focusConfirm: true,
 
-    preConfirm: () => {
+    confirmButtonText: "Ok",
+
+    denyButtonText: "Cancelar",
+
+    allowOutsideClick: false,
+
+    showDenyButton: true,
+
+    showCancelButton: false,
+
+    reverseButtons: true,
+
+  }).then((result) => {
+
+    if (result.isConfirmed) {
 
       document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
 
@@ -955,15 +969,15 @@ document.getElementById("guardarLista").onclick = () => {
       const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
       usuario[obtenerUsr.id].nombreLista[indexLista].lista = listaIngresada;
-      usuario[obtenerUsr.id].nombreLista[indexLista].fecha = fecha.toLocaleString();
+      usuario[obtenerUsr.id].nombreLista[indexLista].fecha = fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
       localStorage.setItem("usuarios", JSON.stringify(usuario));
 
-      localStorage.setItem("userLog", JSON.stringify({ 
-        
-        dni: obtenerUsr.dni, 
+      localStorage.setItem("userLog", JSON.stringify({
 
-        listaSelec: indexLista 
+        dni: obtenerUsr.dni,
+
+        listaSelec: indexLista
 
       }));
 
@@ -978,19 +992,70 @@ document.getElementById("guardarLista").onclick = () => {
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
       })
-      
+
       Toast.fire({
         icon: 'success',
         title: `Lista ${listaIngresada.bold()} creada.`
 
       })
 
-      document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.substring(0, 7)}`;
+      document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista/* .substring(0, 7) */}`;
 
       listas(listaIngresada);
 
+
+
+    } else if (result.isDenied) {
+      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
     }
   })
+
+  /*  preConfirm: () => {
+     
+     document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
+
+     let listaIngresada = document.getElementById("nombreLista").value;
+
+     const obtenerUsr = usuario.find((user) => user.dni === dniUser);
+
+     usuario[obtenerUsr.id].nombreLista[indexLista].lista = listaIngresada;
+     usuario[obtenerUsr.id].nombreLista[indexLista].fecha = fecha.toLocaleString();
+
+     localStorage.setItem("usuarios", JSON.stringify(usuario));
+
+     localStorage.setItem("userLog", JSON.stringify({ 
+       
+       dni: obtenerUsr.dni, 
+
+       listaSelec: indexLista 
+
+     }));
+
+     const Toast = Swal.mixin({
+       toast: true,
+       position: 'top-end',
+       showConfirmButton: false,
+       timer: 3000,
+       timerProgressBar: true,
+       didOpen: (toast) => {
+         toast.addEventListener('mouseenter', Swal.stopTimer)
+         toast.addEventListener('mouseleave', Swal.resumeTimer)
+       }
+     })
+     
+     Toast.fire({
+       icon: 'success',
+       title: `Lista ${listaIngresada.bold()} creada.`
+
+     })
+     
+     document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.substring(0, 7)}`;
+
+     listas(listaIngresada);
+
+   }
+   
+ }) */
   /*   obtenerLista() */
   //Realizar tarea con indexOf en donde al momento de guardar, busca la ultima lista del inidice y guarda en el siguiente indice.
   //si se requier abrir una lista ya cargada se puede agregar al momento de guardar en un div, el value del indice. Entonces al presionar click
@@ -1041,17 +1106,21 @@ document.getElementById("nuevaLista").onclick = () => {
     productos: []
 
   }
-  document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
+  document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
   localStorage.setItem("usuarios", JSON.stringify(usuario));
-  localStorage.setItem("userLog", JSON.stringify({ 
+  localStorage.setItem("userLog", JSON.stringify({
 
-    dni: obtenerUsr.dni, 
+    dni: obtenerUsr.dni,
 
-    listaSelec: indexLista 
-    
+    listaSelec: indexLista
+
   }));
 }
 /*   }); 
 
 }*/
 
+
+
+////////AGREGAR BOTÓN ELIMINAR DE LA LISTA DE GUARDADOS
+//INGRESAR EL BOTON LOGOFF DENTRO DEL NOMBRE
