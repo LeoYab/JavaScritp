@@ -2,13 +2,9 @@
 En el mismo se puede editar, buscar y eliminar un producto previamente cargado.*/
 
 let precio = 0;
-let precTotProd = 0;
 let precioTotal = 0;
-let terminar;
 let productos = [];
-let producto = [];
 let totProd;
-let contProdNom = 0;
 let fecha = new Date();
 let genTab;
 let id = -1;
@@ -18,7 +14,6 @@ let dniUser;
 let nomUser;
 let prod = -1;
 let obtenerUser;
-let nombreLista;
 let indexLista = 0;
 AOS.init();
 
@@ -47,16 +42,21 @@ if (localStorage.getItem("usuarios")) {
     const obtenerUsr = usuario.find((user) => user.dni === obtenerUser.dni);
 
     prodUser(obtenerUsr.nombre, obtenerUser);
-    /*     document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
+
     document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
     document.getElementById("logoffSalir").setAttribute("style", "display:block");
+    document.getElementById("menuLista").setAttribute("style", "display:block");
 
   }
+
 }
+
+
+/* -------------------------------------------------------------------- 
 
 //Muestra el valor del dolar blue.
 
-/* async function dolar(){
+async function dolar(){
 
 const dolarTr = "https://api-dolar-argentina.herokuapp.com/api/dolarblue";
 const resp = await fetch(dolarTr)
@@ -64,11 +64,14 @@ const data = await resp.json()
 
 document.getElementById("dolar").innerHTML=`<p>Dolar Blue: US$ ${data.compra}</p>`;
 
-} */
+} 
+
+/* -------------------------------------------------------------------- */
 
 
 
-/*CARGA DE RECETAS*/
+
+/*CARGA DE RECETAS JSON*/
 /* -------------------------------------------------------------------- */
 
 //Se crea una función asincrónica que obtiene datos de un archivo local json para poder mostrar recetas.
@@ -79,9 +82,17 @@ const recetas = async () => {
 
   const data = await recetJson.json();
 
+
+  /* -------------------------------------------------------------------- */
+
+  //El archivo json tenía demasiadas recetas por lo que con el filtro de abajo eliminé las que le faltaban algún dato. 
+  //De igual manera puede que muestre algún error cuando busca las imágenes en internet ya que a veces no toma el nombre correcto del link.
+
   /*   const filtro = data.filter ((el) => el.Ingredientes.includes(" "))
   
     console.log(filtro) */
+
+  /* -------------------------------------------------------------------- */
 
 
   //Se crean variables en donde se guardan núm. randoms los cuales se usan como el índice de cada receta.
@@ -110,7 +121,7 @@ const recetas = async () => {
   nombAl3 = nombAl3[0].toLowerCase() + nombAl3.slice(1).toLowerCase();
   nombAl3 = nombAl3.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
 
-  //Todo lo anterior es para poder modificar el link de la imagen de cada receta y mostrarla correctamente. Puede que alguna que otra imagen no cargue ya que no se filtran todos los caracteres especiales.
+  //La mayoría de lo anterior es para poder modificar el link de la imagen de cada receta y mostrarla correctamente. Puede que alguna que otra imagen no cargue ya que no se filtran todos los caracteres especiales.
   //Como los ingredientes están separados por comas dentro del json, se reemplaza la "," por un salto de línea y un punto para mostrar por separado cada uno.
 
   document.getElementById("recetas").innerHTML = `
@@ -147,7 +158,7 @@ const recetas = async () => {
        <li class="text-start"><strong>Ingredientes:</strong><br>• ${data[numAl3].Ingredientes.replace(/,/g, "<br>• ")}</li>
      </ul>
  
-   </div>`
+   </div>`;
 
 }
 
@@ -172,7 +183,7 @@ function prodUser(userIng, dniIng) {
   document.getElementById("usrProf").innerText = `${userIng[0]}`;
 
 
-  cargaListas(obtenerUsr)
+  cargaListas(obtenerUsr);
 
   document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[dniIng.listaSelec].lista}`;
 
@@ -187,11 +198,12 @@ function prodUser(userIng, dniIng) {
 
 }
 
+/*CARGA DE PRODUCTOS*/
+/* -------------------------------------------------------------------- */
+
+//Carga las listas que tenga guardado el usuario.
 
 function cargaListas(obtenerUsr) {
-
-  //// Revisar que al actualizar la página muestra el la última lista agregada. Debería mostra la última lista seleccionada de listas.
-  //También revisar que en el condicional de Sin_nombre hay que poner las llavas {} para que no lo tome al cargar nuevamente.
 
   let indiceLista = -1;
 
@@ -218,7 +230,7 @@ function cargaListas(obtenerUsr) {
 /*CREACIÓN DE USUARIO*/
 /* -------------------------------------------------------------------- */
 
-//Toma los datos de los imputs Usuario y DNI cargándoles en un array de objetos.
+//Toma los datos de los imputs Usuario y DNI cargándolos en un array de objetos.
 //Se guarda en el localStorage usuario y se guarda en la key userLog el DNI para utilizarlo cuando se vuelva a recargar la página.
 
 function createUser(usrAdd, dniAdd) {
@@ -274,9 +286,7 @@ let usrLog = document.getElementById("usrProf1");
 usrLog != null && (document.getElementById("usrProf1").onclick = () => usrlog())
 
 
-/*LOGUEO Y DESLOGUEO DE USUARIO*/
-/* -------------------------------------------------------------------- */
-//Se ejecutan sweets alerts en donde al ingresar un usario - dni y evisa si está o no creado.
+//Se ejecutan sweets alerts en donde al ingresar un usario - dni y avisa si está o no creado.
 
 function usrlog() {
 
@@ -307,7 +317,7 @@ function usrlog() {
         return false;
       }
 
-      //Si el nombre y DNI son correctos se guardan en el localStorage, se muestra la inicial del nombre en el usuario y se llama a la funcion prodUser.
+      //Si el nombre y DNI son correctos se guardan en el localStorage, se muestra la inicial del nombre en el usuario y se llama a la funcion prodUser() que carga los productos.
 
       userIng = document.getElementById("usrAdd").value[0].toUpperCase() + document.getElementById("usrAdd").value.slice(1).toLowerCase();
 
@@ -318,11 +328,10 @@ function usrlog() {
         localStorage.setItem("userLog", JSON.stringify({ dni: obtenerUsr.dni, listaSelec: obtenerUsr.nombreLista.length - 1 }));
         indexLista = obtenerUsr.nombreLista.length - 1;
         document.getElementById("usrProf1").innerHTML = `<h2 title="${userIng}">${userIng[0]}</h2>`;
-
         document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
         document.getElementById("logoffSalir").setAttribute("style", "display:block");
-     
-        /*        document.getElementById("opcionesListas").setAttribute("style", "display:block"); */
+        document.getElementById("menuLista").setAttribute("style", "display:block");
+
         obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
         nomUser = userIng;
@@ -351,7 +360,7 @@ function usrlog() {
           icon: 'warning',
           confirmButtonText: 'Volver',
 
-          //Si se confirma el volver, vuelve a llamar a la funcion usrlog.
+          //Si se confirma el volver, vuelve a llamar a la funcion usrlog().
 
         }).then((result) => {
 
@@ -383,17 +392,11 @@ function usrlog() {
             dniUser = dniIng;
             nomUser = userIng;
 
-
+            document.getElementById("menuLista").setAttribute("style", "display:block");
             document.getElementById("usrProf").setAttribute("style", "display:block");
             document.getElementById("usrProf").setAttribute("title", `${userIng}`);
             document.getElementById("usrProf1").setAttribute("style", "display:none");
             document.getElementById("usrProf").innerText = `${userIng[0]}`;
-
-/* 
-            document.getElementById("changeButtonusrProf1").innerHTML = `
-            <div class="usrProf d-flex justify-content-center align-items-center ">
-            <h2 title="${userIng}">${userIng[0]}</h2>
-            </div>`; */
 
             swal.fire(
               'Usuario ' + userIng + ' creado',
@@ -402,7 +405,7 @@ function usrlog() {
 
               createUser(userIng, dniIng)
 
-            )
+            );
 
           } else {
 
@@ -414,17 +417,17 @@ function usrlog() {
               showConfirmButton: false,
               timer: 1000
 
-            })
+            });
 
           }
 
-        })
+        });
 
       }
 
     }
 
-  })
+  });
 
 }
 
@@ -478,7 +481,7 @@ function prodGen() {
 /*CARGA DE PRODUCTOS EN ARRAY DE OBJETOS*/
 /* -------------------------------------------------------------------- */
 
-//se toman valores de los inputs y se guardan en el array. Luego se llama al a función prodGen para mostrarlos en pantalla.
+//se toman valores de los inputs y se guardan en el array. Luego se llama al a función prodGen() para mostrarlos en pantalla.
 
 function addProd() {
 
@@ -518,7 +521,7 @@ function addProd() {
 /*INPUTS PARA AGREGAR PRODUCTOS*/
 /* -------------------------------------------------------------------- */
 
-//Al presionar el botgon (+) de agregar producto, desaparece y aparecen los imputs seteándolos con el attrib required.
+//Al presionar el botgon (+) de agregar producto, desaparece y aparecen los inputs seteándolos con el attrib required.
 
 function btnAgregar() {
 
@@ -565,7 +568,7 @@ function btnVali() {
 
 }
 
-//Al terminar de agregar el producto y enviarlo al array, oculta los imputs y vuelve a mostrar el botón agregar (+).
+//Al terminar de agregar el producto y enviarlo al array, oculta los inputs y vuelve a mostrar el botón agregar (+).
 
 function btnAgregarOcul() {
 
@@ -596,7 +599,7 @@ ocuProBtn.onclick = () => btnAgregarOcul();
 /*CREACIÓN DE TABLA*/
 /* -------------------------------------------------------------------- */
 
-//Función para crear tabla dependiente si se elimina o se modifica un campo de algún producto.
+//Función para crear tabla dependiendo si se elimina o se modifica un campo de algún producto.
 
 function tabla(prod) {
 
@@ -659,11 +662,14 @@ function rearmarTab() {
 
 }
 
+//Función para remover la tabla actual y crear la modificada.
+
 function removerTabla(idCapturado) {
 
   while (idCapturado.firstChild) idCapturado.removeChild(idCapturado.firstChild);
 
 }
+
 
 /*BUSCADOR DE PRODUCTOS*/
 /* -------------------------------------------------------------------- */
@@ -676,7 +682,7 @@ function busqueda() {
 
   const resBusq = productos.filter((prod) => prod.nombre.includes(busProdIng.value[0].toUpperCase() + busProdIng.value.slice(1).toLowerCase()));
 
-  //Eliminar elementos de tabla para mostrar los buscados.
+  //Elimina elementos de la tabla para mostrar los buscados.
 
   let elimTabla = document.getElementById("tabla");
 
@@ -708,6 +714,8 @@ function tabOrig() {
 let busProdIng = document.getElementById("busProdIng");
 
 busProdIng.addEventListener("input", () => busProdIng.value ? busqueda() : tabOrig());
+
+
 
 
 /*MODIFICACIÓN DE PRODUCTOS*/
@@ -787,6 +795,7 @@ function modProd(valVal) {
   }
 
 }
+
 //Escuchador de eventos click en el cual chequea si se presionó el botón editar o eliminar de un producto específico.
 //Se realiza un condicional para sacar error en consola el cual era producido por tocar cualquier etiqueta dentro del id "tabla".
 //Éste condicional activa las funciones si lo presionado en tabla devuelve un valor.
@@ -879,23 +888,27 @@ tab.addEventListener("click", (e) => {
 
 });
 
+//Carga de listas de usuario.
 
 function listas(nuevaLista) {
 
   document.getElementById("listasGuardadas").innerHTML += `
   <li class="d-flex align-items-center">
-  <button id="lista${indexLista}" class="dropdown-item p-2" role="button" value="${indexLista}" title="${nuevaLista}">${nuevaLista.substring(0, 10)} ${fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</button>
+  <button id="lista${indexLista}" class="dropdown-item p-2" role="button" value="${indexLista}" title="${nuevaLista}">${nuevaLista.substring(0, 10)} - ${fecha.toLocaleString([], { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</button>
   <button id="eliminarLista${indexLista}" value="${indexLista}" class="btn btn-outline-secondary btn-sm fa-regular fa-trash-can p-3"></button>    
   </li>
   <hr class="dropdown-divider m-0">
-  
   `;
+
 }
 
 
+/*LISTAS*/
+/* -------------------------------------------------------------------- */
+
+//Se realiza condicional para saber si se quiere ver o eliminar una lista.
 
 let obtenerLista = document.getElementById("listasGuardadas");
-
 
 obtenerLista.onclick = (e) => {
 
@@ -904,8 +917,6 @@ obtenerLista.onclick = (e) => {
   let obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
   if (selectOrDel == "lista" + indexLista) {
-
-
 
     productos = usuario[obtenerUsr.id].nombreLista[indexLista].productos;
 
@@ -922,6 +933,7 @@ obtenerLista.onclick = (e) => {
   } else if (selectOrDel == "eliminarLista" + indexLista) {
 
     Swal.fire({
+
       title: `¿Eliminar ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.bold()}?`,
       focusConfirm: true,
       confirmButtonText: "Ok",
@@ -930,8 +942,9 @@ obtenerLista.onclick = (e) => {
       showDenyButton: true,
       showCancelButton: false,
       reverseButtons: true,
+
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
+
       if (result.isConfirmed) {
 
         const Toast = Swal.mixin({
@@ -944,7 +957,9 @@ obtenerLista.onclick = (e) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
           }
+
         });
+
         Toast.fire({
           icon: 'success',
           title: `Lista ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.bold()} eliminada.`
@@ -962,6 +977,7 @@ obtenerLista.onclick = (e) => {
         cargaListas(obtenerUsr);
 
       } else if (result.isDenied) {
+
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -971,48 +987,30 @@ obtenerLista.onclick = (e) => {
           didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
+
           }
+
         });
+
         Toast.fire({
           icon: 'warning',
           title: `Eliminación cancelada.`
 
-        })
+        });
+
       }
-    })
+
+    });
 
   }
 
-
-
-
-  /*   localStorage.setItem("usuarios", JSON.stringify(usuario)); */
-
-  tabOrig()
+  tabOrig();
 
 }
 
-
-/* 
-  usuario.nombreLista.lista.forEach(() => {
-
-    document.getElementById("listasGuardadas").innerHTML =`
-  <li><a id="Lista${indexLista}" class="dropdown-item" value="${indexLista}" href="#">${nuevaLista}</a></li>
-                <hr class="dropdown-divider">
-  
-  `;
-
-  }) */
-
-
-///// Tiene que guardar la lista cuando el usuario quiera. Entonces al presioanr nueva lista, debe hacer una lista nueva unicamente
-// y si el usuario quiere, la guarda.
+//Al presionar en guardar la lista nos consulta si queremos o no gardarla y si es verdadero nos pide el nombre de la lista a guardar.
 
 document.getElementById("guardarLista").onclick = () => {
-
-  //Se oculta el navbar porque sino no deja escribir en el input
-
-  /*   document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden"); */
 
   Swal.fire({
 
@@ -1028,11 +1026,12 @@ document.getElementById("guardarLista").onclick = () => {
     showDenyButton: true,
     showCancelButton: false,
     reverseButtons: true,
+
   }).then((result) => {
 
-    if (result.isConfirmed) {
+    //Si es verdadero guarda la lista y la fecha de la misma sacando los segundos para que muestra fecha hora y minutos.
 
-      /*   document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible"); */
+    if (result.isConfirmed) {
 
       let listaIngresada = document.getElementById("nombreLista").value;
 
@@ -1073,8 +1072,6 @@ document.getElementById("guardarLista").onclick = () => {
 
       listas(listaIngresada);
 
-
-
     } else if (result.isDenied) {
 
       const Toast = Swal.mixin({
@@ -1087,73 +1084,24 @@ document.getElementById("guardarLista").onclick = () => {
           toast.addEventListener('mouseenter', Swal.stopTimer)
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      })
+
+      });
 
       Toast.fire({
         icon: 'warning',
         title: `Lista no guardada.`
 
-      })
-      /*  document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible"); */
+      });
+
     }
-  })
 
-  /*  preConfirm: () => {
-     
-     document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
-
-     let listaIngresada = document.getElementById("nombreLista").value;
-
-     const obtenerUsr = usuario.find((user) => user.dni === dniUser);
-
-     usuario[obtenerUsr.id].nombreLista[indexLista].lista = listaIngresada;
-     usuario[obtenerUsr.id].nombreLista[indexLista].fecha = fecha.toLocaleString();
-
-     localStorage.setItem("usuarios", JSON.stringify(usuario));
-
-     localStorage.setItem("userLog", JSON.stringify({ 
-       
-       dni: obtenerUsr.dni, 
-
-       listaSelec: indexLista 
-
-     }));
-
-     const Toast = Swal.mixin({
-       toast: true,
-       position: 'top-end',
-       showConfirmButton: false,
-       timer: 3000,
-       timerProgressBar: true,
-       didOpen: (toast) => {
-         toast.addEventListener('mouseenter', Swal.stopTimer)
-         toast.addEventListener('mouseleave', Swal.resumeTimer)
-       }
-     })
-     
-     Toast.fire({
-       icon: 'success',
-       title: `Lista ${listaIngresada.bold()} creada.`
-
-     })
-     
-     document.getElementById("titLista").innerText =`Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista.substring(0, 7)}`;
-
-     listas(listaIngresada);
-
-   }
-   
- }) */
-  /*   obtenerLista() */
-  //Realizar tarea con indexOf en donde al momento de guardar, busca la ultima lista del inidice y guarda en el siguiente indice.
-  //si se requier abrir una lista ya cargada se puede agregar al momento de guardar en un div, el value del indice. Entonces al presionar click
-  //toma el value que se tocó y busca ese indice.
+  });
 
 }
 
-document.getElementById("nuevaLista").onclick = () => {
+//Crea una nueva lista sin guardarla y limpia los valores de todo menos el usuario.
 
-  //Pone todo en cero menos el usuario
+document.getElementById("nuevaLista").onclick = () => {
 
   let elimTabla = document.getElementById("tabla");
 
@@ -1166,23 +1114,6 @@ document.getElementById("nuevaLista").onclick = () => {
 
   document.getElementById("cantidadProductos").innerText = "";
   document.getElementById("totalProd").innerText = "";
-
-
-  /*document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: hidden");
-
-  Swal.fire({
-
-    title: 'Ingrese el nombre de la nueva lista',
-    html:
-      '<input id="nuevaLista" class="swal2-input">',
-
-    focusConfirm: true,
-
-    preConfirm: () => {
-
-      document.getElementById("offcanvasNavbar").setAttribute("style", "visibility: visible");
-
-      let nuevaLista = document.getElementById("nuevaLista").value; */
 
   const obtenerUsr = usuario.find((user) => user.dni === dniUser);
 
@@ -1204,14 +1135,18 @@ document.getElementById("nuevaLista").onclick = () => {
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
+
     }
-  })
+
+  });
 
   Toast.fire({
     icon: 'success',
     title: `Lista creada.`
 
-  })
+  });
+
+  //Ingresa el nombre de la lista en pantalla debajo del TOTAL: y agrega en la key userlog el dni del usuario y la lista seleccionada para que al actualizar la página, cargue la misma lista.
 
   document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
   localStorage.setItem("usuarios", JSON.stringify(usuario));
@@ -1222,12 +1157,5 @@ document.getElementById("nuevaLista").onclick = () => {
     listaSelec: indexLista
 
   }));
+
 }
-/*   });
-
-}*/
-
-
-
-////////AGREGAR BOTÓN ELIMINAR DE LA LISTA DE GUARDADOS
-//INGRESAR EL BOTON LOGOFF DENTRO DEL NOMBRE

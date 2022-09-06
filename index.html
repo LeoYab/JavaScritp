@@ -41,13 +41,13 @@
           </div>
 
           <div class="offcanvas-body">
-            <ul  class="navbar-nav justify-content-start flex-grow-1 pe-3">
+            <ul id="menuLista" class="navbar-nav justify-content-start flex-grow-1 pe-3" style="display:none">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">Acción de Lista</a>
                 <ul class="dropdown-menu">
 
-                  
+
                   <li><a id="guardarLista" data-bs-dismiss="offcanvas" class="dropdown-item">Guarda lista</a></li>
 
 
@@ -56,14 +56,14 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">Historial de Listas</a>
-                  <ul id="listasGuardadas" class="dropdown-menu p-0 show table-striped">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">Historial de Listas</a>
+                <ul id="listasGuardadas" class="dropdown-menu p-0 show table-striped">
 
-                    <!-- CREACIÓN DE LISTAS -->
+                  <!-- CREACIÓN DE LISTAS -->
 
-                  </ul>
+                </ul>
               </li>
             </ul>
             <!-- <div id="dolar"></div> -->
@@ -75,6 +75,11 @@
                 <!--INGRESO DE SLIDER DE RECETAS-->
 
               </div>
+
+              <div class="footerLeo d-flex justify-content-around fixed-bottom">
+                <p class="fw-light mb-1">Copyright by Leonel Yaborski</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -82,10 +87,11 @@
           <a class="logo navbar-brand text-white m-0" href="#"><img src="./images/logo.png" alt="Logo"></a>
         </div>
         <div id="changeButtonusrProf1">
-          <div class="usrProf d-flex justify-content-center align-items-center"> 
-          <h2 id="usrProf" style="display:none" data-bs-toggle="offcanvas" aria-controls="offcanvasNavbar" data-bs-target="#offcanvasNavbar"></h2>
-          <i id="usrProf1" class="fa-solid fa-circle-user fa-2xl" style="display:block"></i>
-        </div>
+          <div class="usrProf d-flex justify-content-center align-items-center">
+            <h2 id="usrProf" style="display:none" data-bs-toggle="offcanvas" aria-controls="offcanvasNavbar"
+              data-bs-target="#offcanvasNavbar"></h2>
+            <i id="usrProf1" class="fa-solid fa-circle-user fa-2xl" style="display:block"></i>
+          </div>
 
           <!--CAMBIO DE BOTON LOGIN-->
 
@@ -111,7 +117,7 @@
 
     <div class="d-flex justify-content-between">
       <p id="cantidadProductos" class="mb-0 fw-bold"></p>
-    <p id="titLista" class="mb-0 text-end"></p>
+      <p id="titLista" class="mb-0 text-end"></p>
     </div>
 
     <table class="table table-sm table-striped mt-2">
@@ -124,7 +130,7 @@
           <th scope="col" class="align-middle">
             <div class="d-flex justify-content-start gap-2">
               <p id="titLista" class="mb-0"> </p>
-          <!--     <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
+              <!--     <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Edit</button>
               <button class="btn btn-sm  btn-outline-light disabled text-white" type="submit">Del</button> -->
             </div>
           </th>

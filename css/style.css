@@ -217,3 +217,11 @@ p#titProd {
 
 button#btnMod {
   border: var(--bs-btn-border-width) solid #6ca115ef; }
+
+.footerLeo {
+  background-color: #558508;
+  width: 75%;
+  color: #fff;
+  border-radius: 30px 30px 0 0; }
+  .footerLeo p {
+    font-size: 75%; }
