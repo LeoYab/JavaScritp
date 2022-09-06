@@ -245,6 +245,7 @@ function createUser(usrAdd, dniAdd) {
         productos: [],
         fecha: "none"
       }];
+      
     }
 
   }
