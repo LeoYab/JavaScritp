@@ -975,6 +975,8 @@ obtenerLista.onclick = (e) => {
 
         document.getElementById("listasGuardadas").innerHTML = ``
 
+        document.getElementById("titLista").innerText = `Lista: ${usuario[obtenerUsr.id].nombreLista[indexLista].lista}`;
+
         cargaListas(obtenerUsr);
 
       } else if (result.isDenied) {
