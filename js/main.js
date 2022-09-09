@@ -23,6 +23,7 @@ AOS.init();
 
 //Revisa si hay usuarios cargados en el localStorage y los agrega al array de usuarios.
 
+
 if (localStorage.getItem("usuarios")) {
 
   usuario = JSON.parse(localStorage.getItem("usuarios"));
@@ -34,7 +35,7 @@ if (localStorage.getItem("usuarios")) {
   //Se carga en una variable el valor de la key userlog para poder actualizar la página sin que se el último usuario logueado se cierre.
 
   obtenerUser = JSON.parse(localStorage.getItem("userLog"));
-
+  
   //Si hay un usuario (DNI) en la variable nos carga los productos y muestra el botón de deslogueo en el menú hamburguesa.
 
   if (obtenerUser != null) {
@@ -46,7 +47,8 @@ if (localStorage.getItem("usuarios")) {
     document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
     document.getElementById("logoffSalir").setAttribute("style", "display:block");
     document.getElementById("menuLista").setAttribute("style", "display:block");
-
+    document.getElementById("agregarProd").setAttribute("style", "display:block");
+    document.getElementById("inicio").setAttribute("style", "display:none");
   }
 
 }
@@ -262,6 +264,9 @@ function createUser(usrAdd, dniAdd) {
 
   document.getElementById("logoffSalir").setAttribute("style", "display:block");
 
+  document.getElementById("agregarProd").setAttribute("style", "display:block");
+
+  document.getElementById("inicio").setAttribute("style", "display:none");
 }
 
 
@@ -331,6 +336,8 @@ function usrlog() {
         document.getElementById("logoff").setAttribute("class", "nav-link fa-solid fa-right-from-bracket");
         document.getElementById("logoffSalir").setAttribute("style", "display:block");
         document.getElementById("menuLista").setAttribute("style", "display:block");
+        document.getElementById("agregarProd").setAttribute("style", "display:block");
+        document.getElementById("inicio").setAttribute("style", "display:none");
 
         obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
