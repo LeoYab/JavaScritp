@@ -296,7 +296,6 @@ function usrlog() {
     html:
       '<input id="usrAdd" class="swal2-input" placeholder="Nombre">' +
       '<input id="dniAdd" type="number" class="swal2-input" placeholder="DNI">',
-
     focusConfirm: false,
 
 
@@ -313,8 +312,8 @@ function usrlog() {
         return false;
       }
 
-      if (!dniIng) {
-        Swal.showValidationMessage("Intresa tu DNI");
+      if (!dniIng || dniIng.length > 8 ) {
+        Swal.showValidationMessage("Intresa correctamente tu DNI");
         return false;
       }
 
