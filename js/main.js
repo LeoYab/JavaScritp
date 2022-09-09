@@ -312,7 +312,7 @@ function usrlog() {
         return false;
       }
 
-      if (!dniIng || dniIng.length > 8 ) {
+      if (dniIng.length != 8) {
         Swal.showValidationMessage("Intresa correctamente tu DNI");
         return false;
       }
