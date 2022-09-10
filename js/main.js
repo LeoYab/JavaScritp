@@ -454,6 +454,7 @@ function prodGen() {
   genTab = document.createElement("tr");
   genTab.setAttribute("data-aos", "zoom-in")
   genTab.setAttribute("data-aos-once", "true")
+  genTab.setAttribute("data-aos-anchor-placement", "top-bottom")
 
   for (const producto of productos) {
 

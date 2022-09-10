@@ -76,7 +76,8 @@ strong {
   border-radius: 15px; }
 
 .agregarProd {
-  text-align: center; }
+  text-align: center;
+  width: fit-content; }
 
 .agregarProd button {
   border-radius: 100%;
