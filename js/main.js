@@ -18,9 +18,13 @@ let indexLista = 0;
 AOS.init();
 
 
+/*DESCARGA DE EXCEL*/
+/* -------------------------------------------------------------------- */
+
+
 function ExportToExcel(type, fn, dl) {
   let titList = document.getElementById("titLista").innerHTML;
-  let elt = document.getElementById('table');
+  let elt = document.getElementById('exportToExcel');
 
   let wb = XLSX.utils.table_to_book(elt, { sheet: "Hoja1" });
 
@@ -30,12 +34,49 @@ function ExportToExcel(type, fn, dl) {
 }
 
 
+function tabExcel (){
+
+ let tabExcel = document.createElement("thead"); 
+ tabExcel.setAttribute("id", "tabExcel")
+
+ tabExcel.innerHTML=`
+   <tr>
+     <th scope="col">Producto</th>
+     <th scope="col">Precio</th>
+     <th scope="col">Cantidad</th>
+     <th scope="col">Total</th>
+   </tr>`;
+
+ let exportToExcel = document.getElementById("exportToExcel");
+
+ exportToExcel.append(tabExcel);
+
+ let genTab = document.createElement("tbody"); 
+ 
+   for (const producto of productos) {
+ 
+     genTab.innerHTML += `
+     <tr>
+     <td>${producto.nombre}</td>
+     <td>$${producto.precio.toFixed(2)}</td>
+     <td>${producto.cantidad}</td>
+     <td>$${producto.totprod.toFixed(2)}</td>
+     </tr>`;
+   }
+ 
+exportToExcel.append(genTab);
+ 
+ }
+ 
+ 
+
 
 let tblData = document.getElementById("tblData");
 
 tblData.onclick = () => {
 
-let table = document.getElementById("table")
+let table = document.getElementById("exportToExcel")
+tabExcel ()
 ExportToExcel(table); 
 
 
