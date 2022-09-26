@@ -18,6 +18,30 @@ let indexLista = 0;
 AOS.init();
 
 
+function ExportToExcel(type, fn, dl) {
+  let titList = document.getElementById("titLista").innerHTML;
+  let elt = document.getElementById('table');
+
+  let wb = XLSX.utils.table_to_book(elt, { sheet: "Hoja1" });
+
+  return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+      XLSX.writeFile(wb, fn || (titList+".xlsx"));
+}
+
+
+
+let tblData = document.getElementById("tblData");
+
+tblData.onclick = () => {
+
+let table = document.getElementById("table")
+ExportToExcel(table); 
+
+
+}
+
+
 /*BÚSQUEDA DE USUARIOS*/
 /* -------------------------------------------------------------------- */
 
