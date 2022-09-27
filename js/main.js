@@ -23,14 +23,18 @@ AOS.init();
 
 
 function ExportToExcel(type, fn, dl) {
-  let titList = document.getElementById("titLista").innerHTML;
+  let titList = document.getElementById("titLista").innerHTML.replace(": ", "_");
+
+let sheet = titList.replace("Lista_", "")
+
   let elt = document.getElementById('exportToExcel');
 
-  let wb = XLSX.utils.table_to_book(elt, { sheet: "Hoja1" });
+  let wb = XLSX.utils.table_to_book(elt, { sheet });
 
   return dl ?
       XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
       XLSX.writeFile(wb, fn || (titList+".xlsx"));
+
 }
 
 
@@ -58,12 +62,18 @@ function tabExcel (){
      genTab.innerHTML += `
      <tr>
      <td>${producto.nombre}</td>
-     <td>$${producto.precio.toFixed(2)}</td>
+     <td>${producto.precio.toFixed(2)}</td>
      <td>${producto.cantidad}</td>
-     <td>$${producto.totprod.toFixed(2)}</td>
+     <td>${producto.totprod.toFixed(2)}</td>
      </tr>`;
    }
- 
+   genTab.innerHTML += `
+   <tr>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td>Total: ${precioTotal}</td>
+   </tr>`;
 exportToExcel.append(genTab);
  
  }
@@ -78,7 +88,7 @@ tblData.onclick = () => {
 let table = document.getElementById("exportToExcel")
 tabExcel ()
 ExportToExcel(table); 
-
+removerTabla(table) 
 
 }
 
@@ -114,6 +124,7 @@ if (localStorage.getItem("usuarios")) {
     document.getElementById("menuLista").setAttribute("style", "display:block");
     document.getElementById("agregarProd").setAttribute("style", "display:block");
     document.getElementById("inicio").setAttribute("style", "display:none");
+    document.getElementById("tblData").setAttribute("style", "display:block");
   }
 
 }
@@ -332,6 +343,8 @@ function createUser(usrAdd, dniAdd) {
   document.getElementById("agregarProd").setAttribute("style", "display:block");
 
   document.getElementById("inicio").setAttribute("style", "display:none");
+
+  document.getElementById("tblData").setAttribute("style", "display:block");
 }
 
 
@@ -403,6 +416,7 @@ function usrlog() {
         document.getElementById("menuLista").setAttribute("style", "display:block");
         document.getElementById("agregarProd").setAttribute("style", "display:block");
         document.getElementById("inicio").setAttribute("style", "display:none");
+        document.getElementById("tblData").setAttribute("style", "display:block");
 
         obtenerUser = JSON.parse(localStorage.getItem("userLog"));
         dniUser = dniIng;
