@@ -72,7 +72,7 @@ function tabExcel (){
    <td></td>
    <td></td>
    <td></td>
-   <td>Total: ${precioTotal}</td>
+   <td>Total: ${precioTotal.toFixed(2)}</td>
    </tr>`;
 exportToExcel.append(genTab);
  
