@@ -25,25 +25,25 @@ AOS.init();
 function ExportToExcel(type, fn, dl) {
   let titList = document.getElementById("titLista").innerHTML.replace(": ", "_");
 
-let sheet = titList.replace("Lista_", "")
+  let sheet = titList.replace("Lista_", "")
 
   let elt = document.getElementById('exportToExcel');
 
   let wb = XLSX.utils.table_to_book(elt, { sheet });
 
   return dl ?
-      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
-      XLSX.writeFile(wb, fn || (titList+".xlsx"));
+    XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+    XLSX.writeFile(wb, fn || (titList + ".xlsx"));
 
 }
 
 
-function tabExcel (){
+function tabExcel() {
 
- let tabExcel = document.createElement("thead"); 
- tabExcel.setAttribute("id", "tabExcel")
+  let tabExcel = document.createElement("thead");
+  tabExcel.setAttribute("id", "tabExcel")
 
- tabExcel.innerHTML=`
+  tabExcel.innerHTML = `
    <tr>
      <th scope="col">Producto</th>
      <th scope="col">Precio</th>
@@ -51,44 +51,44 @@ function tabExcel (){
      <th scope="col">Total</th>
    </tr>`;
 
- let exportToExcel = document.getElementById("exportToExcel");
+  let exportToExcel = document.getElementById("exportToExcel");
 
- exportToExcel.append(tabExcel);
+  exportToExcel.append(tabExcel);
 
- let genTab = document.createElement("tbody"); 
- 
-   for (const producto of productos) {
- 
-     genTab.innerHTML += `
+  let genTab = document.createElement("tbody");
+
+  for (const producto of productos) {
+
+    genTab.innerHTML += `
      <tr>
      <td>${producto.nombre}</td>
      <td>${producto.precio.toFixed(2)}</td>
      <td>${producto.cantidad}</td>
      <td>${producto.totprod.toFixed(2)}</td>
      </tr>`;
-   }
-   genTab.innerHTML += `
+  }
+  genTab.innerHTML += `
    <tr>
    <td></td>
    <td></td>
    <td></td>
    <td>Total: ${precioTotal.toFixed(2)}</td>
    </tr>`;
-exportToExcel.append(genTab);
- 
- }
- 
- 
+  exportToExcel.append(genTab);
+
+}
+
+
 
 
 let tblData = document.getElementById("tblData");
 
 tblData.onclick = () => {
 
-let table = document.getElementById("exportToExcel")
-tabExcel ()
-ExportToExcel(table); 
-removerTabla(table) 
+  let table = document.getElementById("exportToExcel")
+  tabExcel()
+  ExportToExcel(table);
+  removerTabla(table)
 
 }
 
@@ -110,7 +110,7 @@ if (localStorage.getItem("usuarios")) {
   //Se carga en una variable el valor de la key userlog para poder actualizar la página sin que se el último usuario logueado se cierre.
 
   obtenerUser = JSON.parse(localStorage.getItem("userLog"));
-  
+
   //Si hay un usuario (DNI) en la variable nos carga los productos y muestra el botón de deslogueo en el menú hamburguesa.
 
   if (obtenerUser != null) {
@@ -323,7 +323,7 @@ function createUser(usrAdd, dniAdd) {
         productos: [],
         fecha: "none"
       }];
-      
+
     }
 
   }
@@ -576,6 +576,12 @@ function addProd() {
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
+  if (precIng == "" && cantIng == "") {
+    precIng = 0;
+    cantIng = 0;
+  }
+
+
   class Producto {
     constructor(id, nombre, precio, cantidad) {
       this.id = id;
@@ -632,13 +638,21 @@ agrProBtn.onclick = () => btnAgregar();
 
 //Se agrega script para la validación del formulario de Boostrap.
 
-function btnVali() {
+function btnVali(precIng, cantIng) {
+    
+  if (precIng == "" && cantIng == "") {
+
+    document.getElementById("precIngr").value = 0;
+    document.getElementById("cantIngr").value = 0;
+
+  }
 
   (() => {
 
     'use strict';
 
     const forms = document.getElementsByClassName("needs-validation");
+
 
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
@@ -647,7 +661,12 @@ function btnVali() {
           event.stopPropagation()
         }
 
+
+
         form.classList.add("was-validated")
+
+
+
       }, false)
     })
 
@@ -663,7 +682,10 @@ function btnAgregarOcul() {
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
-  btnVali();
+
+
+  btnVali(precIng, cantIng);
+
 
   if (prodIng != "" && precIng != "" && cantIng != "") {
 
@@ -882,6 +904,8 @@ function modProd(valVal) {
   }
 
 }
+
+
 
 //Escuchador de eventos click en el cual chequea si se presionó el botón editar o eliminar de un producto específico.
 //Se realiza un condicional para sacar error en consola el cual era producido por tocar cualquier etiqueta dentro del id "tabla".
