@@ -576,12 +576,6 @@ function addProd() {
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
-  if (precIng == "" && cantIng == "") {
-    precIng = 0;
-    cantIng = 0;
-  }
-
-
   class Producto {
     constructor(id, nombre, precio, cantidad) {
       this.id = id;
@@ -638,15 +632,8 @@ agrProBtn.onclick = () => btnAgregar();
 
 //Se agrega script para la validación del formulario de Boostrap.
 
-function btnVali(precIng, cantIng) {
+function btnVali() {
     
-  if (precIng == "" && cantIng == "") {
-
-    document.getElementById("precIngr").value = 0;
-    document.getElementById("cantIngr").value = 0;
-
-  }
-
   (() => {
 
     'use strict';
@@ -682,12 +669,16 @@ function btnAgregarOcul() {
   let precIng = document.getElementById("precIngr").value;
   let cantIng = document.getElementById("cantIngr").value;
 
+  if (precIng == "" && cantIng == "") {
+    document.getElementById("precIngr").value = 0;
+    document.getElementById("cantIngr").value = 0;
+  }
 
 
   btnVali(precIng, cantIng);
 
 
-  if (prodIng != "" && precIng != "" && cantIng != "") {
+  if (prodIng != "") {
 
     document.getElementById("agregarProd").style.display = "block";
     document.getElementById("ingresarProd").style.display = "none";
